@@ -317,11 +317,6 @@ export default class Modal extends Component {
   }
 
   cancel() {
-    // Reject any deferrals
-    if (this.deferred != null) {
-      this.deferred.reject();
-    }
-
     this.close();
   }
 
