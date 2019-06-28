@@ -1,8 +1,4 @@
 export default class GenericPage {
-  constructor(root) {
-    this.root = root || document.body;
-  }
-
   initialize() {
     this.reloadUIElements();
 
@@ -19,13 +15,13 @@ export default class GenericPage {
     this.fields = {};
     this.buttons = {};
 
-    Array.from(this.root.querySelectorAll('[data-field]'))
+    Array.from(document.body.querySelectorAll('[data-field]'))
       .filter(element => !element.matches('.modal [data-field]'))
       .forEach((element) => {
         this.fields[element.dataset.field] = element;
       });
 
-    Array.from(this.root.querySelectorAll('[data-button]'))
+    Array.from(document.body.querySelectorAll('[data-button]'))
       .filter(element => !element.matches('.modal [data-button]'))
       .forEach((element) => {
         this.buttons[element.dataset.button] = element;
@@ -33,7 +29,7 @@ export default class GenericPage {
   }
 
   setHeader(text) {
-    this.root.querySelector('.header > span').textContent = text;
+    document.body.querySelector('.header > span').textContent = text;
   }
 
   refresh() {

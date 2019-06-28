@@ -17,13 +17,12 @@ function sortRows(rows, sortFunction = () => {}) {
 }
 
 export default class GenericTable extends GenericPage {
-  constructor(root, table) {
-    super(root);
+  constructor(tableSelector) {
+    super();
 
-    this.table = table;
-    this.tbody = this.table.querySelector('tbody');
+    this.table = document.body.querySelector(tableSelector);
+    [this.tbody] = this.table.tBodies;
     this.loadingRow = this.tbody.querySelector('tr.loading');
-    this.noRecordsRow = this.tbody.querySelector('tr.no-records');
   }
 
   initialize() {
@@ -73,16 +72,17 @@ export default class GenericTable extends GenericPage {
   }
 
   updated() {
-    if (!this.noRecordsRow) {
-      return;
-    }
+    if (this.tbody.querySelectorAll('tr:not(.no-records):not(.loading)').length === 0) {
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
 
-    const hasRecords = this.tbody.querySelectorAll('tr:not(.no-records):not(.loading)').length > 0;
+      tr.classList.add('no-records');
 
-    if (hasRecords) {
-      this.noRecordsRow.style.display = 'none';
-    } else {
-      this.noRecordsRow.style.display = '';
+      td.colSpan = 16;
+      td.textContent = this.constructor.noRecordsMessage;
+
+      tr.appendChild(td);
+      this.tbody.appendChild(tr);
     }
   }
 
