@@ -2,6 +2,20 @@ import GenericPage from './generic_page';
 import Pagination from './components/pagination';
 import { elementFromString } from './utilities';
 
+function sortRows(rows, sortFunction = () => {}) {
+  const rowsWithSortOrder = rows.map(row => [sortFunction(row), row]);
+
+  rowsWithSortOrder.sort((x, y) => {
+    if (x[0] === y[0]) {
+      return 0;
+    }
+
+    return x[0] > y[0] ? 1 : -1;
+  });
+
+  return rowsWithSortOrder.map(row => row[1]);
+}
+
 export default class GenericTable extends GenericPage {
   constructor(root, table) {
     super(root);
@@ -28,20 +42,6 @@ export default class GenericTable extends GenericPage {
     return row;
   }
 
-  static sortRows(rows, sortFunction = () => {}) {
-    const rowsWithSortOrder = rows.map(row => [sortFunction(row), row]);
-
-    rowsWithSortOrder.sort((x, y) => {
-      if (x[0] === y[0]) {
-        return 0;
-      }
-
-      return x[0] > y[0] ? 1 : -1;
-    });
-
-    return rowsWithSortOrder.map(row => row[1]);
-  }
-
   reloadRows(rows, { sort } = { sort: null }) {
     if (this.loadingRow) {
       this.loadingRow.style.display = 'none';
@@ -52,7 +52,7 @@ export default class GenericTable extends GenericPage {
         row.parentNode.removeChild(row);
       });
 
-      (sort ? this.constructor.sortRows(rows, sort) : rows).forEach((row) => {
+      (sort ? sortRows(rows, sort) : rows).forEach((row) => {
         this.tbody.appendChild(row);
       });
     }

@@ -7,7 +7,9 @@ import BasicObject from './basic_object';
 export default class Record extends BasicObject {
   // static get classname() { return 'Subreddit::GameThread'; }
 
-  get classname() { return this.constructor.classname; }
+  get classname() {
+    return this.constructor.classname;
+  }
 
   constructor(data) {
     super(data);

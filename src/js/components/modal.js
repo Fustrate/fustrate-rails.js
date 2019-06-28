@@ -56,6 +56,43 @@ let addedGlobalListeners = false;
 
 let overlay;
 
+function createButton(name, options) {
+  let text;
+  let type;
+
+  if (typeof options === 'object') {
+    ({ text, type } = options);
+  } else if (typeof options === 'string') {
+    text = options;
+  }
+
+  return `
+    <button data-button="${name}" class="expand ${type || name}">
+      ${escapeHTML(text || titleize(name))}
+    </button>`;
+}
+
+function toggleBackground(visible = true) {
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.classList.add('modal-overlay');
+  }
+
+  if (visible) {
+    if (!isVisible(overlay)) {
+      hide(overlay);
+
+      document.body.appendChild(overlay);
+
+      $(overlay).fadeIn(fadeSpeed);
+    }
+  } else {
+    $(overlay).fadeOut(fadeSpeed, () => {
+      $(overlay).detach();
+    });
+  }
+}
+
 export default class Modal extends Component {
   static get settings() { return {}; }
 
@@ -134,7 +171,7 @@ export default class Modal extends Component {
           </button>`);
       } else if (typeof button === 'object') {
         Object.keys(button).forEach((name) => {
-          list.push(this.constructor.createButton(name, button[name]));
+          list.push(createButton(name, button[name]));
         }, this);
       }
     }, this);
@@ -205,7 +242,7 @@ export default class Modal extends Component {
       openModals[openModals.length - 2].hide();
     } else {
       // There are no open modals - show the background overlay
-      this.constructor.toggleBackground(true);
+      toggleBackground(true);
     }
 
     const css = this.settings.css.open;
@@ -237,7 +274,7 @@ export default class Modal extends Component {
     this.locked = true;
 
     if (!openPrevious || openModals.length === 1) {
-      this.constructor.toggleBackground(false);
+      toggleBackground(false);
     }
 
     // Remove the top-most modal (this one) from the stack
@@ -324,27 +361,6 @@ export default class Modal extends Component {
     return false;
   }
 
-  static toggleBackground(visible = true) {
-    if (!overlay) {
-      overlay = document.createElement('div');
-      overlay.classList.add('modal-overlay');
-    }
-
-    if (visible) {
-      if (!isVisible(overlay)) {
-        hide(overlay);
-
-        document.body.appendChild(overlay);
-
-        $(overlay).fadeIn(fadeSpeed);
-      }
-    } else {
-      $(overlay).fadeOut(fadeSpeed, () => {
-        $(overlay).detach();
-      });
-    }
-  }
-
   static get closeOnBackgroundClick() {
     return true;
   }
@@ -359,22 +375,6 @@ export default class Modal extends Component {
     }
 
     return false;
-  }
-
-  static createButton(name, options) {
-    let text;
-    let type;
-
-    if (typeof options === 'object') {
-      ({ text, type } = options);
-    } else if (typeof options === 'string') {
-      text = options;
-    }
-
-    return `
-      <button data-button="${name}" class="expand ${type || name}">
-        ${escapeHTML(text || titleize(name))}
-      </button>`;
   }
 
   static hideAllModals() {

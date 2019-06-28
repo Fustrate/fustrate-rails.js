@@ -6,6 +6,21 @@ const settings = {
   nextText: 'Next →',
 };
 
+// Just add 'page='
+function getPreppedPaginationURL() {
+  const url = window.location.search.replace(/[?&]page=\d+/, '');
+
+  if (url[0] === '?') {
+    return `${window.location.pathname}${url}&`;
+  }
+
+  if (url[0] === '&') {
+    return `${window.location.pathname}?${url.slice(1, url.length)}&`;
+  }
+
+  return `${window.location.pathname}?`;
+}
+
 export default class Pagination extends Component {
   constructor({
     currentPage, totalPages, totalEntries, perPage,
@@ -17,7 +32,7 @@ export default class Pagination extends Component {
     this.totalEntries = totalEntries;
     this.perPage = perPage;
 
-    this.base = this.constructor.getPreppedPaginationURL();
+    this.base = getPreppedPaginationURL();
   }
 
   link(text, page, ...args) {
@@ -136,20 +151,5 @@ export default class Pagination extends Component {
     }
 
     return 1;
-  }
-
-  // Just add 'page='
-  static getPreppedPaginationURL() {
-    const url = window.location.search.replace(/[?&]page=\d+/, '');
-
-    if (url[0] === '?') {
-      return `${window.location.pathname}${url}&`;
-    }
-
-    if (url[0] === '&') {
-      return `${window.location.pathname}?${url.slice(1, url.length)}&`;
-    }
-
-    return `${window.location.pathname}?`;
   }
 }

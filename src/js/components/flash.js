@@ -10,11 +10,24 @@ const settings = {
   displayTime: 4000,
 };
 
+function createFlashBar(message, { type, icon } = {}) {
+  const bar = document.createElement('div');
+
+  bar.classList.add('flash', type || 'info');
+  bar.innerHTML = icon ? `${createIcon(icon)} ${message}` : message;
+
+  const flashes = document.getElementById('flashes');
+
+  flashes.insertBefore(bar, flashes.firstChild);
+
+  return bar;
+}
+
 export class Flash extends Component {
   constructor(message, { type, icon } = {}) {
     super();
 
-    const bar = this.constructor.createFlashBar(message, { type, icon });
+    const bar = createFlashBar(message, { type, icon });
 
     $(bar)
       .hide()
@@ -25,19 +38,6 @@ export class Flash extends Component {
 
   static show(message, { type, icon } = {}) {
     return new this(message, { type, icon });
-  }
-
-  static createFlashBar(message, { type, icon } = {}) {
-    const bar = document.createElement('div');
-
-    bar.classList.add('flash', type || 'info');
-    bar.innerHTML = icon ? `${createIcon(icon)} ${message}` : message;
-
-    const flashes = document.getElementById('flashes');
-
-    flashes.insertBefore(bar, flashes.firstChild);
-
-    return bar;
   }
 }
 
