@@ -1,39 +1,14 @@
-if (!Array.prototype.flat) {
-  Array.prototype.flat = function flatPolyfill(depth) {
-    const flattened = [];
+// Supports: Edge (All), Internet Explorer (All)
+require('array-flat-polyfill');
 
-    function flatten(array, toDepth) {
-      array.forEach((element) => {
-        if (Array.isArray(element) && toDepth > 0) {
-          flatten(element, toDepth - 1);
-        } else {
-          flattened.push(element);
-        }
-      });
-    }
+// Supports: Internet Explorer (All)
+require('custom-event-polyfill');
+require('nodelist-foreach-polyfill');
 
-    flatten(this, Math.floor(depth) || 1);
+// Supports: Internet Explorer 11
+require('es6-promise').polyfill();
 
-    return flattened;
-  };
-}
-
-if (!Array.prototype.flatMap) {
-  Array.prototype.flatMap = function flatMapPolyfill(...args) {
-    return Array.prototype.map.apply(this, ...args).flat(1);
-  };
-}
-
-if (window.NodeList && !NodeList.prototype.forEach) {
-  NodeList.prototype.forEach = function forEachPolyfill(callback, thisArg) {
-    thisArg = thisArg || window;
-
-    for (let i = 0; i < this.length; i += 1) {
-      callback.call(thisArg, this[i], i, this);
-    }
-  };
-}
-
+// Supports: Internet Explorer (All)
 if (!Element.prototype.matches) {
   Element.prototype.matches = Element.prototype.msMatchesSelector
     || Element.prototype.webkitMatchesSelector;
