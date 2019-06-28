@@ -72,7 +72,7 @@ function createButton(name, options) {
     </button>`;
 }
 
-function toggleBackground(visible = true) {
+function toggleOverlay(visible = true) {
   if (!overlay) {
     overlay = document.createElement('div');
     overlay.classList.add('modal-overlay');
@@ -242,7 +242,7 @@ export default class Modal extends Component {
       openModals[openModals.length - 2].hide();
     } else {
       // There are no open modals - show the background overlay
-      toggleBackground(true);
+      toggleOverlay(true);
     }
 
     const css = this.settings.css.open;
@@ -274,7 +274,7 @@ export default class Modal extends Component {
     this.locked = true;
 
     if (!openPrevious || openModals.length === 1) {
-      toggleBackground(false);
+      toggleOverlay(false);
     }
 
     // Remove the top-most modal (this one) from the stack
