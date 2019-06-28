@@ -114,9 +114,8 @@ export default class GenericTable extends GenericPage {
 
     const ul = (new Pagination(response)).generate();
 
-    this.root.querySelectorAll('.pagination').forEach((pagination) => {
-      pagination.textContent = '';
-      pagination.append(ul);
+    this.root.querySelectorAll('.pagination').forEach((oldPagination) => {
+      oldPagination.parentNode.replaceChild(ul, oldPagination);
     });
   }
 }
