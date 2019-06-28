@@ -4,6 +4,7 @@ export { default as GenericPage } from './src/js/generic_page';
 export { default as GenericTable } from './src/js/generic_table';
 export { default as Listenable } from './src/js/listenable';
 export { default as Record } from './src/js/record';
+export { default as FormDataBuilder } from './src/js/form_data_builder';
 
 export { default as AlertBox } from './src/js/components/alert_box';
 export * from './src/js/components/autocomplete';
