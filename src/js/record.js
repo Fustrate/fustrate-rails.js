@@ -110,7 +110,10 @@ export default class Record extends BasicObject {
     return this.classname.replace(/::/g, '').replace(/^[A-Z]/, match => match.toLowerCase());
   }
 
+  // returns Promise<Record>
   static create(attributes) {
-    return (new this()).update(attributes);
+    const record = new this();
+
+    return record.update(attributes).then(() => record);
   }
 }
