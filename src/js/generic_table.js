@@ -22,7 +22,6 @@ export default class GenericTable extends GenericPage {
 
     this.table = document.body.querySelector(tableSelector);
     [this.tbody] = this.table.tBodies;
-    this.loadingRow = this.tbody.querySelector('tr.loading');
   }
 
   initialize() {
@@ -41,18 +40,14 @@ export default class GenericTable extends GenericPage {
     return row;
   }
 
-  reloadRows(rows, { sort } = { sort: null }) {
-    if (this.loadingRow) {
-      this.loadingRow.style.display = 'none';
-    }
+  reloadRows(trs, { sort } = { sort: null }) {
+    this.tbody.querySelectorAll('tr').forEach((tr) => {
+      tr.remove();
+    });
 
-    if (rows) {
-      this.tbody.querySelectorAll('tr:not(.no-records):not(.loading)').forEach((row) => {
-        row.parentNode.removeChild(row);
-      });
-
-      (sort ? sortRows(rows, sort) : rows).forEach((row) => {
-        this.tbody.appendChild(row);
+    if (trs.length > 0) {
+      (sort ? sortRows(trs, sort) : trs).forEach((tr) => {
+        this.tbody.appendChild(tr);
       });
     }
 
@@ -72,7 +67,7 @@ export default class GenericTable extends GenericPage {
   }
 
   updated() {
-    if (this.tbody.querySelectorAll('tr:not(.no-records):not(.loading)').length === 0) {
+    if (this.tbody.querySelectorAll('tr').length === 0) {
       const tr = document.createElement('tr');
       const td = document.createElement('td');
 
@@ -119,3 +114,5 @@ export default class GenericTable extends GenericPage {
     });
   }
 }
+
+GenericTable.noRecordsMessage = 'No records found.';
