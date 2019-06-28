@@ -94,7 +94,7 @@ export default class GenericTable extends GenericPage {
   checkAll(event) {
     const check = event ? event.target.checked : true;
 
-    this.table.querySelectorAll('td:first-child input[type=\'checkbox\']').forEach((checkbox) => {
+    this.table.querySelectorAll('td:first-child input[type="checkbox"]').forEach((checkbox) => {
       checkbox.checked = check;
     });
   }
@@ -103,7 +103,7 @@ export default class GenericTable extends GenericPage {
     this.table.querySelectorAll('td:first-child input:checked').forEach((input) => {
       input.checked = false;
     });
-}
+  }
 
   // This should be fed a response from a JSON request for a paginated
   // collection.
@@ -112,10 +112,11 @@ export default class GenericTable extends GenericPage {
       return;
     }
 
-    const paginationHTML = (new Pagination(response)).generate();
+    const ul = (new Pagination(response)).generate();
 
     this.root.querySelectorAll('.pagination').forEach((pagination) => {
-      pagination.outerHTML = paginationHTML;
+      pagination.textContent = '';
+      pagination.append(ul);
     });
   }
 }
