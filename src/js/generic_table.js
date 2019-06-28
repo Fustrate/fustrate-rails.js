@@ -91,6 +91,20 @@ export default class GenericTable extends GenericPage {
       .map(() => this.value);
   }
 
+  checkAll(event) {
+    const check = event ? event.target.checked : true;
+
+    this.table.querySelectorAll('td:first-child input[type=\'checkbox\']').forEach((checkbox) => {
+      checkbox.checked = check;
+    });
+  }
+
+  uncheckAll() {
+    this.table.querySelectorAll('td:first-child input:checked').forEach((input) => {
+      input.checked = false;
+    });
+}
+
   // This should be fed a response from a JSON request for a paginated
   // collection.
   updatePagination(response) {
