@@ -1,6 +1,6 @@
+import { delegate, fire } from '@rails/ujs';
+
 import Component from '../component';
-import { triggerEvent } from '../utilities';
-import { delegate } from '../rails/utils/event';
 
 export default class Disclosure extends Component {
   static initialize() {
@@ -13,7 +13,7 @@ export default class Disclosure extends Component {
 
     disclosure.classList.toggle('open');
 
-    triggerEvent(disclosure, `${(isOpen ? 'closed' : 'opened')}.disclosure`);
+    fire(disclosure, `${(isOpen ? 'closed' : 'opened')}.disclosure`);
 
     return false;
   }

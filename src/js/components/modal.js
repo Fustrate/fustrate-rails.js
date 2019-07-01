@@ -1,5 +1,6 @@
 // jQuery: scrollTop, css, animate, show, height, hide, fadeIn, fadeOut, detach
 import $ from 'jquery';
+import { delegate, fire, stopEverything } from '@rails/ujs';
 
 import Component from '../component';
 import { deepExtend } from '../object';
@@ -11,7 +12,6 @@ import {
   isVisible,
 } from '../utilities';
 import { titleize } from '../string';
-import { delegate, stopEverything, fire } from '../rails/utils/event';
 import { remove } from '../array';
 
 const defaultSettings = {

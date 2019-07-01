@@ -1,5 +1,6 @@
+import { stopEverything } from '@rails/ujs';
+
 import Component from '../component';
-import { stopEverything } from '../rails/utils/event';
 
 // Allow files to be dropped onto an element
 export default class DropZone extends Component {

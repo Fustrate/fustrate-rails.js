@@ -1,7 +1,7 @@
 import Popper from 'popper.js';
+import { delegate } from '@rails/ujs';
 
 import Component from '../component';
-import { delegate } from '../rails/utils/event';
 
 export default class Dropdown extends Component {
   static initialize() {

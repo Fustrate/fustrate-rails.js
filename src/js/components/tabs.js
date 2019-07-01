@@ -1,5 +1,6 @@
+import { delegate, stopEverything } from '@rails/ujs';
+
 import Component from '../component';
-import { delegate, stopEverything } from '../rails/utils/event';
 
 export default class Tabs extends Component {
   constructor(tabs) {

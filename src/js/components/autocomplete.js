@@ -1,7 +1,8 @@
 import Awesomplete from 'awesomplete';
+import { fire } from '@rails/ujs';
 
 import Component from '../component';
-import { debounce, triggerEvent } from '../utilities';
+import { debounce } from '../utilities';
 import { get } from '../ajax';
 
 export class AutocompleteSuggestion extends String {
@@ -124,11 +125,11 @@ export class Autocomplete extends Component {
 
     this.awesomplete.close();
 
-    triggerEvent(this.input, 'blanked.autocomplete');
+    fire(this.input, 'blanked.autocomplete');
   }
 
   onSelect(event) {
-    triggerEvent(this.input, 'selected.autocomplete', { suggestion: event.text });
+    fire(this.input, 'selected.autocomplete', { suggestion: event.text });
 
     // It's obviously not still an error if we just selected a value from the dropdown.
     this.input.classList.remove('error');

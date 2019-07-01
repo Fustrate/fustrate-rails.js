@@ -2,16 +2,13 @@ import moment from 'moment';
 
 require('./polyfills');
 
-// const Rails = require('@rails/ujs');
-
 export default class Fustrate {
   static start(instance) {
     Fustrate.instance = instance;
 
     document.addEventListener('DOMContentLoaded', () => {
-      // Rails.start();
-
       this.initialize();
+
       instance.initialize();
     });
   }
