@@ -10,6 +10,7 @@ require('es6-promise').polyfill();
 
 // Supports: Internet Explorer (All)
 if (!Element.prototype.matches) {
-  Element.prototype.matches = Element.prototype.msMatchesSelector
+  Element.prototype.matches = Element.prototype.matchesSelector
+    || Element.prototype.msMatchesSelector
     || Element.prototype.webkitMatchesSelector;
 }
