@@ -20,13 +20,13 @@ export default class Listenable {
 
   dispatchEvent(event) {
     if (!(event.type && this.listeners[event.type])) {
-      return this;
+      return true;
     }
 
     this.listeners[event.type].forEach((listener) => {
-      listener.apply(this, event);
+      listener.call(this, event);
     });
 
-    return this;
+    return true;
   }
 }

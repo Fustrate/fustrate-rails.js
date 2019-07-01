@@ -1,36 +1,27 @@
-export const compact = (array, strings = true) => {
-  array.forEach((el, index) => {
-    if (!(el === undefined || el === null || (strings && el === ''))) {
-      return;
-    }
+export const compact = (arr, strings = true) => arr
+  .filter(element => !(element === undefined || element === null || (strings && element === '')))
 
-    array.splice(index, 1);
-  });
+export const first = arr => arr[0];
 
-  return array;
-};
+export const last = arr => arr[arr.length - 1];
 
-export const first = array => array[0];
-
-export const last = array => array[array.length - 1];
-
-export const remove = (array, object) => {
-  const index = array.indexOf(object);
+export const remove = (arr, object) => {
+  const index = arr.indexOf(object);
 
   if (index !== -1) {
-    array.splice(index, 1);
+    arr.splice(index, 1);
   }
 };
 
-export const toSentence = (array) => {
-  switch (array.length) {
+export const toSentence = (arr) => {
+  switch (arr.length) {
     case 0:
       return '';
     case 1:
-      return array[0];
+      return String(arr[0]);
     case 2:
-      return `${array[0]} and ${array[1]}`;
+      return `${arr[0]} and ${arr[1]}`;
     default:
-      return `${array.slice(0, -1).join(', ')}, and ${array[array.length - 1]}`;
+      return `${arr.slice(0, -1).join(', ')}, and ${arr[arr.length - 1]}`;
   }
 };
