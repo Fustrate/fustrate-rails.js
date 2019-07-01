@@ -6,7 +6,7 @@ export default class FormDataBuilder {
     return this.toFormData(new FormData(), obj, namespace);
   }
 
-  static appendObjectToFormData(data, key, value) {
+  static appendObject(data, key, value) {
     if (value instanceof Array) {
       value.forEach((item) => {
         data.append(`${key}[]`, String(item));
@@ -29,7 +29,7 @@ export default class FormDataBuilder {
       const key = namespace ? `${namespace}[${field}]` : field;
 
       if (obj[field] && typeof obj[field] === 'object') {
-        this.appendObjectToFormData(data, key, obj[field]);
+        this.appendObject(data, key, obj[field]);
       } else if (typeof obj[field] === 'boolean') {
         data.append(key, String(Number(obj[field])));
       } else if (obj[field] !== null && obj[field] !== undefined) {
