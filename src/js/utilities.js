@@ -1,6 +1,6 @@
 // Internal functions
 import { compact } from './array';
-import { underscore } from './string';
+import { underscore, isBlank } from './string';
 
 const entityMap = {
   '&': '&amp;',
@@ -14,13 +14,13 @@ const entityMap = {
 };
 
 function hrefFor(href) {
-  if (href === undefined) {
+  if (href === undefined || href === null) {
     return '#';
   }
 
   // A plain string is fine.
   if (typeof href === 'string') {
-    return href;
+    return isBlank(href) ? '#' : href;
   }
 
   // Models have a `path` function.
@@ -29,9 +29,9 @@ function hrefFor(href) {
   }
 
   // I should've commented this. What is this for?
-  if (!(href.type && href.id)) {
-    return href;
-  }
+  // if (!(href.type && href.id)) {
+  //   return href;
+  // }
 
   throw new Error(`Invalid href: ${href}`);
 }
@@ -59,7 +59,7 @@ export const animate = (element, animation, callback, { delay, speed } = {}) => 
   }
 
   function handleAnimationEnd() {
-    element.classList.remove('animated', animation);
+    element.classList.remove(...classes);
     element.removeEventListener('animationend', handleAnimationEnd);
 
     if (typeof callback === 'function') {

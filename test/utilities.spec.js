@@ -1,17 +1,43 @@
 import {
+  animate,
   debounce,
   elementFromString,
   escapeHTML,
   hms,
   icon,
   label,
+  linkTo,
   multilineEscapeHTML,
   redirectTo,
-  // animate, linkTo, isVisible, toggle, show, hide, toHumanDate,
+  toHumanDate,
+  show,
+  // animate, linkTo, isVisible, toggle, show, hide,
 } from '../src/js/utilities';
 
 describe('animate', () => {
-  it('', () => {});
+  it('animates for a while', () => {
+    const element = document.createElement('div');
+
+    animate(element, 'wacky');
+
+    expect(element.classList).toContain('animated', 'wacky');
+
+    element.dispatchEvent(new CustomEvent('animationend'));
+
+    expect(element.classList).toHaveLength(0);
+  });
+
+  it('animates with a delay and a speed', () => {
+    const element = document.createElement('div');
+
+    animate(element, 'wacky', null, { delay: 3, speed: 'fast' });
+
+    expect(element.classList).toContain('animated', 'wacky', 'delay-3s', 'fast');
+
+    element.dispatchEvent(new CustomEvent('animationend'));
+
+    expect(element.classList).toHaveLength(0);
+  });
 });
 
 describe('debounce', () => {
@@ -25,16 +51,16 @@ describe('debounce', () => {
     expect(callback).not.toBeCalled();
 
     // Wait for 1 second and then run again
-    jest.runTimersToTime(1000);
+    jest.advanceTimersByTime(1000);
     expect(callback).not.toBeCalled();
     debounced.call();
 
     // Wait for 2.499 seconds
-    jest.runTimersToTime(2499);
+    jest.advanceTimersByTime(2499);
     expect(callback).not.toBeCalled();
 
     // 1 more ms and it should run
-    jest.runTimersToTime(1);
+    jest.advanceTimersByTime(1);
     expect(callback).toBeCalled();
   });
 });
@@ -49,7 +75,7 @@ describe('elementFromString', () => {
 
     expect(element).toBeInstanceOf(HTMLInputElement);
     expect(element.type).toEqual('datetime-local');
-    expect(element.classList.contains('date')).toBeTruthy();
+    expect(element.classList.contains('date')).toBe(true);
   });
 
   it('creates an element with children', () => {
@@ -144,7 +170,35 @@ describe('multilineEscapeHTML', () => {
 });
 
 describe('linkTo', () => {
-  it('', () => {});
+  it('creates a link to undefined/null', () => {
+    expect(linkTo('test')).toEqual('<a href="#">test</a>');
+    expect(linkTo('test', null)).toEqual('<a href="#">test</a>');
+  });
+
+  it('creates a link to a string href', () => {
+    expect(linkTo('test', '')).toEqual('<a href="#">test</a>');
+    expect(linkTo('test', '/users')).toEqual('<a href="/users">test</a>');
+  });
+
+  it('creates a link to an object that responds to #path', () => {
+    expect(linkTo('test', { path: () => '/users' })).toEqual('<a href="/users">test</a>');
+  });
+
+  it("doesn't like other arguments", () => {
+    expect(() => {
+      linkTo('test', 5);
+    }).toThrowError(/Invalid href: /);
+
+    expect(() => {
+      linkTo('test', {});
+    }).toThrowError(/Invalid href: /);
+  });
+
+  it('creates a link with extra attributes', () => {
+    expect(linkTo('test', '#', { 'data-label': 'Test', class: 'antelope' })).toEqual(
+      '<a href="#" data-label="Test" class="antelope">test</a>',
+    );
+  });
 });
 
 describe('redirectTo', () => {
@@ -163,11 +217,11 @@ describe('redirectTo', () => {
     expect(window.location.href).toEqual('https://github.com');
 
     // Wait for 749ms
-    jest.runTimersToTime(749);
+    jest.advanceTimersByTime(749);
     expect(window.location.href).toEqual('https://github.com');
 
     // 1 more ms and it should run
-    jest.runTimersToTime(1);
+    jest.advanceTimersByTime(1);
     expect(window.location.href).toEqual('https://google.com');
   });
 });
@@ -181,7 +235,14 @@ describe('toggle', () => {
 });
 
 describe('show', () => {
-  it('', () => {});
+  it('removes the js-hide class', () => {
+    const element = document.createElement('div');
+    element.classList.add('js-hide');
+
+    show(element);
+
+    expect(element.classList).toHaveLength(0);
+  });
 });
 
 describe('hide', () => {
@@ -189,5 +250,47 @@ describe('hide', () => {
 });
 
 describe('toHumanDate', () => {
-  it('', () => {});
+  beforeAll(() => {
+    Date.prototype.getFullYear = jest.fn().mockReturnValue(2018);
+  });
+
+  it('formats a date in the past', () => {
+    const date = {
+      year: jest.fn().mockReturnValue(2017),
+      format: jest.fn().mockReturnValue('7/1/17'),
+    };
+
+    expect(toHumanDate(date)).toEqual('7/1/17');
+    expect(date.format).toBeCalledWith('M/D/YY');
+  });
+
+  it('formats a date in the current year', () => {
+    const date = {
+      year: jest.fn().mockReturnValue(2018),
+      format: jest.fn().mockReturnValue('7/1'),
+    };
+
+    expect(toHumanDate(date)).toEqual('7/1');
+    expect(date.format).toBeCalledWith('M/D');
+  });
+
+  it('formats a date in the future', () => {
+    const date = {
+      year: jest.fn().mockReturnValue(2019),
+      format: jest.fn().mockReturnValue('7/1/19'),
+    };
+
+    expect(toHumanDate(date)).toEqual('7/1/19');
+    expect(date.format).toBeCalledWith('M/D/YY');
+  });
+
+  it('formats a date with the time', () => {
+    const date = {
+      year: jest.fn().mockReturnValue(2019),
+      format: jest.fn().mockReturnValue('7/1/19 8:30 AM'),
+    };
+
+    expect(toHumanDate(date, true)).toEqual('7/1/19 8:30 AM');
+    expect(date.format).toBeCalledWith('M/D/YY h:mm A');
+  });
 });

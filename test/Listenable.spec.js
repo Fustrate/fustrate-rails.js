@@ -19,7 +19,7 @@ describe('Listenable', () => {
 
     thing.dispatchEvent(event);
 
-    expect(received).toBeTruthy();
+    expect(received).toBe(true);
   });
 
   it('removes an event listener', () => {
@@ -37,6 +37,6 @@ describe('Listenable', () => {
 
     thing.dispatchEvent(event);
 
-    expect(received).toBeFalsy();
+    expect(received).toBe(false);
   });
 });

@@ -34,25 +34,25 @@ describe('#humanize()', () => {
 
 describe('#isBlank()', () => {
   it('dasherizes a string', () => {
-    expect(isBlank('')).toBeTruthy();
-    expect(isBlank(' \t\n ')).toBeTruthy();
-    expect(isBlank(null)).toBeTruthy();
-    expect(isBlank(undefined)).toBeTruthy();
+    expect(isBlank('')).toBe(true);
+    expect(isBlank(' \t\n ')).toBe(true);
+    expect(isBlank(null)).toBe(true);
+    expect(isBlank(undefined)).toBe(true);
 
-    expect(isBlank('a')).toBeFalsy();
-    expect(isBlank(' \ta\n ')).toBeFalsy();
+    expect(isBlank('a')).toBe(false);
+    expect(isBlank(' \ta\n ')).toBe(false);
   });
 });
 
 describe('#isPresent()', () => {
   it('dasherizes a string', () => {
-    expect(isPresent('')).toBeFalsy();
-    expect(isPresent(' \t\n ')).toBeFalsy();
-    expect(isPresent(null)).toBeFalsy();
-    expect(isPresent(undefined)).toBeFalsy();
+    expect(isPresent('')).toBe(false);
+    expect(isPresent(' \t\n ')).toBe(false);
+    expect(isPresent(null)).toBe(false);
+    expect(isPresent(undefined)).toBe(false);
 
-    expect(isPresent('a')).toBeTruthy();
-    expect(isPresent(' \ta\n ')).toBeTruthy();
+    expect(isPresent('a')).toBe(true);
+    expect(isPresent(' \ta\n ')).toBe(true);
   });
 });
 
