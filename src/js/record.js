@@ -50,10 +50,6 @@ export default class Record extends BasicObject {
       url = this.constructor.createPath({ format: 'json' });
     }
 
-    if (this.community && attributes.community_id === undefined) {
-      attributes.community_id = this.community.id;
-    }
-
     return ajax({
       method: this.id ? 'patch' : 'post',
       url,

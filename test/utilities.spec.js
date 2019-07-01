@@ -1,11 +1,13 @@
 import assert from 'assert';
 import {
-  debounce, elementFromString, escapeHTML, hms, multilineEscapeHTML, redirectTo,
-  // animate, icon, label, linkTo, triggerEvent,
-  // isVisible, toggle, show, hide, toHumanDate,
+  debounce, elementFromString, escapeHTML, hms, icon, label, multilineEscapeHTML, redirectTo,
+  // animate, linkTo, isVisible, toggle, show, hide, toHumanDate,
 } from '../src/js/utilities';
 
-describe('animate', () => {});
+describe('animate', () => {
+  it('', () => {
+  });
+});
 
 describe('debounce', () => {
   jest.useFakeTimers();
@@ -89,8 +91,34 @@ describe('hms', () => {
   });
 });
 
-describe('icon', () => {});
-describe('label', () => {});
+describe('icon', () => {
+  it('creates a basic icon', () => {
+    assert.strictEqual(icon('pencil-alt'), '<i class="far fa-pencil-alt"></i>');
+  });
+
+  it('creates an icon with a different style', () => {
+    assert.strictEqual(icon('pencil-alt', 'thin'), '<i class="fat fa-pencil-alt"></i>');
+  });
+
+  it('creates an icon with multiple classes', () => {
+    assert.strictEqual(icon('pencil-alt 2x'), '<i class="far fa-pencil-alt fa-2x"></i>');
+  });
+});
+
+describe('label', () => {
+  it('creates a basic label', () => {
+    assert.strictEqual(label('Open', 'work-order'), '<span class="label work-order open">Open</span>');
+    assert.strictEqual(label('Open', 'Open'), '<span class="label open">Open</span>');
+  });
+
+  it('creates a label with no type', () => {
+    assert.strictEqual(label('Open'), '<span class="label open">Open</span>');
+  });
+
+  it('creates a label with spaces in the text', () => {
+    assert.strictEqual(label('Work Order'), '<span class="label work-order">Work Order</span>');
+  });
+});
 
 describe('multilineEscapeHTML', () => {
   it('escapes null and undefined', () => {
@@ -113,7 +141,10 @@ describe('multilineEscapeHTML', () => {
   });
 });
 
-describe('linkTo', () => {});
+describe('linkTo', () => {
+  it('', () => {
+  });
+});
 
 describe('redirectTo', () => {
   jest.useFakeTimers();
@@ -140,9 +171,27 @@ describe('redirectTo', () => {
   });
 });
 
-describe('triggerEvent', () => {});
-describe('isVisible', () => {});
-describe('toggle', () => {});
-describe('show', () => {});
-describe('hide', () => {});
-describe('toHumanDate', () => {});
+describe('isVisible', () => {
+  it('', () => {
+  });
+});
+
+describe('toggle', () => {
+  it('', () => {
+  });
+});
+
+describe('show', () => {
+  it('', () => {
+  });
+});
+
+describe('hide', () => {
+  it('', () => {
+  });
+});
+
+describe('toHumanDate', () => {
+  it('', () => {
+  });
+});
