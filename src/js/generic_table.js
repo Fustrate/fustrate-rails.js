@@ -17,13 +17,11 @@ function sortRows(rows, sortFunction = () => {}) {
 }
 
 export default class GenericTable extends GenericPage {
-  constructor(root, table) {
-    super(root);
+  constructor(tableSelector) {
+    super();
 
-    this.table = table;
-    this.tbody = this.table.querySelector('tbody');
-    this.loadingRow = this.tbody.querySelector('tr.loading');
-    this.noRecordsRow = this.tbody.querySelector('tr.no-records');
+    this.table = document.body.querySelector(tableSelector);
+    [this.tbody] = this.table.tBodies;
   }
 
   initialize() {
@@ -42,18 +40,14 @@ export default class GenericTable extends GenericPage {
     return row;
   }
 
-  reloadRows(rows, { sort } = { sort: null }) {
-    if (this.loadingRow) {
-      this.loadingRow.style.display = 'none';
-    }
+  reloadRows(trs, { sort } = { sort: null }) {
+    this.tbody.querySelectorAll('tr').forEach((tr) => {
+      tr.remove();
+    });
 
-    if (rows) {
-      this.tbody.querySelectorAll('tr:not(.no-records):not(.loading)').forEach((row) => {
-        row.parentNode.removeChild(row);
-      });
-
-      (sort ? sortRows(rows, sort) : rows).forEach((row) => {
-        this.tbody.appendChild(row);
+    if (trs.length > 0) {
+      (sort ? sortRows(trs, sort) : trs).forEach((tr) => {
+        this.tbody.appendChild(tr);
       });
     }
 
@@ -73,16 +67,17 @@ export default class GenericTable extends GenericPage {
   }
 
   updated() {
-    if (!this.noRecordsRow) {
-      return;
-    }
+    if (this.tbody.querySelectorAll('tr').length === 0) {
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
 
-    const hasRecords = this.tbody.querySelectorAll('tr:not(.no-records):not(.loading)').length > 0;
+      tr.classList.add('no-records');
 
-    if (hasRecords) {
-      this.noRecordsRow.style.display = 'none';
-    } else {
-      this.noRecordsRow.style.display = '';
+      td.colSpan = 16;
+      td.textContent = this.constructor.noRecordsMessage;
+
+      tr.appendChild(td);
+      this.tbody.appendChild(tr);
     }
   }
 
@@ -91,17 +86,33 @@ export default class GenericTable extends GenericPage {
       .map(() => this.value);
   }
 
+  checkAll(event) {
+    const check = event ? event.target.checked : true;
+
+    this.table.querySelectorAll('td:first-child input[type="checkbox"]').forEach((checkbox) => {
+      checkbox.checked = check;
+    });
+  }
+
+  uncheckAll() {
+    this.table.querySelectorAll('td:first-child input:checked').forEach((input) => {
+      input.checked = false;
+    });
+  }
+
   // This should be fed a response from a JSON request for a paginated
   // collection.
-  updatePagination(response) {
-    if (!response.totalPages) {
+  updatePagination(data) {
+    if (!data.totalPages) {
       return;
     }
 
-    const paginationHTML = (new Pagination(response)).generate();
+    const ul = (new Pagination(data)).generate();
 
-    this.root.querySelectorAll('.pagination').forEach((pagination) => {
-      pagination.outerHTML = paginationHTML;
+    document.body.querySelectorAll('.pagination').forEach((oldPagination) => {
+      oldPagination.parentNode.replaceChild(ul.cloneNode(true), oldPagination);
     });
   }
 }
+
+GenericTable.noRecordsMessage = 'No records found.';
