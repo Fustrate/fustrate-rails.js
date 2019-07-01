@@ -3,15 +3,17 @@ import {
   debounce,
   elementFromString,
   escapeHTML,
+  hide,
   hms,
   icon,
+  // isVisible,
   label,
   linkTo,
   multilineEscapeHTML,
   redirectTo,
-  toHumanDate,
   show,
-  // animate, linkTo, isVisible, toggle, show, hide,
+  toggle,
+  toHumanDate,
 } from '../src/js/utilities';
 
 describe('animate', () => {
@@ -231,7 +233,25 @@ describe('isVisible', () => {
 });
 
 describe('toggle', () => {
-  it('', () => {});
+  it('toggles a NodeList of elements', () => {
+    const root = document.createElement('div');
+    root.append(document.createElement('span'), document.createElement('span'));
+
+    const spans = root.querySelectorAll('span');
+
+    toggle(spans, false);
+
+    expect(spans[0].style.display).toEqual('none');
+    expect(spans[1].style.display).toEqual('none');
+  });
+
+  it('toggles a single element', () => {
+    const element = document.createElement('div');
+
+    toggle(element, false);
+
+    expect(element.style.display).toEqual('none');
+  });
 });
 
 describe('show', () => {
@@ -243,10 +263,25 @@ describe('show', () => {
 
     expect(element.classList).toHaveLength(0);
   });
+
+  it('removes the css display property', () => {
+    const element = document.createElement('div');
+    element.style.display = 'none';
+
+    show(element);
+
+    expect(element.style.display).toEqual('');
+  });
 });
 
 describe('hide', () => {
-  it('', () => {});
+  it('removes the css display property', () => {
+    const element = document.createElement('div');
+
+    hide(element);
+
+    expect(element.style.display).toEqual('none');
+  });
 });
 
 describe('toHumanDate', () => {
