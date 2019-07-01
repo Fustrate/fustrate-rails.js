@@ -17,7 +17,7 @@ export default class BasicObject extends Listenable {
       return {};
     }
 
-    Object.getOwnPropertyNames(data).forEach((key) => {
+    Object.getOwnPropertyNames(data).forEach(key => {
       this[key] = data[key];
     }, this);
 
@@ -36,7 +36,9 @@ export default class BasicObject extends Listenable {
     return data;
   }
 
-  get isBasicObject() { return true; }
+  get isBasicObject() {
+    return true;
+  }
 
   static buildList(items, attributes = {}) {
     return items.map(item => new this(deepExtend({}, item, attributes)));

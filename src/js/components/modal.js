@@ -4,13 +4,7 @@ import { delegate, fire, stopEverything } from '@rails/ujs';
 
 import Component from '../component';
 import { deepExtend } from '../object';
-import {
-  elementFromString,
-  escapeHTML,
-  hide,
-  icon as createIcon,
-  isVisible,
-} from '../utilities';
+import { elementFromString, escapeHTML, hide, icon as createIcon, isVisible } from '../utilities';
 import { titleize } from '../string';
 import { remove } from '../array';
 
@@ -94,7 +88,9 @@ function toggleOverlay(visible = true) {
 }
 
 export default class Modal extends Component {
-  static get settings() { return {}; }
+  static get settings() {
+    return {};
+  }
 
   constructor({ settings } = {}) {
     super();
@@ -122,11 +118,11 @@ export default class Modal extends Component {
     this.fields = {};
     this.buttons = {};
 
-    this.modal.querySelectorAll('[data-field]').forEach((element) => {
+    this.modal.querySelectorAll('[data-field]').forEach(element => {
       this.fields[element.dataset.field] = element;
     });
 
-    this.modal.querySelectorAll('[data-button]').forEach((element) => {
+    this.modal.querySelectorAll('[data-button]').forEach(element => {
       this.buttons[element.dataset.button] = element;
     });
   }
@@ -134,8 +130,9 @@ export default class Modal extends Component {
   setTitle(title, { icon } = {}) {
     const iconToUse = icon !== false && icon == null ? this.constructor.icon : icon;
 
-    this.modal.querySelector('.modal-title span')
-      .innerHTML = iconToUse ? `${createIcon(iconToUse)} ${title}` : title;
+    this.modal.querySelector('.modal-title span').innerHTML = iconToUse
+      ? `${createIcon(iconToUse)} ${title}`
+      : title;
   }
 
   setContent(content, reload = true) {
@@ -163,14 +160,14 @@ export default class Modal extends Component {
 
     const list = [];
 
-    buttons.forEach((button) => {
+    buttons.forEach(button => {
       if (typeof button === 'string') {
         list.push(`
           <button data-button="${button}" class="${button} expand">
             ${titleize(button)}
           </button>`);
       } else if (typeof button === 'object') {
-        Object.keys(button).forEach((name) => {
+        Object.keys(button).forEach(name => {
           list.push(createButton(name, button[name]));
         }, this);
       }
@@ -179,7 +176,9 @@ export default class Modal extends Component {
     const klass = `large-${12 / list.length}`;
     const columns = list.map(element => `<div class="columns ${klass}">${element}</div>`);
 
-    this.modal.querySelector('.modal-buttons').innerHTML = `<div class="row">${columns.join('')}</div>`;
+    this.modal.querySelector('.modal-buttons').innerHTML = `<div class="row">${columns.join(
+      '',
+    )}</div>`;
 
     this.settings.cachedHeight = undefined;
 
@@ -189,7 +188,9 @@ export default class Modal extends Component {
   }
 
   addEventListeners() {
-    this.modal.querySelector('.modal-close').addEventListener('click', this.closeButtonClicked.bind(this));
+    this.modal
+      .querySelector('.modal-close')
+      .addEventListener('click', this.closeButtonClicked.bind(this));
 
     if (!addedGlobalListeners) {
       delegate(document.body, '.modal-overlay', 'click', this.constructor.backgroundClicked);
@@ -210,8 +211,9 @@ export default class Modal extends Component {
       return;
     }
 
-    const [firstInput] = Array.from(this.modal.querySelectorAll('input, select, textarea'))
-      .filter(element => isVisible(element) && !element.disabled && !element.readOnly);
+    const [firstInput] = Array.from(this.modal.querySelectorAll('input, select, textarea')).filter(
+      element => isVisible(element) && !element.disabled && !element.readOnly,
+    );
 
     if (firstInput) {
       firstInput.focus();
@@ -253,17 +255,19 @@ export default class Modal extends Component {
       opacity: 1,
     };
 
-    setTimeout((() => {
+    setTimeout(() => {
       this.modal.classList.add('open');
 
-      $(this.modal).css(css).animate(endCss, 250, 'linear', () => {
-        this.locked = false;
+      $(this.modal)
+        .css(css)
+        .animate(endCss, 250, 'linear', () => {
+          this.locked = false;
 
-        fire(this.modal, 'modal:opened');
+          fire(this.modal, 'modal:opened');
 
-        this.focusFirstInput();
-      });
-    }), 125);
+          this.focusFirstInput();
+        });
+    }, 125);
   }
 
   close(openPrevious = true) {
@@ -285,8 +289,8 @@ export default class Modal extends Component {
       opacity: 0,
     };
 
-    return new Promise((resolve) => {
-      setTimeout((() => {
+    return new Promise(resolve => {
+      setTimeout(() => {
         $(this.modal).animate(endCss, 250, 'linear', () => {
           this.locked = false;
 
@@ -303,7 +307,7 @@ export default class Modal extends Component {
         });
 
         this.modal.classList.remove('open');
-      }), 125);
+      }, 125);
     });
   }
 
@@ -327,14 +331,18 @@ export default class Modal extends Component {
   }
 
   cacheHeight() {
-    this.settings.cachedHeight = $(this.modal).show().height();
+    this.settings.cachedHeight = $(this.modal)
+      .show()
+      .height();
 
     $(this.modal).hide();
   }
 
   createModal() {
     // Join and split in case any of the classes include spaces
-    const classes = this.defaultClasses().join(' ').split(' ');
+    const classes = this.defaultClasses()
+      .join(' ')
+      .split(' ');
 
     const element = elementFromString(template);
     element.classList.add(...classes);
@@ -373,7 +381,7 @@ export default class Modal extends Component {
   }
 
   static hideAllModals() {
-    openModals.forEach((modal) => {
+    openModals.forEach(modal => {
       modal.hide();
     });
 

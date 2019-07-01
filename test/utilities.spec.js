@@ -1,12 +1,17 @@
-import assert from 'assert';
 import {
-  debounce, elementFromString, escapeHTML, hms, icon, label, multilineEscapeHTML, redirectTo,
+  debounce,
+  elementFromString,
+  escapeHTML,
+  hms,
+  icon,
+  label,
+  multilineEscapeHTML,
+  redirectTo,
   // animate, linkTo, isVisible, toggle, show, hide, toHumanDate,
 } from '../src/js/utilities';
 
 describe('animate', () => {
-  it('', () => {
-  });
+  it('', () => {});
 });
 
 describe('debounce', () => {
@@ -36,35 +41,34 @@ describe('debounce', () => {
 
 describe('elementFromString', () => {
   it('creates a bare element', () => {
-    assert(elementFromString('<input type="color">') instanceof HTMLInputElement);
+    expect(elementFromString('<input type="color">')).toBeInstanceOf(HTMLInputElement);
   });
 
   it('creates an element with attributes', () => {
     const element = elementFromString('<input type="datetime-local" class="date">');
 
-    assert(element instanceof HTMLInputElement);
-    assert.strictEqual(element.type, 'datetime-local');
-    assert(element.classList.contains('date'));
+    expect(element).toBeInstanceOf(HTMLInputElement);
+    expect(element.type).toEqual('datetime-local');
+    expect(element.classList.contains('date')).toBeTruthy();
   });
 
   it('creates an element with children', () => {
     const element = elementFromString('<tr><td></td><td><input></td><td></td></tr>');
 
-    assert(element instanceof HTMLTableRowElement);
-    assert.strictEqual(element.children.length, 3);
-    assert(element.querySelector('input') instanceof HTMLInputElement);
+    expect(element).toBeInstanceOf(HTMLTableRowElement);
+    expect(element.children).toHaveLength(3);
+    expect(element.querySelector('input')).toBeInstanceOf(HTMLInputElement);
   });
 });
 
 describe('escapeHTML', () => {
   it('escapes null and undefined', () => {
-    assert.strictEqual(escapeHTML(null), '');
-    assert.strictEqual(escapeHTML(undefined), '');
+    expect(escapeHTML(null)).toEqual('');
+    expect(escapeHTML(undefined)).toEqual('');
   });
 
   it('escapes entities in a string', () => {
-    assert.strictEqual(
-      escapeHTML('<strong>\'Bob\' `&` "Bill"</strong> =/'),
+    expect(escapeHTML('<strong>\'Bob\' `&` "Bill"</strong> =/')).toEqual(
       '&lt;strong&gt;&#39;Bob&#39; &#x60;&amp;&#x60; &quot;Bill&quot;&lt;&#x2F;strong&gt; &#x3D;&#x2F;',
     );
   });
@@ -72,78 +76,75 @@ describe('escapeHTML', () => {
 
 describe('hms', () => {
   it('formats zero properly', () => {
-    assert.strictEqual(hms(0), '0:00:00');
-    assert.strictEqual(hms(0, '-'), '-');
+    expect(hms(0)).toEqual('0:00:00');
+    expect(hms(0, '-')).toEqual('-');
   });
 
   it('formats positive numbers', () => {
-    assert.strictEqual(hms(1), '0:00:01');
-    assert.strictEqual(hms(61), '0:01:01');
-    assert.strictEqual(hms(5025), '1:23:45');
-    assert.strictEqual(hms(86400), '24:00:00');
+    expect(hms(1)).toEqual('0:00:01');
+    expect(hms(61)).toEqual('0:01:01');
+    expect(hms(5025)).toEqual('1:23:45');
+    expect(hms(86400)).toEqual('24:00:00');
   });
 
   it('formats negative numbers', () => {
-    assert.strictEqual(hms(-1), '-0:00:01');
-    assert.strictEqual(hms(-61), '-0:01:01');
-    assert.strictEqual(hms(-5025), '-1:23:45');
-    assert.strictEqual(hms(-86400), '-24:00:00');
+    expect(hms(-1)).toEqual('-0:00:01');
+    expect(hms(-61)).toEqual('-0:01:01');
+    expect(hms(-5025)).toEqual('-1:23:45');
+    expect(hms(-86400)).toEqual('-24:00:00');
   });
 });
 
 describe('icon', () => {
   it('creates a basic icon', () => {
-    assert.strictEqual(icon('pencil-alt'), '<i class="far fa-pencil-alt"></i>');
+    expect(icon('pencil-alt')).toEqual('<i class="far fa-pencil-alt"></i>');
   });
 
   it('creates an icon with a different style', () => {
-    assert.strictEqual(icon('pencil-alt', 'thin'), '<i class="fat fa-pencil-alt"></i>');
+    expect(icon('pencil-alt', 'thin')).toEqual('<i class="fat fa-pencil-alt"></i>');
   });
 
   it('creates an icon with multiple classes', () => {
-    assert.strictEqual(icon('pencil-alt 2x'), '<i class="far fa-pencil-alt fa-2x"></i>');
+    expect(icon('pencil-alt 2x')).toEqual('<i class="far fa-pencil-alt fa-2x"></i>');
   });
 });
 
 describe('label', () => {
   it('creates a basic label', () => {
-    assert.strictEqual(label('Open', 'work-order'), '<span class="label work-order open">Open</span>');
-    assert.strictEqual(label('Open', 'Open'), '<span class="label open">Open</span>');
+    expect(label('Open', 'work-order')).toEqual('<span class="label work-order open">Open</span>');
+    expect(label('Open', 'Open')).toEqual('<span class="label open">Open</span>');
   });
 
   it('creates a label with no type', () => {
-    assert.strictEqual(label('Open'), '<span class="label open">Open</span>');
+    expect(label('Open')).toEqual('<span class="label open">Open</span>');
   });
 
   it('creates a label with spaces in the text', () => {
-    assert.strictEqual(label('Work Order'), '<span class="label work-order">Work Order</span>');
+    expect(label('Work Order')).toEqual('<span class="label work-order">Work Order</span>');
   });
 });
 
 describe('multilineEscapeHTML', () => {
   it('escapes null and undefined', () => {
-    assert.strictEqual(multilineEscapeHTML(null), '');
-    assert.strictEqual(multilineEscapeHTML(undefined), '');
+    expect(multilineEscapeHTML(null)).toEqual('');
+    expect(multilineEscapeHTML(undefined)).toEqual('');
   });
 
   it('turns newlines into br elements', () => {
-    assert.strictEqual(
-      multilineEscapeHTML('The\r\nLos\nAngeles\nDodgers'),
+    expect(multilineEscapeHTML('The\r\nLos\nAngeles\nDodgers')).toEqual(
       'The<br />Los<br />Angeles<br />Dodgers',
     );
   });
 
   it('escapes entities in a string', () => {
-    assert.strictEqual(
-      multilineEscapeHTML('<strong>\'Bob\' `&` "Bill"</strong>\n=/'),
+    expect(multilineEscapeHTML('<strong>\'Bob\' `&` "Bill"</strong>\n=/')).toEqual(
       '&lt;strong&gt;&#39;Bob&#39; &#x60;&amp;&#x60; &quot;Bill&quot;&lt;&#x2F;strong&gt;<br />&#x3D;&#x2F;',
     );
   });
 });
 
 describe('linkTo', () => {
-  it('', () => {
-  });
+  it('', () => {});
 });
 
 describe('redirectTo', () => {
@@ -159,39 +160,34 @@ describe('redirectTo', () => {
   it('redirects after 750ms', () => {
     redirectTo('https://google.com');
 
-    assert.strictEqual(window.location.href, 'https://github.com');
+    expect(window.location.href).toEqual('https://github.com');
 
     // Wait for 749ms
     jest.runTimersToTime(749);
-    assert.strictEqual(window.location.href, 'https://github.com');
+    expect(window.location.href).toEqual('https://github.com');
 
     // 1 more ms and it should run
     jest.runTimersToTime(1);
-    assert.strictEqual(window.location.href, 'https://google.com');
+    expect(window.location.href).toEqual('https://google.com');
   });
 });
 
 describe('isVisible', () => {
-  it('', () => {
-  });
+  it('', () => {});
 });
 
 describe('toggle', () => {
-  it('', () => {
-  });
+  it('', () => {});
 });
 
 describe('show', () => {
-  it('', () => {
-  });
+  it('', () => {});
 });
 
 describe('hide', () => {
-  it('', () => {
-  });
+  it('', () => {});
 });
 
 describe('toHumanDate', () => {
-  it('', () => {
-  });
+  it('', () => {});
 });

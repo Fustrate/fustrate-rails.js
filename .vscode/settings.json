@@ -2,6 +2,7 @@
   "[javascript]": {
     "editor.tabSize": 2,
     "editor.rulers": [100],
+    "editor.formatOnSave": true,
   },
   "[css]": {
     "editor.tabSize": 2,
@@ -17,6 +18,5 @@
   },
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
-  "typescript.validate.enable": false,
   "javascript.validate.enable": false,
 }

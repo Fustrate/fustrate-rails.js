@@ -13,7 +13,7 @@ export default class Disclosure extends Component {
 
     disclosure.classList.toggle('open');
 
-    fire(disclosure, `${(isOpen ? 'closed' : 'opened')}.disclosure`);
+    fire(disclosure, `${isOpen ? 'closed' : 'opened'}.disclosure`);
 
     return false;
   }

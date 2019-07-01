@@ -13,7 +13,7 @@ const entityMap = {
   '=': '&#x3D;',
 };
 
-const hrefFor = (href) => {
+function hrefFor(href) {
   if (href === undefined) {
     return '#';
   }
@@ -34,15 +34,15 @@ const hrefFor = (href) => {
   }
 
   throw new Error(`Invalid href: ${href}`);
-};
+}
 
-const toggleElement = (element, makeVisible) => {
+function toggleElement(element, makeVisible) {
   element.style.display = makeVisible ? '' : 'none';
 
   if (makeVisible) {
     element.classList.remove('js-hide');
   }
-};
+}
 
 // Exported functions
 
@@ -78,13 +78,13 @@ export const applyMixin = (target, mixin, options) => {
   const prototype = Object.getPrototypeOf(instance);
 
   if (options) {
-    Object.getOwnPropertyNames(options).forEach((key) => {
+    Object.getOwnPropertyNames(options).forEach(key => {
       target[key] = options[key];
     });
   }
 
   // Assign properties to the prototype
-  Object.getOwnPropertyNames(prototype).forEach((key) => {
+  Object.getOwnPropertyNames(prototype).forEach(key => {
     // Mixins can define their own `initialize` and `addEventListeners` methods, which will be
     // added with their mixin name appended, and called at the same time as the original methods.
     const newKey = ['initialize', 'addEventListeners'].includes(key) ? `${key}${mixin.name}` : key;
@@ -95,7 +95,7 @@ export const applyMixin = (target, mixin, options) => {
   }, this);
 
   // Assign properties to the prototype
-  Object.getOwnPropertyNames(prototype.constructor).forEach((key) => {
+  Object.getOwnPropertyNames(prototype.constructor).forEach(key => {
     if (['length', 'name', 'prototype'].includes(key)) {
       return;
     }
@@ -128,7 +128,7 @@ export const debounce = (func, delay = 250) => {
   };
 };
 
-export const elementFromString = (string) => {
+export const elementFromString = string => {
   const template = document.createElement('template');
 
   template.innerHTML = string.trim();
@@ -136,7 +136,7 @@ export const elementFromString = (string) => {
   return template.content.firstChild;
 };
 
-export const escapeHTML = (string) => {
+export const escapeHTML = string => {
   if (string === null || string === undefined) {
     return '';
   }
@@ -160,7 +160,8 @@ export function hms(seconds, zero) {
 }
 
 export const icon = (types, style = 'regular') => {
-  const classes = types.split(' ')
+  const classes = types
+    .split(' ')
     .map(thing => `fa-${thing}`)
     .join(' ');
 
@@ -179,7 +180,7 @@ export const label = (text, type) => {
   return span.outerHTML;
 };
 
-export const multilineEscapeHTML = (string) => {
+export const multilineEscapeHTML = string => {
   if (string === null || string === undefined) {
     return '';
   }
@@ -203,28 +204,25 @@ export const linkTo = (text, href, options = {}) => {
   element.href = hrefFor(href);
   element.innerHTML = text;
 
-  Object.keys(options).forEach((key) => {
+  Object.keys(options).forEach(key => {
     element.setAttribute(key, options[key]);
   });
 
   return element.outerHTML;
 };
 
-export const redirectTo = (href) => {
+export const redirectTo = href => {
   window.setTimeout(() => {
     window.location.href = href.path ? href.path() : href;
   }, 750);
 };
 
-export const isVisible = elem => !!(
-  elem.offsetWidth
-  || elem.offsetHeight
-  || elem.getClientRects().length
-);
+export const isVisible = elem =>
+  !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
 
 export const toggle = (element, showOrHide) => {
   if (element instanceof NodeList) {
-    element.forEach((elem) => {
+    element.forEach(elem => {
       toggleElement(elem, showOrHide !== undefined ? showOrHide : !isVisible(elem));
     });
   } else {
@@ -232,17 +230,17 @@ export const toggle = (element, showOrHide) => {
   }
 };
 
-export const show = (element) => {
+export const show = element => {
   toggle(element, true);
 };
 
-export const hide = (element) => {
+export const hide = element => {
   toggle(element, false);
 };
 
 export const toHumanDate = (momentObject, time = false) => {
   // use Date#getFullYear so that we don't have to pull in the moment library
-  const year = momentObject.year() !== (new Date()).getFullYear() ? '/YY' : '';
+  const year = momentObject.year() !== new Date().getFullYear() ? '/YY' : '';
 
-  return momentObject.format(`M/D${year}${(time ? ' h:mm A' : '')}`);
+  return momentObject.format(`M/D${year}${time ? ' h:mm A' : ''}`);
 };

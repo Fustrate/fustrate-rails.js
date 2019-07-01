@@ -1,36 +1,33 @@
-import assert from 'assert';
-import {
-  compact, first, last, remove, toSentence,
-} from '../src/js/array';
+import { compact, first, last, remove, toSentence } from '../src/js/array';
 
 describe('compact', () => {
   it('compacts null and undefined', () => {
-    assert.deepStrictEqual(compact([1, null, 2, 3, undefined]), [1, 2, 3]);
-    assert.deepStrictEqual(compact([null, undefined, null]), []);
+    expect(compact([1, null, 2, 3, undefined])).toEqual([1, 2, 3]);
+    expect(compact([null, undefined, null])).toEqual([]);
   });
 
   it('compacts empty strings', () => {
-    assert.deepStrictEqual(compact([1, null, 2, 3, undefined, '', '4']), [1, 2, 3, '4']);
-    assert.deepStrictEqual(compact([null, '', undefined, null, '']), []);
+    expect(compact([1, null, 2, 3, undefined, '', '4'])).toEqual([1, 2, 3, '4']);
+    expect(compact([null, '', undefined, null, ''])).toEqual([]);
   });
 
   it('does not compact empty strings', () => {
-    assert.deepStrictEqual(compact([1, null, 2, 3, undefined, '', '4'], false), [1, 2, 3, '', '4']);
-    assert.deepStrictEqual(compact([null, '', undefined, null, ''], false), ['', '']);
+    expect(compact([1, null, 2, 3, undefined, '', '4'], false)).toEqual([1, 2, 3, '', '4']);
+    expect(compact([null, '', undefined, null, ''], false)).toEqual(['', '']);
   });
 });
 
 describe('first', () => {
   it('returns the first element', () => {
-    assert.strictEqual(first([1, 2, 3]), 1);
-    assert.strictEqual(first([]), undefined);
+    expect(first([1, 2, 3])).toEqual(1);
+    expect(first([])).toBeUndefined();
   });
 });
 
 describe('last', () => {
   it('returns the last element', () => {
-    assert.strictEqual(last([1, 2, 3]), 3);
-    assert.strictEqual(last([]), undefined);
+    expect(last([1, 2, 3])).toEqual(3);
+    expect(last([])).toBeUndefined();
   });
 });
 
@@ -40,19 +37,19 @@ describe('remove', () => {
 
     remove(arr, 3);
 
-    assert.deepStrictEqual(arr, [1, 2]);
+    expect(arr).toEqual([1, 2]);
 
     remove(arr, 4);
 
-    assert.deepStrictEqual(arr, [1, 2]);
+    expect(arr).toEqual([1, 2]);
   });
 });
 
 describe('toSentence', () => {
   it('joins words and stuff', () => {
-    assert.strictEqual(toSentence([1, 2, 3]), '1, 2, and 3');
-    assert.strictEqual(toSentence([1, 2]), '1 and 2');
-    assert.strictEqual(toSentence([1]), '1');
-    assert.strictEqual(toSentence([]), '');
+    expect(toSentence([1, 2, 3])).toEqual('1, 2, and 3');
+    expect(toSentence([1, 2])).toEqual('1 and 2');
+    expect(toSentence([1])).toEqual('1');
+    expect(toSentence([])).toEqual('');
   });
 });

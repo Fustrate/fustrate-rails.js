@@ -30,7 +30,7 @@ export default class Record extends BasicObject {
       return Promise.resolve();
     }
 
-    return get(this.path({ format: 'json' })).then((response) => {
+    return get(this.path({ format: 'json' })).then(response => {
       this.extractFromData(response.data);
 
       this.isLoaded = true;
@@ -54,16 +54,18 @@ export default class Record extends BasicObject {
       method: this.id ? 'patch' : 'post',
       url,
       data: FormDataBuilder.build(attributes, this.constructor.paramKey),
-      onUploadProgress: (event) => {
+      onUploadProgress: event => {
         fire(this, 'upload:progress', event);
       },
-    }).catch(() => {}).then((response) => {
-      this.extractFromData(response.data);
+    })
+      .catch(() => {})
+      .then(response => {
+        this.extractFromData(response.data);
 
-      this.isLoaded = true;
+        this.isLoaded = true;
 
-      return response.data;
-    });
+        return response.data;
+      });
   }
 
   delete() {

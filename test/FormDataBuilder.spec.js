@@ -1,4 +1,3 @@
-import assert from 'assert';
 import FormDataBuilder from '../src/js/form_data_builder';
 
 function rawDataFor(formData) {
@@ -16,7 +15,7 @@ describe('#toFormData', () => {
     const input = { hello: 'world', age: 99, vip: true };
     const output = { hello: 'world', age: '99', vip: '1' };
 
-    assert.deepStrictEqual(rawDataFor(FormDataBuilder.build(input)), output);
+    expect(rawDataFor(FormDataBuilder.build(input))).toEqual(output);
   });
 
   it('creates nested keys', () => {
@@ -37,7 +36,7 @@ describe('#toFormData', () => {
       'bills[2][face]': 'Hamilton',
     };
 
-    assert.deepStrictEqual(rawDataFor(FormDataBuilder.build(input)), output);
+    expect(rawDataFor(FormDataBuilder.build(input))).toEqual(output);
   });
 
   it('starts with a root node', () => {
@@ -56,6 +55,6 @@ describe('#toFormData', () => {
       'bills[2][face]': 'Hamilton',
     };
 
-    assert.deepStrictEqual(rawDataFor(FormDataBuilder.build(input, 'bills')), output);
+    expect(rawDataFor(FormDataBuilder.build(input, 'bills'))).toEqual(output);
   });
 });

@@ -1,5 +1,7 @@
-export const compact = (arr, strings = true) => arr
-  .filter(element => !(element === undefined || element === null || (strings && element === '')))
+export const compact = (arr, strings = true) =>
+  arr.filter(
+    element => !(element === undefined || element === null || (strings && element === '')),
+  );
 
 export const first = arr => arr[0];
 
@@ -13,7 +15,7 @@ export const remove = (arr, object) => {
   }
 };
 
-export const toSentence = (arr) => {
+export const toSentence = arr => {
   switch (arr.length) {
     case 0:
       return '';

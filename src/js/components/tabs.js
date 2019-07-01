@@ -8,7 +8,7 @@ export default class Tabs extends Component {
 
     this.tabs = tabs;
 
-    delegate(this.tabs, 'li > a', 'click', (event) => {
+    delegate(this.tabs, 'li > a', 'click', event => {
       stopEverything(event);
 
       this.activateTab(event.target, true);
@@ -39,7 +39,7 @@ export default class Tabs extends Component {
 
     const link = tab.closest('a');
 
-    Array.from(this.tabs.querySelectorAll('.active')).forEach((sibling) => {
+    Array.from(this.tabs.querySelectorAll('.active')).forEach(sibling => {
       sibling.classList.remove('active');
     });
 
@@ -54,7 +54,7 @@ export default class Tabs extends Component {
 
     tabContent.classList.add('active');
 
-    Array.from(tabContent.parentElement.children).forEach((sibling) => {
+    Array.from(tabContent.parentElement.children).forEach(sibling => {
       if (sibling !== tabContent) {
         sibling.classList.remove('active');
       }

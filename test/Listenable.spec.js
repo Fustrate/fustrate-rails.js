@@ -1,25 +1,25 @@
-import assert from 'assert';
 import Listenable from '../src/js/listenable';
 
-class Thing extends Listenable {
-}
+class Thing extends Listenable {}
 
 describe('Listenable', () => {
   it('adds an event listener', () => {
     const thing = new Thing();
     let received = false;
 
-    thing.addEventListener('hello', (event) => {
-      assert.strictEqual(event.detail, 'world');
+    function callback(event) {
+      expect(event.detail).toEqual('world');
 
       received = true;
-    });
+    }
+
+    thing.addEventListener('hello', callback);
 
     const event = new CustomEvent('hello', { bubbles: true, cancelable: true, detail: 'world' });
 
     thing.dispatchEvent(event);
 
-    assert(received);
+    expect(received).toBeTruthy();
   });
 
   it('removes an event listener', () => {
@@ -37,6 +37,6 @@ describe('Listenable', () => {
 
     thing.dispatchEvent(event);
 
-    assert(!received);
+    expect(received).toBeFalsy();
   });
 });

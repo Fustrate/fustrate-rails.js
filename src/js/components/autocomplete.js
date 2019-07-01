@@ -64,7 +64,9 @@ export class PlainAutocompleteSource extends AutocompleteSource {
     return suggestion.toLowerCase().indexOf(userInput) >= 0;
   }
 
-  suggestion(datum) { return new PlainAutocompleteSuggestion(datum); }
+  suggestion(datum) {
+    return new PlainAutocompleteSuggestion(datum);
+  }
 
   matchingData(searchTerm) {
     return this.list.filter(datum => this.filter(datum, searchTerm), this);
@@ -144,7 +146,7 @@ export class Autocomplete extends Component {
     // If we have plain text sources, show them immediately
     this.sources
       .filter(source => source.list)
-      .forEach((source) => {
+      .forEach(source => {
         list = list.concat(source.matchingData(searchTerm));
       }, this);
 
@@ -170,9 +172,9 @@ export class Autocomplete extends Component {
     this.value = value;
     let list = [];
 
-    this.sources.forEach((source) => {
+    this.sources.forEach(source => {
       if (source.url) {
-        get(source.url({ search: value, commit: 1, format: 'json' })).then((response) => {
+        get(source.url({ search: value, commit: 1, format: 'json' })).then(response => {
           list = list.concat(response.data);
 
           this.awesomplete.list = list;
@@ -204,7 +206,7 @@ export class Autocomplete extends Component {
   }
 
   static addTypes(types) {
-    Object.getOwnPropertyNames(types).forEach((name) => {
+    Object.getOwnPropertyNames(types).forEach(name => {
       this.addType(name, types[name]);
     }, this);
   }

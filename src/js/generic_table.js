@@ -41,12 +41,12 @@ export default class GenericTable extends GenericPage {
   }
 
   reloadRows(trs, { sort } = { sort: null }) {
-    this.tbody.querySelectorAll('tr').forEach((tr) => {
+    this.tbody.querySelectorAll('tr').forEach(tr => {
       tr.remove();
     });
 
     if (trs.length > 0) {
-      (sort ? sortRows(trs, sort) : trs).forEach((tr) => {
+      (sort ? sortRows(trs, sort) : trs).forEach(tr => {
         this.tbody.appendChild(tr);
       });
     }
@@ -82,20 +82,21 @@ export default class GenericTable extends GenericPage {
   }
 
   getCheckedIds() {
-    return Array.from(this.tbody.querySelectorAll('td:first-child input:checked'))
-      .map(() => this.value);
+    return Array.from(this.tbody.querySelectorAll('td:first-child input:checked')).map(
+      () => this.value,
+    );
   }
 
   checkAll(event) {
     const check = event ? event.target.checked : true;
 
-    this.table.querySelectorAll('td:first-child input[type="checkbox"]').forEach((checkbox) => {
+    this.table.querySelectorAll('td:first-child input[type="checkbox"]').forEach(checkbox => {
       checkbox.checked = check;
     });
   }
 
   uncheckAll() {
-    this.table.querySelectorAll('td:first-child input:checked').forEach((input) => {
+    this.table.querySelectorAll('td:first-child input:checked').forEach(input => {
       input.checked = false;
     });
   }
@@ -107,9 +108,9 @@ export default class GenericTable extends GenericPage {
       return;
     }
 
-    const ul = (new Pagination(data)).generate();
+    const ul = new Pagination(data).generate();
 
-    document.body.querySelectorAll('.pagination').forEach((oldPagination) => {
+    document.body.querySelectorAll('.pagination').forEach(oldPagination => {
       oldPagination.parentNode.replaceChild(ul.cloneNode(true), oldPagination);
     });
   }

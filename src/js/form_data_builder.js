@@ -8,7 +8,7 @@ export default class FormDataBuilder {
 
   static appendObject(data, key, value) {
     if (value instanceof Array) {
-      value.forEach((item) => {
+      value.forEach(item => {
         data.append(`${key}[]`, String(item));
       });
     } else if (value instanceof File) {
@@ -21,7 +21,7 @@ export default class FormDataBuilder {
   }
 
   static toFormData(data, obj, namespace = null) {
-    Object.getOwnPropertyNames(obj).forEach((field) => {
+    Object.getOwnPropertyNames(obj).forEach(field => {
       if (typeof obj[field] === 'undefined' || Number.isNaN(obj[field])) {
         return;
       }
