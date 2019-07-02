@@ -2,10 +2,8 @@
 // https://jestjs.io/docs/en/configuration.html
 
 module.exports = {
-  moduleFileExtensions: [
-    'js',
-    'json',
-  ],
+  moduleFileExtensions: ['js', 'json'],
+  roots: ['./src/js/', './test/'],
   // resetMocks: false,
   // restoreMocks: false,
   // timers: 'real',
