@@ -39,30 +39,24 @@ instance.interceptors.response.use(
 );
 
 // A wrapper to allow us to ignore boring errors
-export const get = (url, config = {}) => {
-  if (config.raise) {
-    delete config.raise;
-
+export const get = (url, config = {}, raise = false) => {
+  if (raise) {
     return instance.get(url, config);
   }
 
   return instance.get(url, config).catch(() => {});
 };
 
-export const post = (url, data, config = {}) => {
-  if (config.raise) {
-    delete config.raise;
-
+export const post = (url, data, config = {}, raise = false) => {
+  if (raise) {
     return instance.post(url, data, config);
   }
 
   return instance.post(url, data, config).catch(() => {});
 };
 
-export const patch = (url, data, config = {}) => {
-  if (config.raise) {
-    delete config.raise;
-
+export const patch = (url, data, config = {}, raise = false) => {
+  if (raise) {
     return instance.patch(url, data, config);
   }
 
