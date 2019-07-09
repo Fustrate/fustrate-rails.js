@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { ErrorFlash } from './components/flash';
 
-// IE11 Polyfill
-require('es6-promise').polyfill();
+// Supports: Internet Explorer 11
+require('core-js/features/promise');
 
 const token = document.querySelector('[name="csrf-token"]') || { content: 'no-csrf-token' };
 
