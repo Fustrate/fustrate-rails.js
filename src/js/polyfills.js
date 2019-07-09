@@ -1,14 +1,14 @@
 // Supports: Edge (All), Internet Explorer (All)
-require('array-flat-polyfill');
+require('core-js/features/array/flat');
+require('core-js/features/array/flat-map');
 
 // Supports: Internet Explorer (All)
 require('custom-event-polyfill');
-require('nodelist-foreach-polyfill');
+require('core-js/features/dom-collections/for-each');
+require('core-js/features/array/from');
 
 // Supports: Internet Explorer 11
-require('es6-promise').polyfill();
-
-require('core-js/features/array/from');
+require('core-js/features/promise');
 
 // Supports: Internet Explorer (All)
 if (!Element.prototype.matches) {
