@@ -8,6 +8,8 @@ require('nodelist-foreach-polyfill');
 // Supports: Internet Explorer 11
 require('es6-promise').polyfill();
 
+require('core-js/features/array/from');
+
 // Supports: Internet Explorer (All)
 if (!Element.prototype.matches) {
   Element.prototype.matches =
