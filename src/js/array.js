@@ -29,6 +29,4 @@ export const toSentence = arr => {
 };
 
 export const unique = arr =>
-  arr
-    .filter((value, index, self) => self.indexOf(value) === index)
-    .join(', ');
+  arr.filter((value, index, self) => self.indexOf(value) === index);
