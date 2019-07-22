@@ -41,6 +41,10 @@ function getDefaultDisplay(elem) {
 }
 
 function toggleElement(element, makeVisible) {
+  if (makeVisible === undefined) {
+    makeVisible = element.style.display === 'none';
+  }
+
   element.style.display = makeVisible ? getDefaultDisplay(element) : 'none';
 
   if (makeVisible) {
