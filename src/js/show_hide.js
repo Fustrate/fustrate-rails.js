@@ -17,12 +17,14 @@ const defaultDisplayMap = {
 };
 
 function getDefaultDisplay(elem) {
-  const { nodeName, ownerDocument } = elem;
+  const { nodeName } = elem;
   let display = defaultDisplayMap[nodeName];
 
   if (display) {
     return display;
   }
+
+  const { ownerDocument } = elem;
 
   const temp = ownerDocument.body.appendChild(ownerDocument.createElement(nodeName));
   ({ display } = temp.style);
@@ -39,16 +41,16 @@ function getDefaultDisplay(elem) {
 }
 
 function toggleElement(element, makeVisible) {
-  element.display = makeVisible ? getDefaultDisplay(element) : 'none';
+  element.style.display = makeVisible ? getDefaultDisplay(element) : 'none';
 
   if (makeVisible) {
     element.classList.remove('js-hide');
   }
-};
+}
 
 export const toggle = (element, showOrHide) => {
   if (element instanceof NodeList) {
-    element.forEach(elem => {
+    element.forEach((elem) => {
       toggleElement(elem, showOrHide);
     });
   } else {
