@@ -37,7 +37,7 @@ function hrefFor(href) {
 }
 
 function toggleElement(element, makeVisible) {
-  element.style.display = makeVisible ? 'inherit' : 'none';
+  element.style.display = makeVisible ? '' : 'none';
 
   if (makeVisible) {
     element.classList.remove('js-hide');
