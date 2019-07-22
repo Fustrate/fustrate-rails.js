@@ -59,9 +59,9 @@ export const toggle = (element, showOrHide) => {
 };
 
 export const show = (element) => {
-  toggleElement(element, true);
+  toggle(element, true);
 };
 
 export const hide = (element) => {
-  toggleElement(element, false);
+  toggle(element, false);
 };
