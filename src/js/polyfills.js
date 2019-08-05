@@ -9,6 +9,7 @@ require('core-js/features/array/from');
 
 // Supports: Internet Explorer 11
 require('core-js/features/promise');
+require('core-js/features/symbol');
 
 // Supports: Internet Explorer (All)
 if (!Element.prototype.matches) {
