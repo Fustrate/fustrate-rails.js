@@ -191,14 +191,14 @@ export const multilineEscapeHTML = string => {
     .join('<br />');
 };
 
-export const linkTo = (text, href, options = {}) => {
+export const linkTo = (text, href, attributes = {}) => {
   const element = document.createElement('a');
 
   element.href = hrefFor(href);
   element.innerHTML = text;
 
-  Object.keys(options).forEach(key => {
-    element.setAttribute(key, options[key]);
+  Object.keys(attributes).forEach(key => {
+    element.setAttribute(key, attributes[key]);
   });
 
   return element.outerHTML;

@@ -33,10 +33,10 @@ export default class Pagination extends Component {
     this.base = getPreppedPaginationURL();
   }
 
-  link(text, page, ...args) {
-    args['data-page'] = page;
+  link(text, page, attributes = {}) {
+    attributes['data-page'] = page;
 
-    return linkTo(text, `${this.base}page=${page}`, ...args);
+    return linkTo(text, `${this.base}page=${page}`, attributes);
   }
 
   previousLink() {
