@@ -34,6 +34,8 @@ export default class Pagination extends Component {
   }
 
   link(text, page, ...args) {
+    args['data-page'] = page;
+
     return linkTo(text, `${this.base}page=${page}`, ...args);
   }
 
@@ -68,6 +70,9 @@ export default class Pagination extends Component {
   generate() {
     const ul = document.createElement('ul');
     ul.classList.add('pagination');
+
+    ul.dataset.totalPages = this.totalPages;
+    ul.dataset.currentPage = this.currentPage;
 
     if (this.totalPages === 1) {
       return ul;
