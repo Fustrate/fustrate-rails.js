@@ -175,7 +175,11 @@ export class Autocomplete extends Component {
     this.sources.forEach(source => {
       if (source.url) {
         get(source.url({ search: value, commit: 1, format: 'json' })).then(response => {
-          list = list.concat(response.data);
+          if (Array.isArray(response.data)) {
+            list = list.concat(response.data);
+          } else {
+            list = list.concat(response.data.data);
+          }
 
           this.awesomplete.list = list;
         });
