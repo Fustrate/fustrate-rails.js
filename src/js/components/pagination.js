@@ -74,10 +74,6 @@ export default class Pagination extends Component {
     ul.dataset.totalPages = this.totalPages;
     ul.dataset.currentPage = this.currentPage;
 
-    if (this.totalPages === 1) {
-      return ul;
-    }
-
     ul.appendChild(this.previousLink());
 
     this.windowedPageNumbers().forEach(page => {
@@ -102,6 +98,10 @@ export default class Pagination extends Component {
   }
 
   windowedPageNumbers() {
+    if (this.totalPages === 1) {
+      return [1];
+    }
+
     let pages = [];
 
     let windowFrom = this.currentPage - 4;
