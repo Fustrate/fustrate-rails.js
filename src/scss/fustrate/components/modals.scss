@@ -72,7 +72,7 @@
     border: 1px solid $modal-border-color;
     border-top-color: scale-color($modal-border-color, $lightness: 70%);
     padding: rem-calc(12);
-    text-align: right;
+    display: flex;
 
     &:empty {
       border-width: 0 0 1px;

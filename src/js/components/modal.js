@@ -161,11 +161,10 @@ export default class Modal extends Component {
     const list = [];
 
     buttons.forEach(button => {
-      if (typeof button === 'string') {
-        list.push(`
-          <button data-button="${button}" class="${button} expand">
-            ${titleize(button)}
-          </button>`);
+      if (button === 'spacer') {
+        list.push('<div class="spacer"></div>');
+      } else if (typeof button === 'string') {
+        list.push(`<button class="${button}" data-button="${button}">${titleize(button)}</button>`);
       } else if (typeof button === 'object') {
         Object.keys(button).forEach(name => {
           list.push(createButton(name, button[name]));
@@ -173,12 +172,7 @@ export default class Modal extends Component {
       }
     }, this);
 
-    const klass = `large-${12 / list.length}`;
-    const columns = list.map(element => `<div class="columns ${klass}">${element}</div>`);
-
-    this.modal.querySelector('.modal-buttons').innerHTML = `<div class="row">${columns.join(
-      '',
-    )}</div>`;
+    this.modal.querySelector('.modal-buttons').innerHTML = list.join(' ');
 
     this.settings.cachedHeight = undefined;
 
