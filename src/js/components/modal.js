@@ -61,7 +61,7 @@ function createButton(name, options) {
   }
 
   return `
-    <button data-button="${name}" class="expand ${type || name}">
+    <button data-button="${name}" class="${type || name}">
       ${escapeHTML(text || titleize(name))}
     </button>`;
 }
@@ -112,7 +112,7 @@ export default class Modal extends Component {
     this.initialize();
   }
 
-  initialize() {}
+  initialize() { }
 
   reloadUIElements() {
     this.fields = {};
