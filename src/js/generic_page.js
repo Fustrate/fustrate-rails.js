@@ -29,7 +29,7 @@ export default class GenericPage {
   }
 
   setHeader(text) {
-    document.body.querySelector('.header > span').textContent = text;
+    document.body.querySelector('.header .title').textContent = text;
   }
 
   refresh() {
