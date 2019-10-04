@@ -1,4 +1,9 @@
-import { accountingFormat, bytesToString, ordinalize, truncate } from '../src/js/number';
+import {
+  accountingFormat,
+  bytesToString,
+  ordinalize,
+  truncate,
+} from '../src/js/number';
 
 describe('#accountingFormat()', () => {
   it('should format a positive integer', () => {

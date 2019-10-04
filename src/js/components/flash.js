@@ -1,3 +1,5 @@
+/* eslint-disable max-classes-per-file */
+
 // jQuery: hide, fadeIn, delay, fadeOut
 import $ from 'jquery';
 

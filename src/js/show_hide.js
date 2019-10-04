@@ -1,19 +1,19 @@
 // A few select tags that we're most likely to show or hide
 const defaultDisplayMap = {
-  'A': 'inline',
-  'BUTTON': 'inline',
-  'DIV': 'block',
-  'FORM': 'block',
-  'IMG': 'inline',
-  'INPUT': 'inline',
-  'LABEL': 'inline',
-  'P': 'block',
-  'PRE': 'block',
-  'SECTION': 'block',
-  'SELECT': 'inline',
-  'SPAN': 'inline',
-  'TABLE': 'block',
-  'TEXTAREA': 'inline',
+  A: 'inline',
+  BUTTON: 'inline',
+  DIV: 'block',
+  FORM: 'block',
+  IMG: 'inline',
+  INPUT: 'inline',
+  LABEL: 'inline',
+  P: 'block',
+  PRE: 'block',
+  SECTION: 'block',
+  SELECT: 'inline',
+  SPAN: 'inline',
+  TABLE: 'block',
+  TEXTAREA: 'inline',
 };
 
 function getDefaultDisplay(elem) {

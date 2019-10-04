@@ -1,3 +1,5 @@
+/* eslint-disable max-classes-per-file */
+
 import Awesomplete from 'awesomplete';
 import { fire } from '@rails/ujs';
 
@@ -69,7 +71,7 @@ export class PlainAutocompleteSource extends AutocompleteSource {
   }
 
   matchingData(searchTerm) {
-    return this.list.filter(datum => this.filter(datum, searchTerm), this);
+    return this.list.filter((datum) => this.filter(datum, searchTerm), this);
   }
 }
 
@@ -86,8 +88,8 @@ export class Autocomplete extends Component {
       filter: () => true,
       item: (suggestion, value, index) => suggestion.item(value, index),
       sort: false, // Items are fed in the intended order
-      replace: suggestion => suggestion.label,
-      suggestion: datum => this.suggestionForDatum(datum),
+      replace: (suggestion) => suggestion.label,
+      suggestion: (datum) => this.suggestionForDatum(datum),
     });
 
     // Fix for Chrome ignoring autocomplete="off", but does it break Firefox?
@@ -113,7 +115,7 @@ export class Autocomplete extends Component {
       return this.sources[0];
     }
 
-    return this.sources.find(source => source.matches(datum));
+    return this.sources.find((source) => source.matches(datum));
   }
 
   suggestionForDatum(datum) {
@@ -145,8 +147,8 @@ export class Autocomplete extends Component {
 
     // If we have plain text sources, show them immediately
     this.sources
-      .filter(source => source.list)
-      .forEach(source => {
+      .filter((source) => source.list)
+      .forEach((source) => {
         list = list.concat(source.matchingData(searchTerm));
       }, this);
 
@@ -172,9 +174,9 @@ export class Autocomplete extends Component {
     this.value = value;
     let list = [];
 
-    this.sources.forEach(source => {
+    this.sources.forEach((source) => {
       if (source.url) {
-        get(source.url({ search: value, commit: 1, format: 'json' })).then(response => {
+        get(source.url({ search: value, commit: 1, format: 'json' })).then((response) => {
           if (Array.isArray(response.data)) {
             list = list.concat(response.data);
           } else {
@@ -210,7 +212,7 @@ export class Autocomplete extends Component {
   }
 
   static addTypes(types) {
-    Object.getOwnPropertyNames(types).forEach(name => {
+    Object.getOwnPropertyNames(types).forEach((name) => {
       this.addType(name, types[name]);
     }, this);
   }

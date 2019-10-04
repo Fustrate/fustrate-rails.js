@@ -16,14 +16,14 @@ export default class GenericPage {
     this.buttons = {};
 
     Array.from(document.body.querySelectorAll('[data-field]'))
-      .filter(element => !element.matches('.modal [data-field]'))
-      .forEach(element => {
+      .filter((element) => !element.matches('.modal [data-field]'))
+      .forEach((element) => {
         this.fields[element.dataset.field] = element;
       });
 
     Array.from(document.body.querySelectorAll('[data-button]'))
-      .filter(element => !element.matches('.modal [data-button]'))
-      .forEach(element => {
+      .filter((element) => !element.matches('.modal [data-button]'))
+      .forEach((element) => {
         this.buttons[element.dataset.button] = element;
       });
   }
@@ -41,7 +41,7 @@ export default class GenericPage {
       this.allMethodNamesList = this.getAllMethodNames();
     }
 
-    this.allMethodNamesList.forEach(name => {
+    this.allMethodNamesList.forEach((name) => {
       if (name !== string && name.indexOf(string) === 0) {
         this[name].apply(this);
       }
@@ -58,6 +58,6 @@ export default class GenericPage {
       klass = Object.getPrototypeOf(klass);
     }
 
-    return props.sort().filter(name => typeof this[name] === 'function');
+    return props.sort().filter((name) => typeof this[name] === 'function');
   }
 }

@@ -16,8 +16,8 @@ const instance = axios.create({
 });
 
 instance.interceptors.response.use(
-  response => response,
-  error => {
+  (response) => response,
+  (error) => {
     const { data, status } = error.response;
 
     if (status === 401) {
@@ -26,7 +26,7 @@ instance.interceptors.response.use(
       You are not currently logged in. Please refresh the page and try performing this action again.
       To prevent this in the future, check the "Remember Me" box when logging in.`);
     } else if (data && data.errors) {
-      data.errors.forEach(message => {
+      data.errors.forEach((message) => {
         ErrorFlash.show(message);
       });
     } else {
@@ -44,7 +44,7 @@ export const get = (url, config = {}, raise = false) => {
     return instance.get(url, config);
   }
 
-  return instance.get(url, config).catch(() => {});
+  return instance.get(url, config).catch(() => { });
 };
 
 export const post = (url, data, config = {}, raise = false) => {
@@ -52,7 +52,7 @@ export const post = (url, data, config = {}, raise = false) => {
     return instance.post(url, data, config);
   }
 
-  return instance.post(url, data, config).catch(() => {});
+  return instance.post(url, data, config).catch(() => { });
 };
 
 export const patch = (url, data, config = {}, raise = false) => {
@@ -60,17 +60,16 @@ export const patch = (url, data, config = {}, raise = false) => {
     return instance.patch(url, data, config);
   }
 
-  return instance.patch(url, data, config).catch(() => {});
+  return instance.patch(url, data, config).catch(() => { });
 };
 
-export const when = (...requests) =>
-  new Promise(resolve => {
-    axios.all(requests).then(
-      axios.spread((...responses) => {
-        resolve(...responses);
-      }),
-    );
-  });
+export const when = (...requests) => new Promise((resolve) => {
+  axios.all(requests).then(
+    axios.spread((...responses) => {
+      resolve(...responses);
+    }),
+  );
+});
 
 export const getCurrentPageJson = () => {
   const pathname = window.location.pathname.replace(/\/+$/, '');

@@ -1,3 +1,5 @@
+/* eslint-disable max-classes-per-file */
+
 import BasicObject from '../src/js/basic_object';
 
 class Event extends BasicObject {

@@ -1,4 +1,10 @@
-import { compact, first, last, remove, toSentence } from '../src/js/array';
+import {
+  compact,
+  first,
+  last,
+  remove,
+  toSentence,
+} from '../src/js/array';
 
 describe('compact', () => {
   it('compacts null and undefined', () => {

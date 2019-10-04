@@ -22,7 +22,12 @@ function getPreppedPaginationURL() {
 }
 
 export default class Pagination extends Component {
-  constructor({ currentPage, totalPages, totalEntries, perPage }) {
+  constructor({
+    currentPage,
+    totalPages,
+    totalEntries,
+    perPage,
+  }) {
     super();
 
     this.currentPage = currentPage;
@@ -76,7 +81,7 @@ export default class Pagination extends Component {
 
     ul.appendChild(this.previousLink());
 
-    this.windowedPageNumbers().forEach(page => {
+    this.windowedPageNumbers().forEach((page) => {
       const li = document.createElement('li');
 
       if (page === this.currentPage) {

@@ -13,10 +13,9 @@ require('core-js/features/symbol');
 
 // Supports: Internet Explorer (All)
 if (!Element.prototype.matches) {
-  Element.prototype.matches =
-    Element.prototype.matchesSelector ||
-    Element.prototype.msMatchesSelector ||
-    Element.prototype.webkitMatchesSelector;
+  Element.prototype.matches = Element.prototype.matchesSelector
+    || Element.prototype.msMatchesSelector
+    || Element.prototype.webkitMatchesSelector;
 }
 
 // Supports: Internet Explorer (All)

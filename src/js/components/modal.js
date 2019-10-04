@@ -3,10 +3,15 @@ import $ from 'jquery';
 import { delegate, fire, stopEverything } from '@rails/ujs';
 
 import Component from '../component';
-import { deepExtend } from '../object';
-import { elementFromString, escapeHTML, hide, icon as createIcon, isVisible } from '../utilities';
-import { titleize } from '../string';
 import { remove } from '../array';
+import { deepExtend } from '../object';
+import { titleize } from '../string';
+import {
+  elementFromString,
+  escapeHTML,
+  hide, icon as createIcon,
+  isVisible,
+} from '../utilities';
 
 const defaultSettings = {
   size: 'tiny',
@@ -118,11 +123,11 @@ export default class Modal extends Component {
     this.fields = {};
     this.buttons = {};
 
-    this.modal.querySelectorAll('[data-field]').forEach(element => {
+    this.modal.querySelectorAll('[data-field]').forEach((element) => {
       this.fields[element.dataset.field] = element;
     });
 
-    this.modal.querySelectorAll('[data-button]').forEach(element => {
+    this.modal.querySelectorAll('[data-button]').forEach((element) => {
       this.buttons[element.dataset.button] = element;
     });
   }
@@ -160,13 +165,13 @@ export default class Modal extends Component {
 
     const list = [];
 
-    buttons.forEach(button => {
+    buttons.forEach((button) => {
       if (button === 'spacer') {
         list.push('<div class="spacer"></div>');
       } else if (typeof button === 'string') {
         list.push(`<button class="${button}" data-button="${button}">${titleize(button)}</button>`);
       } else if (typeof button === 'object') {
-        Object.keys(button).forEach(name => {
+        Object.keys(button).forEach((name) => {
           list.push(createButton(name, button[name]));
         }, this);
       }
@@ -205,9 +210,8 @@ export default class Modal extends Component {
       return;
     }
 
-    const [firstInput] = Array.from(this.modal.querySelectorAll('input, select, textarea')).filter(
-      element => isVisible(element) && !element.disabled && !element.readOnly,
-    );
+    const [firstInput] = Array.from(this.modal.querySelectorAll('input, select, textarea'))
+      .filter((element) => isVisible(element) && !element.disabled && !element.readOnly);
 
     if (firstInput) {
       firstInput.focus();
@@ -283,7 +287,7 @@ export default class Modal extends Component {
       opacity: 0,
     };
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       setTimeout(() => {
         $(this.modal).animate(endCss, 250, 'linear', () => {
           this.locked = false;
@@ -347,7 +351,7 @@ export default class Modal extends Component {
   }
 
   defaultClasses() {
-    return [this.settings.size, this.settings.type].filter(klass => klass !== null);
+    return [this.settings.size, this.settings.type].filter((klass) => klass !== null);
   }
 
   closeButtonClicked(event) {
@@ -375,7 +379,7 @@ export default class Modal extends Component {
   }
 
   static hideAllModals() {
-    openModals.forEach(modal => {
+    openModals.forEach((modal) => {
       modal.hide();
     });
 

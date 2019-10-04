@@ -30,7 +30,7 @@ export default class Record extends BasicObject {
       return Promise.resolve();
     }
 
-    return get(this.path({ format: 'json' })).then(response => {
+    return get(this.path({ format: 'json' })).then((response) => {
       this.extractFromData(response.data);
 
       this.isLoaded = true;
@@ -54,12 +54,12 @@ export default class Record extends BasicObject {
       method: this.id ? 'patch' : 'post',
       url,
       data: FormDataBuilder.build(attributes, this.constructor.paramKey),
-      onUploadProgress: event => {
+      onUploadProgress: (event) => {
         fire(this, 'upload:progress', event);
       },
     })
-      .catch(() => {})
-      .then(response => {
+      .catch((response) => response)
+      .then((response) => {
         this.extractFromData(response.data);
 
         this.isLoaded = true;
@@ -73,7 +73,7 @@ export default class Record extends BasicObject {
   }
 
   static get paramKey() {
-    return this.classname.replace(/::/g, '').replace(/^[A-Z]/, match => match.toLowerCase());
+    return this.classname.replace(/::/g, '').replace(/^[A-Z]/, (match) => match.toLowerCase());
   }
 
   // returns Promise<Record>

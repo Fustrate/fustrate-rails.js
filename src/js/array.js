@@ -1,11 +1,9 @@
-export const compact = (arr, strings = true) =>
-  arr.filter(
-    element => !(element === undefined || element === null || (strings && element === '')),
-  );
+export const compact = (arr, strings = true) => arr
+  .filter((element) => !(element === undefined || element === null || (strings && element === '')));
 
-export const first = arr => arr[0];
+export const first = (arr) => arr[0];
 
-export const last = arr => arr[arr.length - 1];
+export const last = (arr) => arr[arr.length - 1];
 
 export const remove = (arr, object) => {
   const index = arr.indexOf(object);
@@ -15,7 +13,7 @@ export const remove = (arr, object) => {
   }
 };
 
-export const toSentence = arr => {
+export const toSentence = (arr) => {
   switch (arr.length) {
     case 0:
       return '';
@@ -28,5 +26,5 @@ export const toSentence = arr => {
   }
 };
 
-export const unique = arr =>
-  arr.filter((value, index, self) => self.indexOf(value) === index);
+export const unique = (arr) => arr
+  .filter((value, index, self) => self.indexOf(value) === index);

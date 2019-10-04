@@ -2,8 +2,8 @@ import GenericPage from './generic_page';
 import Pagination from './components/pagination';
 import { elementFromString } from './utilities';
 
-function sortRows(rows, sortFunction = () => {}) {
-  const rowsWithSortOrder = rows.map(row => [sortFunction(row), row]);
+function sortRows(rows, sortFunction = () => { }) {
+  const rowsWithSortOrder = rows.map((row) => [sortFunction(row), row]);
 
   rowsWithSortOrder.sort((x, y) => {
     if (x[0] === y[0]) {
@@ -13,7 +13,7 @@ function sortRows(rows, sortFunction = () => {}) {
     return x[0] > y[0] ? 1 : -1;
   });
 
-  return rowsWithSortOrder.map(row => row[1]);
+  return rowsWithSortOrder.map((row) => row[1]);
 }
 
 export default class GenericTable extends GenericPage {
@@ -30,7 +30,7 @@ export default class GenericTable extends GenericPage {
     this.reloadTable();
   }
 
-  reloadTable() {}
+  reloadTable() { }
 
   createRow(item) {
     const row = elementFromString(this.constructor.blankRow);
@@ -41,12 +41,12 @@ export default class GenericTable extends GenericPage {
   }
 
   reloadRows(trs, { sort } = { sort: null }) {
-    this.tbody.querySelectorAll('tr').forEach(tr => {
+    this.tbody.querySelectorAll('tr').forEach((tr) => {
       tr.remove();
     });
 
     if (trs.length > 0) {
-      (sort ? sortRows(trs, sort) : trs).forEach(tr => {
+      (sort ? sortRows(trs, sort) : trs).forEach((tr) => {
         this.tbody.appendChild(tr);
       });
     }
@@ -90,13 +90,13 @@ export default class GenericTable extends GenericPage {
   checkAll(event) {
     const check = event ? event.target.checked : true;
 
-    this.table.querySelectorAll('td:first-child input[type="checkbox"]').forEach(checkbox => {
+    this.table.querySelectorAll('td:first-child input[type="checkbox"]').forEach((checkbox) => {
       checkbox.checked = check;
     });
   }
 
   uncheckAll() {
-    this.table.querySelectorAll('td:first-child input:checked').forEach(input => {
+    this.table.querySelectorAll('td:first-child input:checked').forEach((input) => {
       input.checked = false;
     });
   }
@@ -110,7 +110,7 @@ export default class GenericTable extends GenericPage {
 
     const ul = new Pagination(data).generate();
 
-    document.body.querySelectorAll('.pagination').forEach(oldPagination => {
+    document.body.querySelectorAll('.pagination').forEach((oldPagination) => {
       oldPagination.parentNode.replaceChild(ul.cloneNode(true), oldPagination);
     });
   }
