@@ -50,22 +50,24 @@ export default class Record extends BasicObject {
       url = this.constructor.createPath({ format: 'json' });
     }
 
-    return ajax({
-      method: this.id ? 'patch' : 'post',
-      url,
-      data: FormDataBuilder.build(attributes, this.constructor.paramKey),
-      onUploadProgress: (event) => {
-        fire(this, 'upload:progress', event);
-      },
-    })
-      .catch((response) => response)
-      .then((response) => {
-        this.extractFromData(response.data);
+    return new Promise((resolve, reject) => {
+      ajax({
+        method: this.id ? 'patch' : 'post',
+        url,
+        data: FormDataBuilder.build(attributes, this.constructor.paramKey),
+        onUploadProgress: (event) => {
+          fire(this, 'upload:progress', event);
+        },
+      })
+        .catch((response) => { reject(response); })
+        .then((response) => {
+          this.extractFromData(response.data);
 
-        this.isLoaded = true;
+          this.isLoaded = true;
 
-        return response.data;
-      });
+          resolve(response.data);
+        });
+    });
   }
 
   delete() {
