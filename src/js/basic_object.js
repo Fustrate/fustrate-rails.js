@@ -40,7 +40,15 @@ export default class BasicObject extends Listenable {
     return true;
   }
 
+  static build(data) {
+    if (!data) {
+      return undefined;
+    }
+
+    return (data instanceof this ? data : new this(data));
+  }
+
   static buildList(items, attributes = {}) {
-    return items.map((item) => new this(deepExtend({}, item, attributes)));
+    return items ? items.map((item) => new this(deepExtend({}, item, attributes))) : [];
   }
 }
