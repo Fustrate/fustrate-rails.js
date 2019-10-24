@@ -1,1 +1,2 @@
-export default as default, * from './src/js/ajax';
+export * from './src/js/ajax';
+export { default } from './src/js/ajax';
