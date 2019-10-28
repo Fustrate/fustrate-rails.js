@@ -202,9 +202,9 @@ describe('redirectTo', () => {
   });
 });
 
-describe('isVisible', () => {
-  it('', () => {});
-});
+// describe('isVisible', () => {
+//   it('', () => {});
+// });
 
 describe('toggle', () => {
   it('toggles a NodeList of elements', () => {
