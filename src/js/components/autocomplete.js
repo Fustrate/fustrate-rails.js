@@ -5,7 +5,7 @@ import { fire } from '@rails/ujs';
 import { debounce } from 'lodash/util';
 
 import Component from '../component';
-import { get } from '../ajax';
+import { get, errorHandler } from '../ajax';
 
 export class AutocompleteSuggestion extends String {
   constructor(datum, displayValue) {
@@ -184,7 +184,7 @@ export class Autocomplete extends Component {
           }
 
           this.awesomplete.list = list;
-        });
+        }, errorHandler);
       } else if (source.list) {
         const searchTerm = value.toLowerCase();
 

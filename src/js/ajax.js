@@ -15,53 +15,27 @@ const instance = axios.create({
   responseType: 'json',
 });
 
-instance.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    const { data, status } = error.response;
+export function errorHandler(error) {
+  const { data, status } = error.response;
 
-    if (status === 401) {
-      // eslint-disable-next-line no-alert
-      window.alert(`
-      You are not currently logged in. Please refresh the page and try performing this action again.
-      To prevent this in the future, check the "Remember Me" box when logging in.`);
-    } else if (data && data.errors) {
-      data.errors.forEach((message) => {
-        ErrorFlash.show(message);
-      });
-    } else {
-      // eslint-disable-next-line no-console
-      console.log('Unhandled interception', error.response);
-    }
-
-    return Promise.reject(error);
-  },
-);
-
-// A wrapper to allow us to ignore boring errors
-export const get = (url, config = {}, raise = false) => {
-  if (raise) {
-    return instance.get(url, config);
+  if (status === 401) {
+    // eslint-disable-next-line no-alert
+    window.alert(`
+    You are not currently logged in. Please refresh the page and try performing this action again.
+    To prevent this in the future, check the "Remember Me" box when logging in.`);
+  } else if (data && data.errors) {
+    data.errors.forEach((message) => {
+      ErrorFlash.show(message);
+    });
+  } else {
+    // eslint-disable-next-line no-console
+    console.log('Unhandled interception', error.response);
   }
+}
 
-  return instance.get(url, config).catch(() => { });
-};
-
-export const post = (url, data, config = {}, raise = false) => {
-  if (raise) {
-    return instance.post(url, data, config);
-  }
-
-  return instance.post(url, data, config).catch(() => { });
-};
-
-export const patch = (url, data, config = {}, raise = false) => {
-  if (raise) {
-    return instance.patch(url, data, config);
-  }
-
-  return instance.patch(url, data, config).catch(() => { });
-};
+export const get = (url, config = {}) => instance.get(url, config);
+export const post = (url, data, config = {}) => instance.post(url, data, config);
+export const patch = (url, data, config = {}) => instance.patch(url, data, config);
 
 export const when = (...requests) => new Promise((resolve) => {
   axios.all(requests).then(

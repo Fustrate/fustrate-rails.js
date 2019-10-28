@@ -1,4 +1,4 @@
-import { remove } from './array';
+import { pull } from 'lodash/array';
 
 // A simple polyfill for objects that aren't DOM nodes to receive events.
 export default class Listenable {
@@ -15,7 +15,7 @@ export default class Listenable {
   }
 
   removeEventListener(type, listener) {
-    remove(this.listeners[type], listener);
+    pull(this.listeners[type], listener);
   }
 
   dispatchEvent(event) {
