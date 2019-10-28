@@ -5,7 +5,7 @@ import { fire } from '@rails/ujs';
 import { debounce } from 'lodash/util';
 
 import Component from '../component';
-import { get, errorHandler } from '../ajax';
+import ajax from '../ajax';
 
 export class AutocompleteSuggestion extends String {
   constructor(datum, displayValue) {
@@ -176,7 +176,7 @@ export class Autocomplete extends Component {
 
     this.sources.forEach((source) => {
       if (source.url) {
-        get(source.url({ search: value, commit: 1, format: 'json' })).then((response) => {
+        ajax.get(source.url({ search: value, commit: 1, format: 'json' })).then((response) => {
           if (Array.isArray(response.data)) {
             list = list.concat(response.data);
           } else {
@@ -184,7 +184,7 @@ export class Autocomplete extends Component {
           }
 
           this.awesomplete.list = list;
-        }, errorHandler);
+        });
       } else if (source.list) {
         const searchTerm = value.toLowerCase();
 

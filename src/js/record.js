@@ -2,7 +2,7 @@ import { fire } from '@rails/ujs';
 
 import BasicObject from './basic_object';
 import FormDataBuilder from './form_data_builder';
-import ajax, { get, errorHandler } from './ajax';
+import ajax from './ajax';
 
 export default class Record extends BasicObject {
   // static get classname() { return 'Subreddit::GameThread'; }
@@ -30,13 +30,13 @@ export default class Record extends BasicObject {
       return Promise.resolve();
     }
 
-    return get(this.path({ format: 'json' })).then((response) => {
+    return ajax.get(this.path({ format: 'json' })).then((response) => {
       this.extractFromData(response.data);
 
       this.isLoaded = true;
 
       return response.data;
-    }, errorHandler);
+    });
   }
 
   update(attributes = {}) {
@@ -63,7 +63,7 @@ export default class Record extends BasicObject {
       this.isLoaded = true;
 
       return response.data;
-    }, errorHandler);
+    });
   }
 
   delete() {
