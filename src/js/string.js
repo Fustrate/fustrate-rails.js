@@ -1,6 +1,8 @@
-export const capitalize = (string) => (typeof string !== 'string' ? '' : `${string.charAt(0).toUpperCase()}${string.slice(1)}`);
-
-export const dasherize = (string) => (typeof string !== 'string' ? '' : string.replace(/_/g, '-'));
+// TODO: Remove these and use lodash directly in projects
+export {
+  upperFirst as capitalize,
+  kebabCase as dasherize,
+} from 'lodash/string';
 
 export const humanize = (string) => (typeof string !== 'string'
   ? ''

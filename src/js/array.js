@@ -1,17 +1,11 @@
-export const compact = (arr, strings = true) => arr
-  .filter((element) => !(element === undefined || element === null || (strings && element === '')));
-
-export const first = (arr) => arr[0];
-
-export const last = (arr) => arr[arr.length - 1];
-
-export const remove = (arr, object) => {
-  const index = arr.indexOf(object);
-
-  if (index !== -1) {
-    arr.splice(index, 1);
-  }
-};
+// TODO: Remove these and use lodash directly in projects
+export {
+  compact,
+  head as first,
+  last,
+  uniq as unique,
+  pull as remove,
+} from 'lodash';
 
 export const toSentence = (arr) => {
   switch (arr.length) {
@@ -25,6 +19,3 @@ export const toSentence = (arr) => {
       return `${arr.slice(0, -1).join(', ')}, and ${arr[arr.length - 1]}`;
   }
 };
-
-export const unique = (arr) => arr
-  .filter((value, index, self) => self.indexOf(value) === index);

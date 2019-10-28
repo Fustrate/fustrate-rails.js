@@ -1,17 +1,10 @@
 // Internal functions
-import { compact } from './array';
+import { compact } from 'lodash/array';
+import { escape } from 'lodash/string';
 import { underscore, isBlank } from './string';
 
-const entityMap = {
-  '&': '&amp;',
-  '<': '&lt;',
-  '>': '&gt;',
-  '"': '&quot;',
-  "'": '&#39;',
-  '/': '&#x2F;',
-  '`': '&#x60;',
-  '=': '&#x3D;',
-};
+// TODO: Remove this and use lodash directly in projects
+export const escapeHTML = escape;
 
 function hrefFor(href) {
   if (href === undefined || href === null) {
@@ -108,40 +101,12 @@ export const applyMixin = (target, mixin, options) => {
   return target;
 };
 
-export const debounce = (func, delay = 250) => {
-  let timeout = null;
-
-  return (...args) => {
-    const context = this;
-
-    const delayedFunc = () => {
-      func.apply(context, args);
-
-      timeout = null;
-    };
-
-    if (timeout) {
-      clearTimeout(timeout);
-    }
-
-    timeout = setTimeout(delayedFunc, delay);
-  };
-};
-
 export const elementFromString = (string) => {
   const template = document.createElement('template');
 
   template.innerHTML = string.trim();
 
   return template.content.firstChild;
-};
-
-export const escapeHTML = (string) => {
-  if (string === null || string === undefined) {
-    return '';
-  }
-
-  return String(string).replace(/[&<>"'`=/]/g, (entity) => entityMap[entity]);
 };
 
 export function hms(seconds, zero) {

@@ -2,9 +2,9 @@
 
 import Awesomplete from 'awesomplete';
 import { fire } from '@rails/ujs';
+import { debounce } from 'lodash/util';
 
 import Component from '../component';
-import { debounce } from '../utilities';
 import { get } from '../ajax';
 
 export class AutocompleteSuggestion extends String {

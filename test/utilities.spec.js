@@ -1,6 +1,5 @@
 import {
   animate,
-  debounce,
   elementFromString,
   escapeHTML,
   hide,
@@ -42,31 +41,6 @@ describe('animate', () => {
   });
 });
 
-describe('debounce', () => {
-  jest.useFakeTimers();
-
-  it('waits to run a function', () => {
-    const callback = jest.fn();
-    const debounced = debounce(callback, 2500);
-
-    debounced.call();
-    expect(callback).not.toBeCalled();
-
-    // Wait for 1 second and then run again
-    jest.advanceTimersByTime(1000);
-    expect(callback).not.toBeCalled();
-    debounced.call();
-
-    // Wait for 2.499 seconds
-    jest.advanceTimersByTime(2499);
-    expect(callback).not.toBeCalled();
-
-    // 1 more ms and it should run
-    jest.advanceTimersByTime(1);
-    expect(callback).toBeCalled();
-  });
-});
-
 describe('elementFromString', () => {
   it('creates a bare element', () => {
     expect(elementFromString('<input type="color">')).toBeInstanceOf(HTMLInputElement);
@@ -97,7 +71,7 @@ describe('escapeHTML', () => {
 
   it('escapes entities in a string', () => {
     expect(escapeHTML('<strong>\'Bob\' `&` "Bill"</strong> =/')).toEqual(
-      '&lt;strong&gt;&#39;Bob&#39; &#x60;&amp;&#x60; &quot;Bill&quot;&lt;&#x2F;strong&gt; &#x3D;&#x2F;',
+      '&lt;strong&gt;&#39;Bob&#39; `&amp;` &quot;Bill&quot;&lt;/strong&gt; =/',
     );
   });
 });
@@ -166,7 +140,7 @@ describe('multilineEscapeHTML', () => {
 
   it('escapes entities in a string', () => {
     expect(multilineEscapeHTML('<strong>\'Bob\' `&` "Bill"</strong>\n=/')).toEqual(
-      '&lt;strong&gt;&#39;Bob&#39; &#x60;&amp;&#x60; &quot;Bill&quot;&lt;&#x2F;strong&gt;<br />&#x3D;&#x2F;',
+      '&lt;strong&gt;&#39;Bob&#39; `&amp;` &quot;Bill&quot;&lt;/strong&gt;<br />=/',
     );
   });
 });
