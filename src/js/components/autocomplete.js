@@ -2,7 +2,7 @@
 
 import Awesomplete from 'awesomplete';
 import { fire } from '@rails/ujs';
-import { debounce } from 'lodash/util';
+import { debounce } from 'lodash/function';
 
 import Component from '../component';
 import ajax from '../ajax';
