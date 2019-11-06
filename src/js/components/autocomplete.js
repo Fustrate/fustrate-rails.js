@@ -184,7 +184,7 @@ export class Autocomplete extends Component {
           }
 
           this.awesomplete.list = list;
-        });
+        }, () => { });
       } else if (source.list) {
         const searchTerm = value.toLowerCase();
 
