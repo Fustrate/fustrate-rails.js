@@ -1,15 +1,22 @@
 import moment from 'moment';
+import Rails from '@rails/ujs';
 
 require('./polyfills');
 
+const debugData = [];
+
 export default class Fustrate {
-  static start(instance) {
-    Fustrate.instance = instance;
+  static start(Klass) {
+    if (Klass) {
+      Fustrate.instance = new Klass();
+    }
 
     document.addEventListener('DOMContentLoaded', () => {
       this.initialize();
 
-      instance.initialize();
+      if (Klass) {
+        Fustrate.instance.initialize();
+      }
     });
   }
 
@@ -43,5 +50,15 @@ export default class Fustrate {
 
       wrapper.appendChild(table);
     });
+
+    Rails.start();
+  }
+
+  static addDebugData(data) {
+    debugData.push(data);
+  }
+
+  static get debugData() {
+    return debugData;
   }
 }
