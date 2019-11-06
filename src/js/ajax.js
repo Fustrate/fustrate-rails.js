@@ -16,6 +16,16 @@ const instance = axios.create({
   responseType: 'json',
 });
 
+instance.interceptors.request.use((config) => {
+  addDebugData({
+    method: config.method,
+    url: config.url,
+    data: config.data,
+  });
+
+  return config;
+}, (error) => Promise.reject(error));
+
 // The interceptor only handles basic 401 errors and error responses - it will still throw so that
 // more involved error handling can happen later.
 instance.interceptors.response.use(
@@ -43,7 +53,7 @@ instance.interceptors.response.use(
       console.log('Unhandled interception', error.response);
     }
 
-    throw error;
+    return Promise.reject(error);
   },
 );
 
