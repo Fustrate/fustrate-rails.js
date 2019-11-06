@@ -21,13 +21,13 @@ const instance = axios.create({
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
-    const { data, status } = error.response;
-
     addDebugData({
       error,
       response: error.response,
       keys: Object.keys(error),
     });
+
+    const { data, status } = error.response;
 
     if (status === 401) {
       // eslint-disable-next-line no-alert
