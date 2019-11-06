@@ -3,8 +3,6 @@ import Rails from '@rails/ujs';
 
 require('./polyfills');
 
-const debugData = [];
-
 export default class Fustrate {
   static start(Klass) {
     if (Klass) {
@@ -52,13 +50,5 @@ export default class Fustrate {
     });
 
     Rails.start();
-  }
-
-  static addDebugData(data) {
-    debugData.push(data);
-  }
-
-  static get debugData() {
-    return debugData;
   }
 }

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { ErrorFlash } from './components/flash';
+import { addDebugData } from './debug';
 
 // Supports: Internet Explorer 11
 require('core-js/features/promise');
@@ -21,6 +22,12 @@ instance.interceptors.response.use(
   (response) => response,
   (error) => {
     const { data, status } = error.response;
+
+    addDebugData({
+      error,
+      response: error.response,
+      keys: Object.keys(error),
+    });
 
     if (status === 401) {
       // eslint-disable-next-line no-alert
