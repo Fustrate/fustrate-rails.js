@@ -38,7 +38,7 @@ const defaultSettings = {
 const fadeSpeed = 250;
 
 const template = `
-  <div class="modal">
+  <div class="modal" role="dialog" aria-modal="true">
     <div class="modal-title">
       <span></span>
       <a href="#" class="modal-close">&#215;</a>
@@ -54,6 +54,8 @@ let openModals = [];
 let addedGlobalListeners = false;
 
 let overlay;
+
+let modalCount = 0;
 
 function createButton(name, options) {
   let text;
@@ -99,6 +101,9 @@ export default class Modal extends Component {
 
   constructor({ settings } = {}) {
     super();
+
+    modalCount += 1;
+    this.modalId = modalCount;
 
     this.settings = deepExtend(
       {},
@@ -344,6 +349,10 @@ export default class Modal extends Component {
 
     const element = elementFromString(template);
     element.classList.add(...classes);
+
+    // Accessibility
+    element.setAttribute('aria-labelledby', `modal_${this.modalId}_title`);
+    element.querySelector('.modal-title span').setAttribute('id', `modal_${this.modalId}_title`);
 
     document.body.appendChild(element);
 
