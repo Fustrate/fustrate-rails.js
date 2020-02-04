@@ -275,7 +275,7 @@ export default class Modal extends Component {
 
   close(openPrevious = true) {
     if (this.locked || !this.modal.classList.contains('open')) {
-      return Promise.reject();
+      return;
     }
 
     this.locked = true;
@@ -292,26 +292,22 @@ export default class Modal extends Component {
       opacity: 0,
     };
 
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        $(this.modal).animate(endCss, 250, 'linear', () => {
-          this.locked = false;
+    setTimeout(() => {
+      $(this.modal).animate(endCss, 250, 'linear', () => {
+        this.locked = false;
 
-          $(this.modal).css(this.settings.css.close);
-          fire(this.modal, 'modal:closed');
+        $(this.modal).css(this.settings.css.close);
+        fire(this.modal, 'modal:closed');
 
-          resolve();
+        if (openPrevious) {
+          this.openPreviousModal();
+        } else {
+          this.constructor.hideAllModals();
+        }
+      });
 
-          if (openPrevious) {
-            this.openPreviousModal();
-          } else {
-            this.constructor.hideAllModals();
-          }
-        });
-
-        this.modal.classList.remove('open');
-      }, 125);
-    });
+      this.modal.classList.remove('open');
+    }, 125);
   }
 
   // Just hide the modal immediately and don't bother with an overlay
