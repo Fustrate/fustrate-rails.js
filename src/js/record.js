@@ -72,8 +72,8 @@ export default class Record extends BasicObject {
     });
   }
 
-  delete() {
-    return ajax.delete(this.path({ format: 'json' }));
+  delete(params = {}) {
+    return ajax.delete(this.path({ format: 'json' }), { params });
   }
 
   static get paramKey() {
