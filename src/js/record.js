@@ -39,7 +39,7 @@ export default class Record extends BasicObject {
     });
   }
 
-  update(attributes = {}) {
+  update(attributes = {}, additionalParameters = {}) {
     let url;
 
     if (this.id) {
@@ -49,11 +49,17 @@ export default class Record extends BasicObject {
 
       url = this.constructor.createPath({ format: 'json' });
     }
+    
+    const data = FormDataBuilder.build(attributes, this.constructor.paramKey);
+          
+    Object.keys(additionalParameters).forEach((key) => {
+      data.append(key, additionalParameters[key]);
+    });
 
     return ajax({
       method: this.id ? 'patch' : 'post',
       url,
-      data: FormDataBuilder.build(attributes, this.constructor.paramKey),
+      data,
       onUploadProgress: (event) => {
         fire(this, 'upload:progress', event);
       },
@@ -66,8 +72,8 @@ export default class Record extends BasicObject {
     });
   }
 
-  delete() {
-    return ajax.delete(this.path({ format: 'json' }));
+  delete(params = {}) {
+    return ajax.delete(this.path({ format: 'json' }), { params });
   }
 
   static get paramKey() {
