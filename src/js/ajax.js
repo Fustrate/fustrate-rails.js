@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { ErrorFlash } from './components/flash';
-import { addDebugData } from './debug';
+// import { addDebugData } from './debug';
 
 // Supports: Internet Explorer 11
 require('core-js/features/promise');
@@ -17,11 +17,11 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use((config) => {
-  addDebugData({
-    method: config.method,
-    url: config.url,
-    data: config.data,
-  });
+  // addDebugData({
+  //   method: config.method,
+  //   url: config.url,
+  //   data: config.data,
+  // });
 
   return config;
 }, (error) => Promise.reject(error));
@@ -31,11 +31,11 @@ instance.interceptors.request.use((config) => {
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
-    addDebugData({
-      error,
-      response: error.response,
-      keys: Object.keys(error),
-    });
+    // addDebugData({
+    //   error,
+    //   response: error.response,
+    //   keys: Object.keys(error),
+    // });
 
     const { data, status } = error.response;
 
