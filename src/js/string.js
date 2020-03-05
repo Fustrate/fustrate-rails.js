@@ -2,6 +2,8 @@
 export {
   upperFirst as capitalize,
   kebabCase as dasherize,
+  trim as strip,
+  startCase as titleize,
 } from 'lodash/string';
 
 export const humanize = (string) => (typeof string !== 'string'
@@ -44,12 +46,6 @@ export const pluralize = (string) => {
 };
 
 export const presence = (string) => (isBlank(string) ? undefined : string);
-
-export const strip = (string) => (typeof string !== 'string' ? '' : string.replace(/^\s+|\s+$/g, ''));
-
-export const titleize = (string) => (typeof string !== 'string' ? '' : string
-  .replace(/_/g, ' ')
-  .replace(/\b[a-z]/g, (char) => char.toUpperCase()));
 
 export const underscore = (string) => (typeof string !== 'string' ? '' : string
   .replace(/[a-z][A-Z]/, (match) => `${match[0]}_${match[1]}`)
