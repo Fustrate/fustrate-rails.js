@@ -70,7 +70,7 @@ export const getCurrentPageJson = () => {
   let { search } = window.location;
   
   if (pathname === '') {
-    search = search === '' ? '?format=json' : `${search}&format=json';
+    search = search === '' ? '?format=json' : `${search}&format=json`;
   } else {
     pathname = `${pathname}.json`;
   }
