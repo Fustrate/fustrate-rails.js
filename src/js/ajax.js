@@ -75,7 +75,7 @@ export const getCurrentPageJson = () => {
     pathname = `${pathname}.json`;
   }
 
-  return instance.get(`${pathname}{search}`);
+  return instance.get(`${pathname}${search}`);
 };
 
 export default instance;
