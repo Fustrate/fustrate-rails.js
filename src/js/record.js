@@ -49,9 +49,9 @@ export default class Record extends BasicObject {
 
       url = this.constructor.createPath({ format: 'json' });
     }
-    
+
     const data = FormDataBuilder.build(attributes, this.constructor.paramKey);
-          
+
     Object.keys(additionalParameters).forEach((key) => {
       data.append(key, additionalParameters[key]);
     });

@@ -16,15 +16,7 @@ const instance = axios.create({
   responseType: 'json',
 });
 
-instance.interceptors.request.use((config) => {
-  // addDebugData({
-  //   method: config.method,
-  //   url: config.url,
-  //   data: config.data,
-  // });
-
-  return config;
-}, (error) => Promise.reject(error));
+instance.interceptors.request.use((config) => config, (error) => Promise.reject(error));
 
 // The interceptor only handles basic 401 errors and error responses - it will still throw so that
 // more involved error handling can happen later.
@@ -68,7 +60,7 @@ export const when = (...requests) => new Promise((resolve) => {
 export const getCurrentPageJson = () => {
   let pathname = window.location.pathname.replace(/\/+$/, '');
   let { search } = window.location;
-  
+
   if (pathname === '') {
     search = search === '' ? '?format=json' : `${search}&format=json`;
   } else {
