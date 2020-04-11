@@ -29,18 +29,10 @@ function hrefFor(href) {
   throw new Error(`Invalid href: ${href}`);
 }
 
-function toggleElement(element, makeVisible) {
-  element.style.display = makeVisible ? '' : 'none';
-
-  if (makeVisible) {
-    element.classList.remove('js-hide');
-  }
-}
-
 // Exported functions
 
-export const animate = (element, animation, callback, { delay, speed } = {}) => {
-  const classes = ['animated', animation];
+export const animate = (element, animation, { delay, speed } = {}, callback) => {
+  const classes = ['animated', ...animation.split(' ')];
 
   if (delay) {
     classes.push(`delay-${delay}s`);
@@ -173,28 +165,6 @@ export const redirectTo = (href) => {
   window.setTimeout(() => {
     window.location.href = href.path ? href.path() : href;
   }, 750);
-};
-
-export const isVisible = (elem) => !!(
-  elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length
-);
-
-export const toggle = (element, showOrHide) => {
-  if (element instanceof NodeList) {
-    element.forEach((elem) => {
-      toggleElement(elem, showOrHide !== undefined ? showOrHide : !isVisible(elem));
-    });
-  } else {
-    toggleElement(element, showOrHide !== undefined ? showOrHide : !isVisible(element));
-  }
-};
-
-export const show = (element) => {
-  toggle(element, true);
-};
-
-export const hide = (element) => {
-  toggle(element, false);
 };
 
 export const toHumanDate = (momentObject, time = false) => {

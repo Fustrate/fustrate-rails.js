@@ -52,13 +52,17 @@ function toggleElement(element, makeVisible) {
   }
 }
 
+export const isVisible = (elem) => !!(
+  elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length
+);
+
 export const toggle = (element, showOrHide) => {
   if (element instanceof NodeList) {
     element.forEach((elem) => {
-      toggleElement(elem, showOrHide);
+      toggleElement(elem, showOrHide !== undefined ? showOrHide : !isVisible(elem));
     });
   } else {
-    toggleElement(element, showOrHide);
+    toggleElement(element, showOrHide !== undefined ? showOrHide : !isVisible(element));
   }
 };
 

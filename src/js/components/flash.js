@@ -1,15 +1,13 @@
 /* eslint-disable max-classes-per-file */
 
-// jQuery: hide, fadeIn, delay, fadeOut
-import $ from 'jquery';
-
 import Component from '../component';
-import { icon as createIcon } from '../utilities';
+import { hide } from '../show_hide';
+import { animate, icon as createIcon } from '../utilities';
 
 const settings = {
-  fadeInSpeed: 500,
-  fadeOutSpeed: 2000,
-  displayTime: 4000,
+  fadeInSpeed: 'faster',
+  fadeOutSpeed: 'slow',
+  displayTime: 4,
 };
 
 function createFlashBar(message, { type, icon } = {}) {
@@ -31,11 +29,14 @@ export class Flash extends Component {
 
     const bar = createFlashBar(message, { type, icon });
 
-    $(bar)
-      .hide()
-      .fadeIn(settings.fadeInSpeed)
-      .delay(settings.displayTime)
-      .fadeOut(settings.fadeOutSpeed, () => bar.remove());
+    hide(bar);
+
+    animate(bar, 'fadeIn', { speed: settings.fadeInSpeed }, () => {
+      animate(bar, 'fadeOut', {
+        speed: settings.fadeOutSpeed,
+        delay: settings.displayTime,
+      }, bar.remove);
+    });
   }
 
   static show(message, { type, icon } = {}) {

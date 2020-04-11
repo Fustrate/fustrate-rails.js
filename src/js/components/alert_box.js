@@ -1,10 +1,7 @@
-// jQuery: fadeOut
-import $ from 'jquery';
 import { delegate } from '@rails/ujs';
 
 import Component from '../component';
-
-const fadeSpeed = 300;
+import { animate } from '../utilities';
 
 export default class AlertBox extends Component {
   static initialize() {
@@ -14,7 +11,7 @@ export default class AlertBox extends Component {
   static closeAlertBox(event) {
     const alertBox = event.target.closest('.alert-box');
 
-    $(alertBox).fadeOut(fadeSpeed, alertBox.remove);
+    animate(alertBox, 'fadeOut', { speed: 'faster' }, alertBox.remove);
 
     return false;
   }

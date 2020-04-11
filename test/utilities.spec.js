@@ -2,16 +2,12 @@ import {
   animate,
   elementFromString,
   escapeHTML,
-  hide,
   hms,
   icon,
-  // isVisible,
   label,
   linkTo,
   multilineEscapeHTML,
   redirectTo,
-  show,
-  toggle,
   toHumanDate,
 } from '../src/js/utilities';
 
@@ -31,7 +27,7 @@ describe('animate', () => {
   it('animates with a delay and a speed', () => {
     const element = document.createElement('div');
 
-    animate(element, 'wacky', null, { delay: 3, speed: 'fast' });
+    animate(element, 'wacky', { delay: 3, speed: 'fast' });
 
     expect(element.classList).toContain('animated', 'wacky', 'delay-3s', 'fast');
 
@@ -199,62 +195,6 @@ describe('redirectTo', () => {
     // 1 more ms and it should run
     jest.advanceTimersByTime(1);
     expect(window.location.href).toEqual('https://google.com');
-  });
-});
-
-// describe('isVisible', () => {
-//   it('', () => {});
-// });
-
-describe('toggle', () => {
-  it('toggles a NodeList of elements', () => {
-    const root = document.createElement('div');
-    root.append(document.createElement('span'), document.createElement('span'));
-
-    const spans = root.querySelectorAll('span');
-
-    toggle(spans, false);
-
-    expect(spans[0].style.display).toEqual('none');
-    expect(spans[1].style.display).toEqual('none');
-  });
-
-  it('toggles a single element', () => {
-    const element = document.createElement('div');
-
-    toggle(element, false);
-
-    expect(element.style.display).toEqual('none');
-  });
-});
-
-describe('show', () => {
-  it('removes the js-hide class', () => {
-    const element = document.createElement('div');
-    element.classList.add('js-hide');
-
-    show(element);
-
-    expect(element.classList).toHaveLength(0);
-  });
-
-  it('removes the css display property', () => {
-    const element = document.createElement('div');
-    element.style.display = 'none';
-
-    show(element);
-
-    expect(element.style.display).toEqual('');
-  });
-});
-
-describe('hide', () => {
-  it('removes the css display property', () => {
-    const element = document.createElement('div');
-
-    hide(element);
-
-    expect(element.style.display).toEqual('none');
   });
 });
 

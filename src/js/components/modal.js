@@ -1,4 +1,4 @@
-// jQuery: scrollTop, css, animate, show, height, hide, fadeIn, fadeOut, detach
+// jQuery: scrollTop, css, animate, show, height
 import $ from 'jquery';
 import { delegate, fire, stopEverything } from '@rails/ujs';
 
@@ -6,11 +6,12 @@ import Component from '../component';
 import { remove } from '../array';
 import { deepExtend } from '../object';
 import { titleize } from '../string';
+import { hide, isVisible } from '../show_hide';
 import {
+  animate,
   elementFromString,
   escapeHTML,
-  hide, icon as createIcon,
-  isVisible,
+  icon as createIcon,
 } from '../utilities';
 
 const defaultSettings = {
@@ -89,7 +90,7 @@ function toggleOverlay(visible = true) {
     }
   } else {
     $(overlay).fadeOut(fadeSpeed, () => {
-      $(overlay).detach();
+      overlay.parentNode.removeChild(overlay);
     });
   }
 }
