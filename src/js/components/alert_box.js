@@ -11,7 +11,9 @@ export default class AlertBox extends Component {
   static closeAlertBox(event) {
     const alertBox = event.target.closest('.alert-box');
 
-    animate(alertBox, 'fadeOut', { speed: 'faster' }, alertBox.remove);
+    animate(alertBox, 'fadeOut', { speed: 'faster' }, () => {
+      alertBox.remove();
+    });
 
     return false;
   }

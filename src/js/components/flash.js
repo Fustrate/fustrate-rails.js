@@ -1,14 +1,10 @@
 /* eslint-disable max-classes-per-file */
 
 import Component from '../component';
-import { hide } from '../show_hide';
 import { animate, icon as createIcon } from '../utilities';
 
-const settings = {
-  fadeInSpeed: 'faster',
-  fadeOutSpeed: 'slow',
-  displayTime: 4,
-};
+const fadeInSettings = { speed: 'faster' };
+const fadeOutSettings = { speed: 'slow', delay: 4 };
 
 function createFlashBar(message, { type, icon } = {}) {
   const bar = document.createElement('div');
@@ -29,11 +25,10 @@ export class Flash extends Component {
 
     const bar = createFlashBar(message, { type, icon });
 
-    animate(bar, 'fadeIn', { speed: settings.fadeInSpeed }, () => {
-      animate(bar, 'fadeOut', {
-        speed: settings.fadeOutSpeed,
-        delay: settings.displayTime,
-      }, bar.remove);
+    animate(bar, 'fadeIn', fadeInSettings, () => {
+      animate(bar, 'fadeOut', fadeOutSettings, () => {
+        bar.remove();
+      });
     });
   }
 

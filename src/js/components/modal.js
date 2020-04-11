@@ -1,4 +1,4 @@
-// jQuery: scrollTop, css, animate, show, height
+// jQuery: scrollTop, show, height
 import $ from 'jquery';
 import { delegate, fire, stopEverything } from '@rails/ujs';
 
@@ -6,7 +6,7 @@ import Component from '../component';
 import { remove } from '../array';
 import { deepExtend } from '../object';
 import { titleize } from '../string';
-import { hide, isVisible } from '../show_hide';
+import { isVisible } from '../show_hide';
 import {
   animate,
   elementFromString,
@@ -22,21 +22,7 @@ const defaultSettings = {
   title: null,
   buttons: [],
   distanceFromTop: 25,
-  css: {
-    open: {
-      opacity: 0,
-      visibility: 'visible',
-      display: 'block',
-    },
-    close: {
-      opacity: 1,
-      visibility: 'hidden',
-      display: 'none',
-    },
-  },
 };
-
-const fadeSpeed = 250;
 
 const template = `
   <div class="modal" role="dialog" aria-modal="true">
@@ -82,14 +68,12 @@ function toggleOverlay(visible = true) {
 
   if (visible) {
     if (!isVisible(overlay)) {
-      hide(overlay);
-
       document.body.appendChild(overlay);
 
-      $(overlay).fadeIn(fadeSpeed);
+      animate(overlay, 'fadeIn', { speed: 'fast' });
     }
   } else {
-    $(overlay).fadeOut(fadeSpeed, () => {
+    animate(overlay, 'fadeOut', { speed: 'faster' }, () => {
       overlay.parentNode.removeChild(overlay);
     });
   }
@@ -251,26 +235,18 @@ export default class Modal extends Component {
       toggleOverlay(true);
     }
 
-    const css = this.settings.css.open;
-    css.top = `${$(window).scrollTop() - this.settings.cachedHeight}px`;
-
-    const endCss = {
-      top: `${$(window).scrollTop() + this.settings.distanceFromTop}px`,
-      opacity: 1,
-    };
+    this.modal.style.top = `${$(window).scrollTop() + this.settings.distanceFromTop}px`;
 
     setTimeout(() => {
       this.modal.classList.add('open');
 
-      $(this.modal)
-        .css(css)
-        .animate(endCss, 250, 'linear', () => {
-          this.locked = false;
+      animate(this.modal, 'fadeInDown', {}, () => {
+        this.locked = false;
 
-          fire(this.modal, 'modal:opened');
+        fire(this.modal, 'modal:opened');
 
-          this.focusFirstInput();
-        });
+        this.focusFirstInput();
+      });
     }, 125);
   }
 
@@ -288,26 +264,20 @@ export default class Modal extends Component {
     // Remove the top-most modal (this one) from the stack
     openModals.pop();
 
-    const endCss = {
-      top: `${-$(window).scrollTop() - this.settings.cachedHeight}px`,
-      opacity: 0,
-    };
-
     setTimeout(() => {
-      $(this.modal).animate(endCss, 250, 'linear', () => {
-        this.locked = false;
-
-        $(this.modal).css(this.settings.css.close);
+      animate(this.modal, 'fadeOutUp', {}, () => {
         fire(this.modal, 'modal:closed');
 
-        if (openPrevious) {
-          this.openPreviousModal();
-        } else {
-          this.constructor.hideAllModals();
-        }
+        this.modal.classList.remove('open');
+
+        this.locked = false;
       });
 
-      this.modal.classList.remove('open');
+      if (openPrevious) {
+        this.openPreviousModal();
+      } else {
+        this.constructor.hideAllModals();
+      }
     }, 125);
   }
 
@@ -316,8 +286,6 @@ export default class Modal extends Component {
     this.locked = false;
 
     this.modal.classList.remove('open');
-
-    $(this.modal).css(this.settings.css.close);
   }
 
   cancel() {
@@ -331,11 +299,11 @@ export default class Modal extends Component {
   }
 
   cacheHeight() {
-    this.settings.cachedHeight = $(this.modal)
-      .show()
-      .height();
+    this.modal.style.display = 'block';
 
-    $(this.modal).hide();
+    this.settings.cachedHeight = $(this.modal).height();
+
+    this.modal.style.display = '';
   }
 
   createModal() {
