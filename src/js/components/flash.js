@@ -29,8 +29,6 @@ export class Flash extends Component {
 
     const bar = createFlashBar(message, { type, icon });
 
-    hide(bar);
-
     animate(bar, 'fadeIn', { speed: settings.fadeInSpeed }, () => {
       animate(bar, 'fadeOut', {
         speed: settings.fadeOutSpeed,
