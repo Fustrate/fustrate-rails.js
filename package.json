@@ -16,7 +16,6 @@
     "color": "^3.1.2",
     "core-js": "^3.6.5",
     "custom-event-polyfill": "^1.0.7",
-    "jquery": "^3.5.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "popper.js": "^1.16.1",

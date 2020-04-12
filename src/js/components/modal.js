@@ -1,5 +1,3 @@
-// jQuery: scrollTop, show, height
-import $ from 'jquery';
 import { delegate, fire, stopEverything } from '@rails/ujs';
 
 import Component from '../component';
@@ -235,7 +233,9 @@ export default class Modal extends Component {
       toggleOverlay(true);
     }
 
-    this.modal.style.top = `${$(window).scrollTop() + this.settings.distanceFromTop}px`;
+    const { top } = document.body.getBoundingClientRect();
+
+    this.modal.style.top = `${-top + this.settings.distanceFromTop}px`;
 
     setTimeout(() => {
       this.modal.classList.add('open');
@@ -301,7 +301,9 @@ export default class Modal extends Component {
   cacheHeight() {
     this.modal.style.display = 'block';
 
-    this.settings.cachedHeight = $(this.modal).height();
+    const { height } = getComputedStyle(this.modal, null);
+
+    this.settings.cachedHeight = parseFloat(height.replace('px', ''));
 
     this.modal.style.display = '';
   }
