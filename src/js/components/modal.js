@@ -137,8 +137,6 @@ export default class Modal extends Component {
 
     this.modal.querySelector('.modal-content').innerHTML = modalContent;
 
-    this.settings.cachedHeight = undefined;
-
     if (reload) {
       this.reloadUIElements();
     }
@@ -166,8 +164,6 @@ export default class Modal extends Component {
     }, this);
 
     this.modal.querySelector('.modal-buttons').innerHTML = list.join(' ');
-
-    this.settings.cachedHeight = undefined;
 
     if (reload) {
       this.reloadUIElements();
@@ -220,10 +216,6 @@ export default class Modal extends Component {
     openModals.push(this);
 
     fire(this.modal, 'modal:opening');
-
-    if (typeof this.settings.cachedHeight === 'undefined') {
-      this.cacheHeight();
-    }
 
     if (openModals.length > 1) {
       // Hide the modal immediately previous to this one.
@@ -296,16 +288,6 @@ export default class Modal extends Component {
     if (openModals.length > 0) {
       openModals[openModals.length - 1].open();
     }
-  }
-
-  cacheHeight() {
-    this.modal.style.display = 'block';
-
-    const { height } = getComputedStyle(this.modal, null);
-
-    this.settings.cachedHeight = parseFloat(height.replace('px', ''));
-
-    this.modal.style.display = '';
   }
 
   createModal() {
