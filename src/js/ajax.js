@@ -51,9 +51,7 @@ instance.interceptors.response.use(
 
 export const when = (...requests) => new Promise((resolve) => {
   axios.all(requests).then(
-    axios.spread((...responses) => {
-      resolve(...responses);
-    }),
+    axios.spread((...responses) => resolve(responses)),
   );
 });
 
