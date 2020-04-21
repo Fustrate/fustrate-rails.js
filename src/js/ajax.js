@@ -31,7 +31,9 @@ instance.interceptors.response.use(
 
     const { data, status } = error.response;
 
-    if (status === 401) {
+    if (!status || status === 404) {
+      window.alert('The server is not responding - please wait a while before trying again.');
+    } else if (status === 401) {
       // eslint-disable-next-line no-alert
       window.alert(`
       You are not currently logged in. Please refresh the page and try performing this action again.
@@ -42,7 +44,7 @@ instance.interceptors.response.use(
       });
     } else {
       // eslint-disable-next-line no-console
-      console.log('Unhandled interception', error.response);
+      console.log(`Unhandled interception (${status})`, error.response);
     }
 
     return Promise.reject(error);
