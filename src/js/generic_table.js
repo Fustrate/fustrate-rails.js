@@ -25,9 +25,7 @@ export default class GenericTable extends GenericPage {
   }
 
   initialize() {
-    super.initialize();
-
-    this.reloadTable();
+    return super.initialize().then(this.reloadTable.bind(this));
   }
 
   reloadTable() { }
