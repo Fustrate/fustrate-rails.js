@@ -5,6 +5,8 @@ export default class GenericPage {
     this.callAllMethodsBeginningWith('initialize');
 
     this.addEventListeners();
+    
+    return Promise.resolve();
   }
 
   addEventListeners() {
