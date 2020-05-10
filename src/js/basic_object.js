@@ -5,9 +5,17 @@ import Listenable from './listenable';
 
 export default class BasicObject extends Listenable {
   constructor(data) {
-    super(data);
+    super();
+    
+    if (!data) {
+      return;
+    }
 
-    this.extractFromData(data);
+    if (typeof data === 'number' || typeof data === 'string') {
+      this.id = data;
+    } else {
+      this.extractFromData(data);
+    }
   }
 
   // Simple extractor to assign root keys as properties in the current object.
