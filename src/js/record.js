@@ -12,17 +12,14 @@ export default class Record extends BasicObject {
   }
 
   constructor(data) {
-    super(data);
-
     this.isLoaded = false;
 
     if (typeof data === 'number' || typeof data === 'string') {
       // If the parameter was a number or string, it's likely the record ID
-      this.id = parseInt(data, 10);
-    } else {
-      // Otherwise we were probably given a hash of attributes
-      this.extractFromData(data);
+      data = { id: parseInt(data, 10) };
     }
+
+    super(data);
   }
 
   reload({ force } = {}) {
