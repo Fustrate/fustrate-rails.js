@@ -6,14 +6,8 @@ import Listenable from './listenable';
 export default class BasicObject extends Listenable {
   constructor(data) {
     super();
-    
-    if (!data) {
-      return;
-    }
 
-    if (typeof data === 'number' || typeof data === 'string') {
-      this.id = data;
-    } else {
+    if (typeof data === 'object') {
       this.extractFromData(data);
     }
   }
