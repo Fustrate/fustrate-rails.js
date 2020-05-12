@@ -3,9 +3,6 @@ import { compact } from 'lodash/array';
 import { escape } from 'lodash/string';
 import { underscore, isBlank } from './string';
 
-// TODO: Remove this and use lodash directly in projects
-export const escapeHTML = escape;
-
 function hrefFor(href) {
   if (href === undefined || href === null) {
     return '#';
@@ -144,7 +141,7 @@ export const multilineEscapeHTML = (string) => {
 
   return String(string)
     .split(/\r?\n/)
-    .map((line) => escapeHTML(line))
+    .map((line) => escape(line))
     .join('<br />');
 };
 
