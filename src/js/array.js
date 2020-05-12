@@ -1,12 +1,3 @@
-// TODO: Remove these and use lodash directly in projects
-export {
-  compact,
-  head as first,
-  last,
-  uniq as unique,
-  pull as remove,
-} from 'lodash';
-
 export const toSentence = (arr) => {
   switch (arr.length) {
     case 0:
