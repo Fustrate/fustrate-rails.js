@@ -5,7 +5,7 @@ export const humanize = (string) => (typeof string !== 'string'
     .replace(/_/g, ' ')
     .toLowerCase());
 
-export const isBlank = (string) => (typeof string === 'string' && string.trim() === '') || string === null || string === undefined;
+export const isBlank = (string) => string == null || (typeof string === 'string' && string.trim() === '');
 
 export const isPresent = (string) => !isBlank(string);
 
