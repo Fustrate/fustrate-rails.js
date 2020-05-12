@@ -1,11 +1,3 @@
-// TODO: Remove these and use lodash directly in projects
-export {
-  upperFirst as capitalize,
-  kebabCase as dasherize,
-  trim as strip,
-  startCase as titleize,
-} from 'lodash/string';
-
 export const humanize = (string) => (typeof string !== 'string'
   ? ''
   : string
