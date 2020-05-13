@@ -283,6 +283,7 @@ export class GenericTable extends GenericPage {
     createRow(item: Record | { [s: string]: any }): HTMLTableRowElement;
     reloadRows(trs: HTMLTableRowElement[], options?: { sort?: (a: HTMLTableRowElement, b: HTMLTableRowElement) => number }): void;
     addRow(row: HTMLTableRowElement): void;
+    updateRow(row: HTMLTableRowElement, item: any): void;
     removeRow(row: HTMLTableRowElement): void;
     updated(): void;
     getCheckedIds(): string[];
