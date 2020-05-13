@@ -1,14 +1,14 @@
+import { escape, startCase } from 'lodash/string';
+import { pull } from 'lodash/array';
+
 import { delegate, fire, stopEverything } from '@rails/ujs';
 
 import Component from '../component';
-import { remove } from '../array';
 import { deepExtend } from '../object';
-import { titleize } from '../string';
 import { isVisible } from '../show_hide';
 import {
   animate,
   elementFromString,
-  escapeHTML,
   icon as createIcon,
 } from '../utilities';
 
@@ -54,7 +54,7 @@ function createButton(name, options) {
 
   return `
     <button data-button="${name}" class="${type || name}">
-      ${escapeHTML(text || titleize(name))}
+      ${escape(text || startCase(name))}
     </button>`;
 }
 
@@ -155,7 +155,7 @@ export default class Modal extends Component {
       if (button === 'spacer') {
         list.push('<div class="spacer"></div>');
       } else if (typeof button === 'string') {
-        list.push(`<button class="${button}" data-button="${button}">${titleize(button)}</button>`);
+        list.push(`<button class="${button}" data-button="${button}">${startCase(button)}</button>`);
       } else if (typeof button === 'object') {
         Object.keys(button).forEach((name) => {
           list.push(createButton(name, button[name]));
@@ -210,7 +210,7 @@ export default class Modal extends Component {
     this.locked = true;
 
     if (openModals.includes(this)) {
-      remove(openModals, this);
+      pull(openModals, this);
     }
 
     openModals.push(this);

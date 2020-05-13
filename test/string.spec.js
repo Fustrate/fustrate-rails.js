@@ -1,6 +1,4 @@
 import {
-  capitalize,
-  dasherize,
   humanize,
   isBlank,
   isPresent,
@@ -8,23 +6,8 @@ import {
   phoneFormat,
   pluralize,
   presence,
-  strip,
-  titleize,
   underscore,
 } from '../src/js/string';
-
-describe('#capitalize()', () => {
-  it('capitalizes a string', () => {
-    expect(capitalize('hello world')).toEqual('Hello world');
-    expect(capitalize('HELLO WORLD')).toEqual('HELLO WORLD');
-  });
-});
-
-describe('#dasherize()', () => {
-  it('dasherizes a string', () => {
-    expect(dasherize('hello_world')).toEqual('hello-world');
-  });
-});
 
 describe('#humanize()', () => {
   it('dasherizes a string', () => {
@@ -90,24 +73,6 @@ describe('#presence()', () => {
     expect(presence('')).toBeUndefined();
     expect(presence(null)).toBeUndefined();
     expect(presence(undefined)).toBeUndefined();
-  });
-});
-
-describe('#strip()', () => {
-  it('strips a string', () => {
-    expect(strip('hello world')).toEqual('hello world');
-    expect(strip('   hello world')).toEqual('hello world');
-    expect(strip('\thello world ')).toEqual('hello world');
-    expect(strip('hello world\t')).toEqual('hello world');
-    expect(strip('\nhello\nworld')).toEqual('hello\nworld');
-  });
-});
-
-describe('#titleize()', () => {
-  it('titleizes a string', () => {
-    expect(titleize('hello world')).toEqual('Hello World');
-    expect(titleize('hello_world')).toEqual('Hello World');
-    // expect(titleize('it's a surprise')).toEqual("It's A Surprise");
   });
 });
 
