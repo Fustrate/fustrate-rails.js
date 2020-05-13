@@ -3,9 +3,9 @@ import { Moment } from 'moment';
 import { AxiosInstance, AxiosPromise } from 'axios';
 
 declare module "@fustrate/rails" {
-    type AutocompleteDatum = { [s: string]: any };
+    export type AutocompleteDatum = { [s: string]: any };
 
-    interface ModalSettings {
+    export interface ModalSettings {
         size: 'tiny' | 'small' | 'medium' | 'large' | 'xlarge',
         type?: string,
         icon?: string,
@@ -15,14 +15,14 @@ declare module "@fustrate/rails" {
         distanceFromTop: number,
     }
 
-    interface PaginationData {
+    export interface PaginationData {
         currentPage?: number,
         totalPages?: number,
         totalEntries?: number,
         perPage?: number,
     }
 
-    class Listenable {
+    export class Listenable {
         listeners: { [s: string]: ((event: CustomEvent) => void)[] };
 
         addEventListener(type: string, listener: (event: CustomEvent) => void): void;
@@ -30,7 +30,7 @@ declare module "@fustrate/rails" {
         dispatchEvent(event: CustomEvent): boolean;
     }
 
-    class BasicObject extends Listenable {
+    export class BasicObject extends Listenable {
         constructor(data: number | string | { [s: string]: any });
 
         extractFromData(data: { [s: string]: any }): { [s: string]: any };
@@ -41,7 +41,7 @@ declare module "@fustrate/rails" {
         static buildList(items: any[], attributes: { [s: string]: any }): [BasicObject];
     }
 
-    class Record extends BasicObject {
+    export class Record extends BasicObject {
         static classname: string;
 
         id?: number;
@@ -61,15 +61,15 @@ declare module "@fustrate/rails" {
         static get paramKey(): string;
     }
 
-    class Component extends Listenable {
+    export class Component extends Listenable {
     }
 
-    class AlertBox extends Component {
+    export class AlertBox extends Component {
         static initialize(): void;
         static closeAlertBox(event: UIEvent): false;
     }
 
-    class AutocompleteSuggestion extends String {
+    export class AutocompleteSuggestion extends String {
         datum: AutocompleteDatum;
 
         constructor(datum: AutocompleteDatum, displayValue: string);
@@ -79,17 +79,17 @@ declare module "@fustrate/rails" {
         highlightedHTML(value: string): string;
     }
 
-    class PlainAutocompleteSuggestion extends AutocompleteSuggestion {
+    export class PlainAutocompleteSuggestion extends AutocompleteSuggestion {
         constructor(datum: AutocompleteDatum);
     }
 
-    class AutocompleteSource {
+    export class AutocompleteSource {
         matches(datum: AutocompleteDatum): boolean;
         filter(suggestion: AutocompleteSuggestion, userInput: string): boolean;
         suggestion(datum: AutocompleteDatum): AutocompleteSuggestion;
     }
 
-    class PlainAutocompleteSource extends AutocompleteSource {
+    export class PlainAutocompleteSource extends AutocompleteSource {
         list: string[];
 
         constructor(list: string[]);
@@ -99,13 +99,13 @@ declare module "@fustrate/rails" {
         matchingData(searchTerm: string): string[];
     }
 
-    interface AutocompleteOptions {
+    export interface AutocompleteOptions {
         source?: AutocompleteSource,
         sources?: AutocompleteSource[],
         list?: string[],
     }
 
-    class Autocomplete extends Component {
+    export class Autocomplete extends Component {
         input: HTMLInputElement;
         awesomplete: Awesomplete;
         sources: AutocompleteSource[];
@@ -126,58 +126,58 @@ declare module "@fustrate/rails" {
         static create(input: HTMLInputElement, options?: AutocompleteOptions): Autocomplete;
     }
 
-    class PlainAutocomplete extends Autocomplete {
+    export class PlainAutocomplete extends Autocomplete {
         static create(input: HTMLInputElement, options?: AutocompleteOptions): PlainAutocomplete;
 
         onSelect(event: UIEvent): void
     }
 
-    class Disclosure extends Component {
+    export class Disclosure extends Component {
         static initialize(): void;
         static toggleDisclosure(event: UIEvent): false;
     }
 
-    class DropZone extends Component {
+    export class DropZone extends Component {
         constructor(target: HTMLElement, callback: (files: File[]) => void);
 
         static create(target: HTMLElement, callback: (files: File[]) => void): void;
     }
 
-    class Dropdown extends Component {
+    export class Dropdown extends Component {
         static initialize(): void;
         static open(event: UIEvent): false;
         static hide(): void;
     }
 
-    class FilePicker extends Component {
+    export class FilePicker extends Component {
         constructor(callback: (files: File[]) => void);
     }
 
-    class Flash extends Component {
+    export class Flash extends Component {
         constructor(message: string, options: { type: string, icon?: string });
 
         static show(message: string, options: { type: string, icon?: string }): Flash;
     }
 
-    class InfoFlash extends Flash {
+    export class InfoFlash extends Flash {
         constructor(message: string, options: { icon?: string });
 
         static show(message: string, options: { icon?: string }): InfoFlash;
     }
 
-    class ErrorFlash extends Flash {
+    export class ErrorFlash extends Flash {
         constructor(message: string, options: { icon?: string });
 
         static show(message: string, options: { icon?: string }): ErrorFlash;
     }
 
-    class SuccessFlash extends Flash {
+    export class SuccessFlash extends Flash {
         constructor(message: string, options: { icon?: string });
 
         static show(message: string, options: { icon?: string }): SuccessFlash;
     }
 
-    class Modal extends Component {
+    export class Modal extends Component {
         buttons: { [s: string]: HTMLButtonElement };
         fields: { [s: string]: HTMLElement };
         modalId: number;
@@ -211,7 +211,7 @@ declare module "@fustrate/rails" {
         static keyPressed(event: UIEvent): void;
     }
 
-    class Pagination extends Component {
+    export class Pagination extends Component {
         currentPage: number;
         totalPages: number;
         totalEntries: number;
@@ -229,7 +229,7 @@ declare module "@fustrate/rails" {
         static getCurrentPage(): number;
     }
 
-    class Tabs extends Component {
+    export class Tabs extends Component {
         tabs: HTMLUListElement;
 
         constructor(tabs: HTMLUListElement);
@@ -239,17 +239,17 @@ declare module "@fustrate/rails" {
         static initialize(): Tabs;
     }
 
-    class Tooltip extends Component {
+    export class Tooltip extends Component {
         static create(node: HTMLElement, title: string, options: { placement?: string, container?: HTMLElement }): TooltipJS;
     }
 
-    class FormDataBuilder {
+    export class FormDataBuilder {
         static build(obj: { [s: string]: any }, namespace?: string): FormData;
         static appendObject(data: FormData, key: string, value: any): void;
         static toFormData(data: FormData, obj: { [s: string]: any }, namespace?: string): FormData;
     }
 
-    class GenericPage {
+    export class GenericPage {
         fields: { [s: string]: HTMLElement };
         buttons: { [s: string]: HTMLElement };
         allMethodNamesList: string[];
@@ -263,7 +263,7 @@ declare module "@fustrate/rails" {
         getAllMethodNames(): string[];
     }
 
-    class GenericTable extends GenericPage {
+    export class GenericTable extends GenericPage {
         table: HTMLTableElement;
         tbody: HTMLTableSectionElement;
 
@@ -284,7 +284,7 @@ declare module "@fustrate/rails" {
         updatePagination(data: PaginationData): void;
       }
 
-    class Fustrate {
+    export class Fustrate {
         static instance: GenericPage;
 
         constructor();
@@ -297,60 +297,60 @@ declare module "@fustrate/rails" {
 }
 
 declare module "@fustrate/rails/ajax" {
-    function when(...requests: AxiosPromise[]): Promise<any>;
-    function getCurrentPageJson(): AxiosPromise;
+    export function when(...requests: AxiosPromise[]): Promise<any>;
+    export function getCurrentPageJson(): AxiosPromise;
 
     export = AxiosInstance;
 }
 
 declare module "@fustrate/rails/array" {
-    function toSentence(arr: string[]): string;
+    export function toSentence(arr: string[]): string;
 }
 
 declare module "@fustrate/rails/debug" {
     const debugData: any[];
 
-    function addDebugData(data: any): void;
+    export function addDebugData(data: any): void;
 }
 
 declare module "@fustrate/rails/number" {
-    function accountingFormat(number: number): string;
-    function truncate(number: number, digits: number): string;
-    function bytesToString(number: number): string;
-    function ordinalize(number: number): string;
+    export function accountingFormat(number: number): string;
+    export function truncate(number: number, digits: number): string;
+    export function bytesToString(number: number): string;
+    export function ordinalize(number: number): string;
 }
 
 declare module "@fustrate/rails/object" {
-    function isPlainObject(object: any): boolean;
-    function deepExtend(out: object, ...rest: object[]): object;
+    export function isPlainObject(object: any): boolean;
+    export function deepExtend(out: object, ...rest: object[]): object;
 }
 
 declare module "@fustrate/rails/show_hide" {
-    function isVisible(elem: HTMLElement): boolean;
-    function toggle(element: NodeList | HTMLElement, showOrHide?: boolean): void;
-    function show(element: NodeList | HTMLElement): void;
-    function hide(element: NodeList | HTMLElement): void;
+    export function isVisible(elem: HTMLElement): boolean;
+    export function toggle(element: NodeList | HTMLElement, showOrHide?: boolean): void;
+    export function show(element: NodeList | HTMLElement): void;
+    export function hide(element: NodeList | HTMLElement): void;
 }
 
 declare module "@fustrate/rails/string" {
-    function humanize(string?: string): string;
-    function isBlank(string?: string): boolean;
-    function isPresent(string?: string): boolean;
-    function parameterize(string?: string): string;
-    function phoneFormat(string?: string): string;
-    function pluralize(string?: string): string;
-    function presence(string?: string): (string | undefined);
-    function underscore(string?: string): string;
+    export function humanize(string?: string): string;
+    export function isBlank(string?: string): boolean;
+    export function isPresent(string?: string): boolean;
+    export function parameterize(string?: string): string;
+    export function phoneFormat(string?: string): string;
+    export function pluralize(string?: string): string;
+    export function presence(string?: string): (string | undefined);
+    export function underscore(string?: string): string;
 }
 
 declare module "@fustrate/rails/utilities" {
-    function animate(element: HTMLElement, animation: string, options: { delay?: string, speed?: string }, callback?: () => void): void;
-    function elementFromString<T extends HTMLElement>(string: string): T;
-    function hms(seconds: number, zero: boolean): string;
-    function icon(types: string, style: string): string;
-    function label(text: string, type?: string): string;
-    function multilineEscapeHTML(string: string): string;
-    function linkTo(text: string, href?: string | any, attributes?: { [s: string]: any }): string;
-    function redirectTo(href: string | any): void;
-    function toHumanDate(momentObject: Moment, time: boolean): string;
+    export function animate(element: HTMLElement, animation: string, options: { delay?: string, speed?: string }, callback?: () => void): void;
+    export function elementFromString<T extends HTMLElement>(string: string): T;
+    export function hms(seconds: number, zero: boolean): string;
+    export function icon(types: string, style: string): string;
+    export function label(text: string, type?: string): string;
+    export function multilineEscapeHTML(string: string): string;
+    export function linkTo(text: string, href?: string | any, attributes?: { [s: string]: any }): string;
+    export function redirectTo(href: string | any): void;
+    export function toHumanDate(momentObject: Moment, time: boolean): string;
 }
