@@ -36,6 +36,5 @@
     "lint": "eslint .",
     "precommit": "npm run lint",
     "test": "jest"
-  },
-  "types": "./fustrate-rails.d.ts"
+  }
 }

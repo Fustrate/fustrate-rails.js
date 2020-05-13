@@ -1,6 +1,7 @@
-import TooltipJS from 'tooltip.js';
-import { Moment } from 'moment';
+import Awesomplete from 'awesomplete';
 import { AxiosInstance, AxiosPromise } from 'axios';
+import { Moment } from 'moment';
+import TooltipJS from 'tooltip.js';
 
 declare module "@fustrate/rails" {
     export type AutocompleteDatum = { [s: string]: any };
@@ -49,10 +50,10 @@ declare module "@fustrate/rails" {
 
         constructor(data: number | string | { [s: string]: any });
 
-        path(options: { format?: string }): string;
-        reload(options: { force?: boolean }): Promise<any>;
-        update(attributes: { [s: string]: any }, additionalParameters: { [s: string]: any }): Promise<any>;
-        delete(params:  { [s: string]: any }): Promise<any>;
+        path(options?: { format?: string }): string;
+        reload(options?: { force?: boolean }): Promise<any>;
+        update(attributes: { [s: string]: any }, additionalParameters?: { [s: string]: any }): Promise<any>;
+        delete(params?:  { [s: string]: any }): Promise<any>;
 
         get classname(): string;
 
@@ -160,21 +161,21 @@ declare module "@fustrate/rails" {
     }
 
     export class InfoFlash extends Flash {
-        constructor(message: string, options: { icon?: string });
+        constructor(message: string, options?: { icon?: string });
 
-        static show(message: string, options: { icon?: string }): InfoFlash;
+        static show(message: string, options?: { icon?: string }): InfoFlash;
     }
 
     export class ErrorFlash extends Flash {
-        constructor(message: string, options: { icon?: string });
+        constructor(message: string, options?: { icon?: string });
 
-        static show(message: string, options: { icon?: string }): ErrorFlash;
+        static show(message: string, options?: { icon?: string }): ErrorFlash;
     }
 
     export class SuccessFlash extends Flash {
-        constructor(message: string, options: { icon?: string });
+        constructor(message: string, options?: { icon?: string });
 
-        static show(message: string, options: { icon?: string }): SuccessFlash;
+        static show(message: string, options?: { icon?: string }): SuccessFlash;
     }
 
     export class Modal extends Component {
@@ -274,7 +275,7 @@ declare module "@fustrate/rails" {
         initialize(): Promise<any>;
         reloadTable(): void;
         createRow(item: Record | { [s: string]: any }): HTMLTableRowElement;
-        reloadRows(trs: HTMLTableRowElement[], options: { sort?: (a: HTMLTableRowElement, b: HTMLTableRowElement) => number }): void;
+        reloadRows(trs: HTMLTableRowElement[], options?: { sort?: (a: HTMLTableRowElement, b: HTMLTableRowElement) => number }): void;
         addRow(row: HTMLTableRowElement): void;
         removeRow(row: HTMLTableRowElement): void;
         updated(): void;
@@ -284,7 +285,7 @@ declare module "@fustrate/rails" {
         updatePagination(data: PaginationData): void;
       }
 
-    export class Fustrate {
+    export default class Fustrate {
         static instance: GenericPage;
 
         constructor();
@@ -292,8 +293,6 @@ declare module "@fustrate/rails" {
         static start(klass: GenericPage): void;
         static initialize(): void;
     }
-
-    export = Fustrate;
 }
 
 declare module "@fustrate/rails/ajax" {
@@ -308,7 +307,7 @@ declare module "@fustrate/rails/array" {
 }
 
 declare module "@fustrate/rails/debug" {
-    const debugData: any[];
+    export const debugData: any[];
 
     export function addDebugData(data: any): void;
 }
@@ -344,13 +343,13 @@ declare module "@fustrate/rails/string" {
 }
 
 declare module "@fustrate/rails/utilities" {
-    export function animate(element: HTMLElement, animation: string, options: { delay?: string, speed?: string }, callback?: () => void): void;
+    export function animate(element: HTMLElement, animation: string, options?: { delay?: string, speed?: string }, callback?: () => void): void;
     export function elementFromString<T extends HTMLElement>(string: string): T;
-    export function hms(seconds: number, zero: boolean): string;
-    export function icon(types: string, style: string): string;
+    export function hms(seconds: number, zero?: boolean): string;
+    export function icon(types: string, style?: string): string;
     export function label(text: string, type?: string): string;
     export function multilineEscapeHTML(string: string): string;
     export function linkTo(text: string, href?: string | any, attributes?: { [s: string]: any }): string;
     export function redirectTo(href: string | any): void;
-    export function toHumanDate(momentObject: Moment, time: boolean): string;
+    export function toHumanDate(momentObject: Moment, time?: boolean): string;
 }
