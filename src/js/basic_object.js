@@ -46,11 +46,11 @@ export default class BasicObject extends Listenable {
     if (!data) {
       return undefined;
     }
-    
+
     if (data instanceof this) {
       return data;
     }
-    
+
     if (typeof data === 'string' || typeof data === 'number') {
       data = { id: data };
     }

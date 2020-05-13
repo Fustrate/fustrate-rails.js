@@ -155,7 +155,7 @@ export default class Pagination extends Component {
     const matchData = window.location.search.match(/[?&]page=(\d+)/);
 
     if (matchData != null) {
-      return matchData[0];
+      return parseInt(matchData[0], 10);
     }
 
     return 1;
