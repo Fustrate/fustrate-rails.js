@@ -266,6 +266,7 @@ export class GenericTable extends GenericPage {
     table: HTMLTableElement;
     tbody: HTMLTableSectionElement;
 
+    static blankRow: string;
     static noRecordsMessage: string;
 
     constructor(tableSelector: string);
