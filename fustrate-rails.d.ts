@@ -1,4 +1,6 @@
 import TooltipJS from 'tooltip.js';
+import { Moment } from 'moment';
+import { AxiosInstance, AxiosPromise } from 'axios';
 
 declare module "@fustrate/rails" {
     const debugData: any[];
@@ -58,7 +60,7 @@ declare module "@fustrate/rails" {
 
         get classname(): string;
 
-        static create(attributes): Promise<any>;
+        static create(attributes: { [s: string]: any }): Promise<any>;
 
         static get paramKey(): string;
     }
@@ -71,7 +73,70 @@ declare module "@fustrate/rails" {
         static closeAlertBox(event: UIEvent): false;
     }
 
+    interface AutocompleteDatum {
+    }
+
+    class AutocompleteSuggestion extends String {
+        datum: AutocompleteDatum;
+
+        constructor(datum: AutocompleteDatum, displayValue: string);
+
+        highlight(input: string, text: string): string;
+        item(text: string): HTMLLIElement;
+        highlightedHTML(value: string): string;
+    }
+
+    class PlainAutocompleteSuggestion extends AutocompleteSuggestion {
+        constructor(datum: AutocompleteDatum);
+    }
+
+    class AutocompleteSource {
+        matches(datum: AutocompleteDatum): boolean;
+        filter(suggestion: AutocompleteSuggestion, userInput: string): boolean;
+        suggestion(datum: AutocompleteDatum): AutocompleteSuggestion;
+    }
+
+    class PlainAutocompleteSource extends AutocompleteSource {
+        list: string[];
+
+        constructor(list: string[]);
+
+        filter(suggestion: AutocompleteSuggestion, userInput: string): boolean;
+        suggestion(datum: AutocompleteDatum): PlainAutocompleteSuggestion;
+        matchingData(searchTerm: string): string[];
+    }
+
+    interface AutocompleteOptions {
+        source?: AutocompleteSource,
+        sources?: AutocompleteSource[],
+        list?: string[],
+    }
+
     class Autocomplete extends Component {
+        input: HTMLInputElement;
+        awesomplete: Awesomplete;
+        sources: AutocompleteSource[];
+        value: string;
+
+        constructor(input: HTMLInputElement, options?: AutocompleteOptions);
+
+        extractOptions(options: AutocompleteOptions): void;
+        sourceForDatum(datum: AutocompleteDatum): AutocompleteSource;
+        suggestionForDatum(datum: AutocompleteDatum): AutocompleteSuggestion;
+        blanked(): void;
+        onSelect(event: UIEvent): void;
+        onFocus(): void;
+        onKeyup(event: UIEvent): void;
+        highlight(text: string): string;
+        replace(suggestion: AutocompleteSuggestion): void;
+
+        static create(input: HTMLInputElement, options?: AutocompleteOptions): Autocomplete;
+    }
+
+    class PlainAutocomplete extends Autocomplete {
+        static create(input: HTMLInputElement, options?: AutocompleteOptions): PlainAutocomplete;
+
+        onSelect(event: UIEvent): void
     }
 
     class Disclosure extends Component {
@@ -234,15 +299,59 @@ declare module "@fustrate/rails" {
         static start(klass: GenericPage): void;
         static initialize(): void;
     }
+
+    export = Fustrate;
+}
+
+declare module "@fustrate/rails/ajax" {
+    function when(...requests: AxiosPromise[]): Promise<any>;
+    function getCurrentPageJson(): AxiosPromise;
+
+    export = AxiosInstance;
+}
+
+declare module "@fustrate/rails/array" {
+    function toSentence(arr: string[]): string;
+}
+
+declare module "@fustrate/rails/number" {
+    function accountingFormat(number: number): string;
+    function truncate(number: number, digits: number): string;
+    function bytesToString(number: number): string;
+    function ordinalize(number: number): string;
+}
+
+declare module "@fustrate/rails/object" {
+    function isPlainObject(object: any): boolean;
+    function deepExtend(out: object, ...rest: object[]): object;
+}
+
+declare module "@fustrate/rails/show_hide" {
+    function isVisible(elem: HTMLElement): boolean;
+    function toggle(element: NodeList | HTMLElement, showOrHide?: boolean): void;
+    function show(element: NodeList | HTMLElement): void;
+    function hide(element: NodeList | HTMLElement): void;
 }
 
 declare module "@fustrate/rails/string" {
-    const humanize: (string?: string) => string;
-    const isBlank: (string?: string) => boolean;
-    const isPresent: (string?: string) => boolean;
-    const parameterize: (string?: string) => string;
-    const phoneFormat: (string?: string) => string;
-    const pluralize: (string?: string) => string;
-    const presence: (string?: string) => (string | undefined);
-    const underscore: (string?: string) => string;
+    function humanize(string?: string): string;
+    function isBlank(string?: string): boolean;
+    function isPresent(string?: string): boolean;
+    function parameterize(string?: string): string;
+    function phoneFormat(string?: string): string;
+    function pluralize(string?: string): string;
+    function presence(string?: string): (string | undefined);
+    function underscore(string?: string): string;
+}
+
+declare module "@fustrate/rails/utilities" {
+    function animate(element: HTMLElement, animation: string, options: { delay?: string, speed?: string }, callback?: () => void): void;
+    function elementFromString<T extends HTMLElement>(string: string): T;
+    function hms(seconds: number, zero: boolean): string;
+    function icon(types: string, style: string): string;
+    function label(text: string, type?: string): string;
+    function multilineEscapeHTML(string: string): string;
+    function linkTo(text: string, href?: string | any, attributes?: { [s: string]: any }): string;
+    function redirectTo(href: string | any): void;
+    function toHumanDate(momentObject: Moment, time: boolean): string;
 }
