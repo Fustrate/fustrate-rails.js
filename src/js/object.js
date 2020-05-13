@@ -1,6 +1,6 @@
 export const isPlainObject = (object) => {
   // Do the inexpensive checks first.
-  if (typeof object !== 'object' || Array.isArray(object) || object === null) {
+  if (typeof object !== 'object' || Array.isArray(object) || object == null) {
     return false;
   }
 

@@ -4,7 +4,7 @@ import { escape } from 'lodash/string';
 import { underscore, isBlank } from './string';
 
 function hrefFor(href) {
-  if (href === undefined || href === null) {
+  if (href == null) {
     return '#';
   }
 
@@ -17,11 +17,6 @@ function hrefFor(href) {
   if (href.path) {
     return href.path();
   }
-
-  // I should've commented this. What is this for?
-  // if (!(href.type && href.id)) {
-  //   return href;
-  // }
 
   throw new Error(`Invalid href: ${href}`);
 }
@@ -135,7 +130,7 @@ export const label = (text, type) => {
 };
 
 export const multilineEscapeHTML = (string) => {
-  if (string === null || string === undefined) {
+  if (string == null) {
     return '';
   }
 

@@ -23,7 +23,7 @@ if (!Element.prototype.closest) {
   Element.prototype.closest = function closest(selector) {
     let el = this;
 
-    while (el !== null && el.nodeType === 1) {
+    while (el != null && el.nodeType === 1) {
       if (el.matches(selector)) {
         return el;
       }

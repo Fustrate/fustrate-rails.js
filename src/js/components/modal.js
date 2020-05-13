@@ -309,7 +309,7 @@ export default class Modal extends Component {
   }
 
   defaultClasses() {
-    return [this.settings.size, this.settings.type].filter((klass) => klass !== null);
+    return [this.settings.size, this.settings.type].filter((klass) => klass != null);
   }
 
   closeButtonClicked(event) {

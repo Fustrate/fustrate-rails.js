@@ -32,7 +32,7 @@ export default class FormDataBuilder {
         this.appendObject(data, key, obj[field]);
       } else if (typeof obj[field] === 'boolean') {
         data.append(key, String(Number(obj[field])));
-      } else if (obj[field] !== null && obj[field] !== undefined) {
+      } else if (obj[field] != null) {
         data.append(key, obj[field]);
       }
     });
