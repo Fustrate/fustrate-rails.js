@@ -207,16 +207,6 @@ export class Autocomplete extends Component {
     this.awesomplete.replace(suggestion);
   }
 
-  static addType(name, func) {
-    Autocomplete.types[name] = func;
-  }
-
-  static addTypes(types) {
-    Object.getOwnPropertyNames(types).forEach((name) => {
-      this.addType(name, types[name]);
-    }, this);
-  }
-
   static create(input, options) {
     return new this(input, options);
   }
