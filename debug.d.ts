@@ -1,5 +1,3 @@
-declare module "@fustrate/rails/debug" {
-    export const debugData: any[];
+export const debugData: any[];
 
-    export function addDebugData(data: any): void;
-}
+export function addDebugData(data: any): void;

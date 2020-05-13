@@ -1,3 +1,1 @@
-declare module "@fustrate/rails/array" {
-    export function toSentence(arr: string[]): string;
-}
+export function toSentence(arr: string[]): string;
