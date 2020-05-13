@@ -3,11 +3,7 @@ import { Moment } from 'moment';
 import { AxiosInstance, AxiosPromise } from 'axios';
 
 declare module "@fustrate/rails" {
-    const debugData: any[];
-
-    function addDebugData(data: any): void;
-
-    type Listener = () => void;
+    type AutocompleteDatum = { [s: string]: any };
 
     interface ModalSettings {
         size: 'tiny' | 'small' | 'medium' | 'large' | 'xlarge',
@@ -71,9 +67,6 @@ declare module "@fustrate/rails" {
     class AlertBox extends Component {
         static initialize(): void;
         static closeAlertBox(event: UIEvent): false;
-    }
-
-    interface AutocompleteDatum {
     }
 
     class AutocompleteSuggestion extends String {
@@ -312,6 +305,12 @@ declare module "@fustrate/rails/ajax" {
 
 declare module "@fustrate/rails/array" {
     function toSentence(arr: string[]): string;
+}
+
+declare module "@fustrate/rails/debug" {
+    const debugData: any[];
+
+    function addDebugData(data: any): void;
 }
 
 declare module "@fustrate/rails/number" {
