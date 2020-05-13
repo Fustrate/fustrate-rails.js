@@ -234,7 +234,9 @@ declare module "@fustrate/rails" {
         static start(klass: GenericPage): void;
         static initialize(): void;
     }
+}
 
+declare module "@fustrate/rails/string" {
     const humanize: (string?: string) => string;
     const isBlank: (string?: string) => boolean;
     const isPresent: (string?: string) => boolean;
