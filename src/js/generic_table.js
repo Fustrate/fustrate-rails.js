@@ -1,5 +1,6 @@
 import GenericPage from './generic_page';
 import Pagination from './components/pagination';
+import { deepExtend } from './object';
 import { elementFromString } from './utilities';
 
 function sortRows(rows, sortFunction = () => { }) {
@@ -16,12 +17,18 @@ function sortRows(rows, sortFunction = () => { }) {
   return rowsWithSortOrder.map((row) => row[1]);
 }
 
+const defaultSettings = {
+  blankRow: '<tr></tr>',
+  noRecordsMessage: 'No records found.',
+};
+
 export default class GenericTable extends GenericPage {
-  constructor(tableSelector) {
+  constructor(tableSelector, settings = {}) {
     super();
 
     this.table = document.body.querySelector(tableSelector);
     [this.tbody] = this.table.tBodies;
+    this.settings = deepExtend({}, defaultSettings, settings);
   }
 
   initialize() {
@@ -31,7 +38,7 @@ export default class GenericTable extends GenericPage {
   reloadTable() { }
 
   createRow(item) {
-    const row = elementFromString(this.constructor.blankRow);
+    const row = elementFromString(this.settings.blankRow);
 
     this.updateRow(row, item);
 
@@ -72,7 +79,7 @@ export default class GenericTable extends GenericPage {
       tr.classList.add('no-records');
 
       td.colSpan = 16;
-      td.textContent = this.constructor.noRecordsMessage;
+      td.textContent = this.settings.noRecordsMessage;
 
       tr.appendChild(td);
       this.tbody.appendChild(tr);
@@ -113,5 +120,3 @@ export default class GenericTable extends GenericPage {
     });
   }
 }
-
-GenericTable.noRecordsMessage = 'No records found.';

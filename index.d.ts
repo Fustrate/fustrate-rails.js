@@ -20,6 +20,12 @@ interface PaginationData {
     perPage?: number,
 }
 
+interface GenericTableSettings {
+    noRecordsMessage?: string,
+    blankRow?: string,
+    [s: string]: any,
+}
+
 export class Listenable {
     listeners: { [s: string]: ((event: CustomEvent) => void)[] };
 
@@ -265,11 +271,12 @@ export class GenericPage {
 export class GenericTable extends GenericPage {
     table: HTMLTableElement;
     tbody: HTMLTableSectionElement;
+    settings: GenericTableSettings;
 
     static blankRow: string;
     static noRecordsMessage: string;
 
-    constructor(tableSelector: string);
+    constructor(tableSelector: string, settings: GenericTableSettings);
 
     initialize(): Promise<any>;
     reloadTable(): void;
