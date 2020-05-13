@@ -103,14 +103,20 @@ declare module "@fustrate/rails" {
 
     class InfoFlash extends Flash {
         constructor(message: string, options: { icon?: string });
+
+        static show(message: string, options: { icon?: string }): InfoFlash;
     }
 
     class ErrorFlash extends Flash {
         constructor(message: string, options: { icon?: string });
+
+        static show(message: string, options: { icon?: string }): ErrorFlash;
     }
 
     class SuccessFlash extends Flash {
         constructor(message: string, options: { icon?: string });
+
+        static show(message: string, options: { icon?: string }): SuccessFlash;
     }
 
     class Modal extends Component {
