@@ -55,10 +55,24 @@ export default class BasicObject extends Listenable {
       data = { id: data };
     }
 
-    return new this(deepExtend({}, data, attributes));
+    const record = new this();
+
+    record.extractFromData(deepExtend({}, data, attributes));
+
+    return record;
   }
 
   static buildList(items, attributes = {}) {
-    return items ? items.map((item) => new this(deepExtend({}, item, attributes))) : [];
+    if (!Array.isArray(items)) {
+      return [];
+    }
+
+    return items.map((item) => {
+      const record = new this();
+
+      record.extractFromData(deepExtend({}, item, attributes));
+
+      return record;
+    });
   }
 }

@@ -5,7 +5,7 @@ import FormDataBuilder from './form_data_builder';
 import ajax from './ajax';
 
 export default class Record extends BasicObject {
-  // static get classname() { return 'Subreddit::GameThread'; }
+  // static classname = 'Subreddit::GameThread';
 
   get classname() {
     return this.constructor.classname;

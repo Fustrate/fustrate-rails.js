@@ -1,7 +1,7 @@
 import Awesomplete from 'awesomplete';
 import TooltipJS from 'tooltip.js';
 
-type AutocompleteDatum = { [s: string]: any };
+export type AutocompleteDatum = { [s: string]: any };
 
 interface ModalSettings {
     size: 'tiny' | 'small' | 'medium' | 'large' | 'xlarge',
@@ -41,8 +41,8 @@ export class BasicObject extends Listenable {
 
     get isBasicObject(): boolean;
 
-    static build(data: number | string | { [s: string]: any }, attributes: { [s: string]: any }): BasicObject | null;
-    static buildList(items: any[], attributes: { [s: string]: any }): [BasicObject];
+    static build<T extends typeof BasicObject>(this: T, data: { [s: string]: any }, attributes?: { [s: string]: any }): InstanceType<T>;
+    static buildList<T extends typeof BasicObject>(this: T, items: any[], attributes?: { [s: string]: any }): InstanceType<T>[];
 }
 
 export class Record extends BasicObject {
@@ -61,7 +61,7 @@ export class Record extends BasicObject {
 
     get classname(): string;
 
-    static create(attributes: { [s: string]: any }): Promise<any>;
+    static create<T extends typeof Record>(this: T, attributes: { [s: string]: any }): Promise<InstanceType<T>>;
 
     static get paramKey(): string;
 }
@@ -191,7 +191,7 @@ export class Modal extends Component {
 
     static get settings(): ModalSettings;
 
-    constructor(settings: ModalSettings);
+    constructor(settings: { settings: ModalSettings });
 
     initialize(): void;
     reloadUIElements(): void;
