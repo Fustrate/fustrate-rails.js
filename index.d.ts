@@ -191,7 +191,7 @@ export class Modal extends Component {
 
     static get settings(): ModalSettings;
 
-    constructor(settings: { settings: ModalSettings });
+    constructor(settings: ModalSettings);
 
     initialize(): void;
     reloadUIElements(): void;

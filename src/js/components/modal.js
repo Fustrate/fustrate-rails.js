@@ -82,7 +82,7 @@ export default class Modal extends Component {
     return {};
   }
 
-  constructor({ settings } = {}) {
+  constructor(settings = {}) {
     super();
 
     modalCount += 1;
