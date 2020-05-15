@@ -4,13 +4,13 @@ import TooltipJS from 'tooltip.js';
 export type AutocompleteDatum = { [s: string]: any };
 
 interface ModalSettings {
-    size: 'tiny' | 'small' | 'medium' | 'large' | 'xlarge',
+    size?: 'tiny' | 'small' | 'medium' | 'large' | 'xlarge',
     type?: string,
     icon?: string,
     content?: string,
     title?: string,
-    buttons: ('spacer' | string | { [s: string]: string | { text?: string, type?: string } })[],
-    distanceFromTop: number,
+    buttons?: ('spacer' | string | { [s: string]: string | { text?: string, type?: string } })[],
+    distanceFromTop?: number,
 }
 
 interface PaginationData {
