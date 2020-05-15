@@ -3,7 +3,7 @@ import TooltipJS from 'tooltip.js';
 
 export type AutocompleteDatum = { [s: string]: any };
 
-interface ModalSettings {
+export interface ModalSettings {
     size?: 'tiny' | 'small' | 'medium' | 'large' | 'xlarge',
     type?: string,
     icon?: string,
@@ -13,14 +13,14 @@ interface ModalSettings {
     distanceFromTop?: number,
 }
 
-interface PaginationData {
+export interface PaginationData {
     currentPage?: number,
     totalPages?: number,
     totalEntries?: number,
     perPage?: number,
 }
 
-interface GenericTableSettings {
+export interface GenericTableSettings {
     noRecordsMessage?: string,
     blankRow?: string,
     [s: string]: any,
