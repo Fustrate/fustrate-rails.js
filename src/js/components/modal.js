@@ -4,7 +4,6 @@ import { pull } from 'lodash/array';
 import { delegate, fire, stopEverything } from '@rails/ujs';
 
 import Component from '../component';
-import { deepExtend } from '../object';
 import { isVisible } from '../show_hide';
 import {
   animate,
@@ -88,12 +87,7 @@ export default class Modal extends Component {
     modalCount += 1;
     this.modalId = modalCount;
 
-    this.settings = deepExtend(
-      {},
-      defaultSettings,
-      this.constructor.settings != null ? this.constructor.settings : {},
-      settings != null ? settings : {},
-    );
+    this.settings = { ...defaultSettings, ...settings };
 
     this.modal = this.createModal();
 
