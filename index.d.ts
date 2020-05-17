@@ -191,6 +191,10 @@ export class Modal extends Component {
     settings: ModalSettings;
     modal: HTMLDivElement;
 
+    promise: Promise<any>;
+    resolve: (value?: any) => void;
+    reject: (reason?: any) => void;
+
     static get settings(): ModalSettings;
 
     constructor(settings?: ModalSettings);
@@ -202,7 +206,7 @@ export class Modal extends Component {
     setButtons(buttons: ModalButton[], reload?: boolean): void;
     addEventListeners(): void;
     focusFirstInput(): void;
-    open(): void;
+    open(): Promise<any>;
     close(openPrevious?: boolean): void;
     hide(): void;
     cancel(): void;

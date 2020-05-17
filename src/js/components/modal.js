@@ -198,7 +198,7 @@ export default class Modal extends Component {
 
   open() {
     if (this.locked || this.modal.classList.contains('open')) {
-      return;
+      return this.promise;
     }
 
     this.locked = true;
@@ -234,6 +234,13 @@ export default class Modal extends Component {
         this.focusFirstInput();
       });
     }, 125);
+
+    this.promise = new Promise((resolve, reject) => {
+      this.resolve = resolve;
+      this.reject = reject;
+    });
+
+    return this.promise;
   }
 
   close(openPrevious = true) {
