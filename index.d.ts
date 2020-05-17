@@ -130,13 +130,11 @@ export class Autocomplete extends Component {
     highlight(text: string): string;
     replace(suggestion: AutocompleteSuggestion): void;
 
-    static create(input: HTMLInputElement, options?: AutocompleteOptions): Autocomplete;
+    static create<T extends typeof Autocomplete>(this: T, input: HTMLElement, options?: AutocompleteOptions): InstanceType<T>;
 }
 
 export class PlainAutocomplete extends Autocomplete {
-    static create(input: HTMLInputElement, options?: AutocompleteOptions): PlainAutocomplete;
-
-    onSelect(event: UIEvent): void
+    list: any[];
 }
 
 export class Disclosure extends Component {
