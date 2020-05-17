@@ -36,7 +36,7 @@ export class Listenable {
 }
 
 export class BasicObject extends Listenable {
-    constructor(data: number | string | { [s: string]: any });
+    constructor(data?: number | string);
 
     extractFromData(data: { [s: string]: any }): { [s: string]: any };
 
@@ -52,7 +52,7 @@ export class Record extends BasicObject {
     id?: number;
     isLoaded: boolean;
 
-    constructor(data: number | string | { [s: string]: any });
+    constructor(data?: number | string);
 
     path(options?: { format?: string }): string;
     reload(options?: { force?: boolean }): Promise<any>;
