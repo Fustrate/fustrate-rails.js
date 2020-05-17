@@ -1,28 +1,28 @@
 import Awesomplete from 'awesomplete';
 import TooltipJS from 'tooltip.js';
 
-export type AutocompleteDatum = { [s: string]: any };
+type ModalButton = 'spacer' | string | { [s: string]: string | { text?: string, type?: string } }
 
 export interface ModalSettings {
-    size?: 'tiny' | 'small' | 'medium' | 'large' | 'xlarge',
-    type?: string,
-    icon?: string,
+    buttons?: ModalButton[],
     content?: string,
-    title?: string,
-    buttons?: ('spacer' | string | { [s: string]: string | { text?: string, type?: string } })[],
     distanceFromTop?: number,
+    icon?: string,
+    size?: string,
+    title?: string,
+    type?: string,
 }
 
 export interface PaginationData {
     currentPage?: number,
-    totalPages?: number,
-    totalEntries?: number,
     perPage?: number,
+    totalEntries?: number,
+    totalPages?: number,
 }
 
 export interface GenericTableSettings {
-    noRecordsMessage?: string,
     blankRow?: string,
+    noRecordsMessage?: string,
     [s: string]: any,
 }
 
@@ -75,9 +75,9 @@ export class AlertBox extends Component {
 }
 
 export class AutocompleteSuggestion extends String {
-    datum: AutocompleteDatum;
+    datum: any;
 
-    constructor(datum: AutocompleteDatum, displayValue: string);
+    constructor(datum: any, displayValue: string);
 
     highlight(input: string, text: string): string;
     item(text: string): HTMLLIElement;
@@ -85,13 +85,13 @@ export class AutocompleteSuggestion extends String {
 }
 
 export class PlainAutocompleteSuggestion extends AutocompleteSuggestion {
-    constructor(datum: AutocompleteDatum);
+    constructor(datum: any);
 }
 
 export class AutocompleteSource {
-    matches(datum: AutocompleteDatum): boolean;
+    matches(datum: any): boolean;
     filter(suggestion: AutocompleteSuggestion, userInput: string): boolean;
-    suggestion(datum: AutocompleteDatum): AutocompleteSuggestion;
+    suggestion(datum: any): AutocompleteSuggestion;
 }
 
 export class PlainAutocompleteSource extends AutocompleteSource {
@@ -100,7 +100,7 @@ export class PlainAutocompleteSource extends AutocompleteSource {
     constructor(list: string[]);
 
     filter(suggestion: AutocompleteSuggestion, userInput: string): boolean;
-    suggestion(datum: AutocompleteDatum): PlainAutocompleteSuggestion;
+    suggestion(datum: any): PlainAutocompleteSuggestion;
     matchingData(searchTerm: string): string[];
 }
 
@@ -108,19 +108,20 @@ export interface AutocompleteOptions {
     source?: AutocompleteSource,
     sources?: AutocompleteSource[],
     list?: string[],
+    [s: string]: any,
 }
 
 export class Autocomplete extends Component {
-    input: HTMLInputElement;
+    input: HTMLElement;
     awesomplete: Awesomplete;
     sources: AutocompleteSource[];
     value: string;
 
-    constructor(input: HTMLInputElement, options?: AutocompleteOptions);
+    constructor(input: HTMLElement, options?: AutocompleteOptions);
 
     extractOptions(options: AutocompleteOptions): void;
-    sourceForDatum(datum: AutocompleteDatum): AutocompleteSource;
-    suggestionForDatum(datum: AutocompleteDatum): AutocompleteSuggestion;
+    sourceForDatum(datum: any): AutocompleteSource;
+    suggestionForDatum(datum: any): AutocompleteSuggestion;
     blanked(): void;
     onSelect(event: UIEvent): void;
     onFocus(): void;
@@ -183,7 +184,7 @@ export class SuccessFlash extends Flash {
 }
 
 export class Modal extends Component {
-    buttons: { [s: string]: HTMLButtonElement };
+    buttons: { [s: string]: HTMLElement };
     fields: { [s: string]: HTMLElement };
     modalId: number;
     settings: ModalSettings;
@@ -195,9 +196,9 @@ export class Modal extends Component {
 
     initialize(): void;
     reloadUIElements(): void;
-    setTitle(title: string, options: { icon?: string }): void;
+    setTitle(title: string, options?: { icon?: string }): void;
     setContent(content: string, reload?: boolean): void;
-    setButtons(buttons, reload?: boolean): void;
+    setButtons(buttons: ModalButton[], reload?: boolean): void;
     addEventListeners(): void;
     focusFirstInput(): void;
     open(): void;
