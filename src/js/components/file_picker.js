@@ -18,4 +18,8 @@ export default class FilePicker extends Component {
 
     input.click();
   }
+
+  static open(callback) {
+    return new this(callback);
+  }
 }

@@ -158,6 +158,8 @@ export class Dropdown extends Component {
 
 export class FilePicker extends Component {
     constructor(callback: (files: File[]) => void);
+
+    static open(callback: (files: File[]) => void): FilePicker;
 }
 
 export class Flash extends Component {
