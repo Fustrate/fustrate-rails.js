@@ -76,7 +76,7 @@ export class PlainAutocompleteSource extends AutocompleteSource {
 }
 
 export class Autocomplete extends Component {
-  constructor(input, options = {}) {
+  constructor(input, options) {
     super();
 
     this.input = input;
@@ -213,10 +213,6 @@ export class Autocomplete extends Component {
 }
 
 export class PlainAutocomplete extends Autocomplete {
-  static create(input, options) {
-    return super.create(input, options);
-  }
-
   onSelect(event) {
     super.onSelect(event);
 
