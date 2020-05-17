@@ -5,6 +5,7 @@ type ModalButton = 'spacer' | string | { [s: string]: string | { text?: string, 
 
 export interface ModalSettings {
     buttons?: ModalButton[],
+    closeOnBackgroundClick?: boolean,
     content?: string,
     distanceFromTop?: number,
     icon?: string,
@@ -209,8 +210,6 @@ export class Modal extends Component {
     createModal(): HTMLDivElement;
     defaultClasses(): string[];
     closeButtonClicked(event: UIEvent): false;
-
-    static get closeOnBackgroundClick(): boolean;
 
     static backgroundClicked(): false;
     static hideAllModals(): void;

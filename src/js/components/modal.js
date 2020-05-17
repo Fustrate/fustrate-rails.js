@@ -314,16 +314,12 @@ export default class Modal extends Component {
     return false;
   }
 
-  static get closeOnBackgroundClick() {
-    return true;
-  }
-
   // Close the top-most modal if the background is clicked
   static backgroundClicked() {
     const modal = openModals[openModals.length - 1];
 
     // Don't continue to close if we're not supposed to
-    if (modal && !modal.locked && modal.constructor.closeOnBackgroundClick) {
+    if (modal && !modal.locked && modal.settings.closeOnBackgroundClick !== false) {
       modal.close();
     }
 
