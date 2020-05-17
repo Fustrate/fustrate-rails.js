@@ -84,10 +84,12 @@ export default class Modal extends Component {
   constructor(settings = {}) {
     super();
 
+    this.settings = { ...defaultSettings, ...settings };
+  }
+
+  setup() {
     modalCount += 1;
     this.modalId = modalCount;
-
-    this.settings = { ...defaultSettings, ...settings };
 
     this.modal = this.createModal();
 
@@ -97,6 +99,14 @@ export default class Modal extends Component {
     this.reloadUIElements();
     this.addEventListeners();
     this.initialize();
+  }
+
+  static build() {
+    const modal = new this();
+
+    modal.setup();
+
+    return modal;
   }
 
   initialize() { }

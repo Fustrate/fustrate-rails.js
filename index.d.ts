@@ -197,6 +197,8 @@ export class Modal extends Component {
 
     static get settings(): ModalSettings;
 
+    static build<T extends typeof Modal>(this: T): InstanceType<T>;
+
     constructor(settings?: ModalSettings);
 
     initialize(): void;
