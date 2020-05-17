@@ -4,14 +4,6 @@ import { deepExtend } from './object';
 import Listenable from './listenable';
 
 export default class BasicObject extends Listenable {
-  constructor(data) {
-    super();
-
-    if (typeof data === 'object') {
-      this.extractFromData(data);
-    }
-  }
-
   // Simple extractor to assign root keys as properties in the current object.
   // Formats a few common attributes as dates with moment.js
   extractFromData(data) {
