@@ -4,8 +4,9 @@ export const isPlainObject = (object) => {
     return false;
   }
 
-  // This is a getter on BasicObject - any sort of basic record shouldn't be iterated
-  return !object.isBasicObject;
+  // isBasicObject is a getter on BasicObject - any sort of basic record shouldn't be iterated
+  // We also don't want to mess with Moment objects.
+  return !object.isBasicObject && object.constructor.name !== 'Moment';
 };
 
 export const deepExtend = (out, ...rest) => {
