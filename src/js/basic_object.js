@@ -59,12 +59,6 @@ export default class BasicObject extends Listenable {
       return [];
     }
 
-    return items.map((item) => {
-      const record = new this();
-
-      record.extractFromData(deepExtend({}, item, attributes));
-
-      return record;
-    });
+    return items.map((item) => this.build(item, attributes));
   }
 }
