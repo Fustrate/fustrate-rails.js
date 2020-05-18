@@ -42,7 +42,7 @@ export class BasicObject extends Listenable {
 
     get isBasicObject(): boolean;
 
-    static build<T extends typeof BasicObject>(this: T, data: { [s: string]: any }, attributes?: { [s: string]: any }): InstanceType<T>;
+    static build<T extends typeof BasicObject>(this: T, data?: { [s: string]: any }, attributes?: { [s: string]: any }): InstanceType<T>;
     static buildList<T extends typeof BasicObject>(this: T, items: any[], attributes?: { [s: string]: any }): InstanceType<T>[];
 }
 
