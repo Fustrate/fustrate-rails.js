@@ -41,7 +41,7 @@ function getDefaultDisplay(elem) {
 }
 
 function toggleElement(element, makeVisible) {
-  if (makeVisible === undefined) {
+  if (makeVisible == null) {
     makeVisible = element.style.display === 'none';
   }
 
@@ -59,10 +59,10 @@ export const isVisible = (elem) => !!(
 export const toggle = (element, showOrHide) => {
   if (element instanceof NodeList) {
     element.forEach((elem) => {
-      toggleElement(elem, showOrHide !== undefined ? showOrHide : !isVisible(elem));
+      toggleElement(elem, showOrHide != null ? showOrHide : !isVisible(elem));
     });
   } else {
-    toggleElement(element, showOrHide !== undefined ? showOrHide : !isVisible(element));
+    toggleElement(element, showOrHide != null ? showOrHide : !isVisible(element));
   }
 };
 

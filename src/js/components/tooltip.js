@@ -6,7 +6,7 @@ export default class Tooltip extends Component {
     return new TooltipJS(node, {
       placement: placement || 'bottom',
       title,
-      container: container === undefined ? document.body : container,
+      container: container == null ? document.body : container,
     });
   }
 }
