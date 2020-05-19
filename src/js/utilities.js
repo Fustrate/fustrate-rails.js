@@ -93,9 +93,9 @@ export const elementFromString = (string) => {
   return template.content.firstChild;
 };
 
-export function hms(seconds, zero) {
-  if (zero && (seconds === 0 || seconds === undefined)) {
-    return zero;
+export function hms(seconds, zeroDisplay) {
+  if (zeroDisplay && seconds === 0) {
+    return zeroDisplay;
   }
 
   const absolute = Math.abs(seconds);
