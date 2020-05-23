@@ -1,5 +1,6 @@
 import Awesomplete from 'awesomplete';
 import TooltipJS from 'tooltip.js';
+import { AxiosResponse } from 'axios';
 
 type ModalButton = 'spacer' | string | { [s: string]: string | { text?: string, type?: string } }
 
@@ -54,11 +55,11 @@ export class Record extends BasicObject {
 
     constructor(data?: number | string);
 
-    delete(params?:  { [s: string]: any }): Promise<any>;
+    delete(params?:  { [s: string]: any }): Promise<AxiosResponse<any>>;
     extractFromData(data: number | string | { [s: string]: any }): { [s: string]: any };
     path(options?: { format?: string }): string;
-    reload(options?: { force?: boolean }): Promise<any>;
-    update(attributes: { [s: string]: any }, additionalParameters?: { [s: string]: any }): Promise<any>;
+    reload(options?: { force?: boolean }): Promise<AxiosResponse<any>>;
+    update(attributes: { [s: string]: any }, additionalParameters?: { [s: string]: any }): Promise<AxiosResponse<any>>;
 
     get classname(): string;
 
