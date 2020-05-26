@@ -211,7 +211,7 @@ export class Modal extends Component {
     focusFirstInput(): void;
     hide(): void;
     initialize(): void;
-    open(reopening: boolean): Promise<any>;
+    open(reopening?: boolean): Promise<any>;
     openPreviousModal(): void;
     reloadUIElements(): void;
     setButtons(buttons: ModalButton[], reload?: boolean): void;
