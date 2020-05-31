@@ -305,7 +305,7 @@ export class Fustrate {
     constructor();
 
     static initialize(): void;
-    static start(klass: GenericPage): void;
+    static start(klass: typeof GenericPage): void;
 }
 
 export default Fustrate;
