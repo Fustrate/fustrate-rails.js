@@ -1,7 +1,6 @@
 import {
   animate,
   elementFromString,
-  escapeHTML,
   hms,
   icon,
   label,
@@ -17,7 +16,7 @@ describe('animate', () => {
 
     animate(element, 'wacky');
 
-    expect(element.classList).toContain('animated', 'wacky');
+    expect(element.classList).toContain('animate__animated', 'animate__wacky');
 
     element.dispatchEvent(new CustomEvent('animationend'));
 
@@ -29,7 +28,7 @@ describe('animate', () => {
 
     animate(element, 'wacky', { delay: 3, speed: 'fast' });
 
-    expect(element.classList).toContain('animated', 'wacky', 'delay-3s', 'fast');
+    expect(element.classList).toContain('animate__animated', 'animate__wacky', 'animate__delay-3s', 'animate__fast');
 
     element.dispatchEvent(new CustomEvent('animationend'));
 
@@ -56,19 +55,6 @@ describe('elementFromString', () => {
     expect(element).toBeInstanceOf(HTMLTableRowElement);
     expect(element.children).toHaveLength(3);
     expect(element.querySelector('input')).toBeInstanceOf(HTMLInputElement);
-  });
-});
-
-describe('escapeHTML', () => {
-  it('escapes null and undefined', () => {
-    expect(escapeHTML(null)).toEqual('');
-    expect(escapeHTML(undefined)).toEqual('');
-  });
-
-  it('escapes entities in a string', () => {
-    expect(escapeHTML('<strong>\'Bob\' `&` "Bill"</strong> =/')).toEqual(
-      '&lt;strong&gt;&#39;Bob&#39; `&amp;` &quot;Bill&quot;&lt;/strong&gt; =/',
-    );
   });
 });
 

@@ -35,8 +35,10 @@ export const animate = (element, animation, { delay, speed } = {}, callback) => 
     classes.push(speed);
   }
 
+  const scopedClasses = classes.map((name) => `animate__${name}`);
+
   function handleAnimationEnd() {
-    element.classList.remove(...classes);
+    element.classList.remove(...scopedClasses);
     element.removeEventListener('animationend', handleAnimationEnd);
 
     if (typeof callback === 'function') {
@@ -46,7 +48,7 @@ export const animate = (element, animation, { delay, speed } = {}, callback) => 
 
   element.addEventListener('animationend', handleAnimationEnd);
 
-  element.classList.add(...classes);
+  element.classList.add(...scopedClasses);
 };
 
 export const applyMixin = (target, mixin, options) => {

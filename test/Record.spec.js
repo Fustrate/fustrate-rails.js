@@ -10,27 +10,27 @@ describe('constructor', () => {
     expect(new Record('5').id).toBe(5);
   });
 
-  it('constructors a Record with attributes', () => {
-    const mockedExtraction = jest.fn();
+});
 
-    Record.prototype.extractFromData = mockedExtraction;
+describe('#reload', () => { });
+
+describe('#extractFromData', () => {
+  it('extracts attributes for a record', () => {
+    const record = new Record();
 
     const data = { id: 5, name: 'Steven' };
 
-    new Record(data); // eslint-disable-line no-new
+    record.extractFromData(data);
 
-    expect(mockedExtraction).toBeCalledWith(data);
+    expect(record.id).toBe(5);
+    expect(record.name).toBe('Steven');
   });
 });
 
-describe('#reload', () => {});
+describe('#update', () => { });
 
-describe('#extractFromData', () => {});
+describe('#delete', () => { });
 
-describe('#update', () => {});
+describe('.paramKey', () => { });
 
-describe('#delete', () => {});
-
-describe('.paramKey', () => {});
-
-describe('.create', () => {});
+describe('.create', () => { });
