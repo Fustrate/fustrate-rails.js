@@ -16,6 +16,5 @@ export * from './src/js/components/flash';
 export { default as Modal } from './src/js/components/modal';
 export { default as Pagination } from './src/js/components/pagination';
 export { default as Tabs } from './src/js/components/tabs';
-export { default as Tooltip } from './src/js/components/tooltip';
 
 export { default } from './src/js/fustrate';

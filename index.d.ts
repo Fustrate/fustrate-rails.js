@@ -1,6 +1,5 @@
-import Awesomplete from 'awesomplete';
-import TooltipJS from 'tooltip.js';
-import { AxiosResponse } from 'axios';
+import type Awesomplete from 'awesomplete';
+import type { AxiosResponse } from 'axios';
 
 type ModalButton = 'spacer' | string | { [s: string]: string | { text?: string, type?: string } }
 
@@ -249,10 +248,6 @@ export class Tabs extends Component {
     activateTab(tab: HTMLLIElement, changeHash: boolean): void;
 
     static initialize(): Tabs;
-}
-
-export class Tooltip extends Component {
-    static create(node: HTMLElement, title: string, options: { placement?: string, container?: HTMLElement }): TooltipJS;
 }
 
 export class FormDataBuilder {
