@@ -1,4 +1,4 @@
-import { Moment } from 'moment';
+import type { Moment } from 'moment';
 
 export function animate(element: HTMLElement, animation: string, options?: { delay?: string, speed?: string }, callback?: () => void): void;
 export function elementFromString<T extends HTMLElement>(string: string): T;
