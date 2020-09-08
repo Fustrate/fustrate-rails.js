@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/prefer-default-export
 export const toSentence = (arr) => {
   switch (arr.length) {
     case 0:

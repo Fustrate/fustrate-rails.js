@@ -9,7 +9,6 @@ describe('constructor', () => {
     expect(new Record(5).id).toBe(5);
     expect(new Record('5').id).toBe(5);
   });
-
 });
 
 describe('#reload', () => { });

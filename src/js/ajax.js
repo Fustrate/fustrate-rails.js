@@ -27,6 +27,7 @@ function processResponseError(response) {
 }
 
 function processRequestError(request) {
+  // eslint-disable-next-line no-alert
   window.alert('There was a problem connecting to the server - please wait a while before trying again.');
 
   addDebugData({
