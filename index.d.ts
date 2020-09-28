@@ -4,75 +4,76 @@ import type { AxiosResponse } from 'axios';
 type ModalButton = 'spacer' | string | { [s: string]: string | { text?: string, type?: string } }
 
 export interface ModalSettings {
-    buttons?: ModalButton[],
-    closeOnBackgroundClick?: boolean,
-    content?: string,
-    distanceFromTop?: number,
-    icon?: string,
-    size?: string,
-    title?: string,
-    type?: string,
+    buttons?: ModalButton[];
+    closeOnBackgroundClick?: boolean;
+    content?: string;
+    distanceFromTop?: number;
+    icon?: string;
+    size?: string;
+    title?: string;
+    type?: string;
 }
 
 export interface PaginationData {
-    currentPage?: number,
-    perPage?: number,
-    totalEntries?: number,
-    totalPages?: number,
+    currentPage?: number;
+    perPage?: number;
+    totalEntries?: number;
+    totalPages?: number;
 }
 
 export interface GenericTableSettings {
-    blankRow?: string,
-    noRecordsMessage?: string,
-    [s: string]: any,
+    [s: string]: any;
+    blankRow?: string;
+    noRecordsMessage?: string;
 }
 
 export class Listenable {
-    listeners: { [s: string]: ((event: CustomEvent) => void)[] };
+    protected listeners: { [s: string]: ((event: CustomEvent) => void)[] };
 
-    addEventListener(type: string, listener: (event: CustomEvent) => void): void;
-    dispatchEvent(event: CustomEvent): boolean;
-    removeEventListener(type: string, listener: (event: CustomEvent) => void): void;
+    public addEventListener(type: string, listener: (event: CustomEvent) => void): void;
+    public removeEventListener(type: string, listener: (event: CustomEvent) => void): void;
+
+    protected dispatchEvent(event: CustomEvent): boolean;
 }
 
 export class BasicObject extends Listenable {
-    constructor(data?: number | string);
+    public constructor(data?: number | string);
 
-    extractFromData(data: { [s: string]: any }): { [s: string]: any };
+    public extractFromData(data: { [s: string]: any }): { [s: string]: any };
 
-    get isBasicObject(): boolean;
+    public get isBasicObject(): boolean;
 
-    static build<T extends typeof BasicObject>(this: T, data?: { [s: string]: any }, attributes?: { [s: string]: any }): InstanceType<T>;
-    static buildList<T extends typeof BasicObject>(this: T, items: any[], attributes?: { [s: string]: any }): InstanceType<T>[];
+    public static build<T extends typeof BasicObject>(this: T, data?: { [s: string]: any }, attributes?: { [s: string]: any }): InstanceType<T>;
+    public static buildList<T extends typeof BasicObject>(this: T, items: any[], attributes?: { [s: string]: any }): InstanceType<T>[];
 }
 
 export class Record extends BasicObject {
-    static classname: string;
+    public static classname: string;
 
-    id?: number;
-    isLoaded: boolean;
+    public id?: number;
+    protected isLoaded: boolean;
 
-    constructor(data?: number | string);
+    public constructor(data?: number | string);
 
-    delete(params?:  { [s: string]: any }): Promise<AxiosResponse<any>>;
-    extractFromData(data: number | string | { [s: string]: any }): { [s: string]: any };
-    path(options?: { format?: string }): string;
-    reload(options?: { force?: boolean }): Promise<AxiosResponse<any>>;
-    update(attributes: { [s: string]: any }, additionalParameters?: { [s: string]: any }): Promise<AxiosResponse<any>>;
+    public delete(params?:  { [s: string]: any }): Promise<AxiosResponse<any>>;
+    public extractFromData(data: number | string | { [s: string]: any }): { [s: string]: any };
+    public path(options?: { format?: string }): string;
+    public reload(options?: { force?: boolean }): Promise<AxiosResponse<any>>;
+    public update(attributes: { [s: string]: any }, additionalParameters?: { [s: string]: any }): Promise<AxiosResponse<any>>;
 
-    get classname(): string;
+    public get classname(): string;
 
-    static create<T extends typeof Record>(this: T, attributes: { [s: string]: any }): Promise<InstanceType<T>>;
+    public static create<T extends typeof Record>(this: T, attributes: { [s: string]: any }): Promise<InstanceType<T>>;
 
-    static get paramKey(): string;
+    public static get paramKey(): string;
 }
 
 export class Component extends Listenable {
 }
 
 export class AlertBox extends Component {
-    static closeAlertBox(event: UIEvent): false;
-    static initialize(): void;
+    public static initialize(): void;
+    protected static closeAlertBox(event: UIEvent): false;
 }
 
 export class AutocompleteSuggestion extends String {
@@ -138,169 +139,173 @@ export class PlainAutocomplete extends Autocomplete {
 }
 
 export class Disclosure extends Component {
-    static initialize(): void;
-    static toggleDisclosure(event: UIEvent): false;
+    public static initialize(): void;
+    protected static toggleDisclosure(event: UIEvent): false;
 }
 
 export class DropZone extends Component {
-    constructor(target: HTMLElement, callback: (files: File[]) => void);
+    protected constructor(target: HTMLElement, callback: (files: File[]) => void);
 
-    static create(target: HTMLElement, callback: (files: File[]) => void): void;
+    public static create(target: HTMLElement, callback: (files: File[]) => void): void;
 }
 
 export class Dropdown extends Component {
-    static initialize(): void;
-    static open(event: UIEvent): false;
-    static hide(): void;
+    public static initialize(): void;
+    protected static open(event: UIEvent): false;
+    protected static hide(): void;
 }
 
 export class FilePicker extends Component {
-    constructor(callback: (files: File[]) => void);
+    protected constructor(callback: (files: File[]) => void);
 
-    static open(callback: (files: File[]) => void): FilePicker;
+    public static open(callback: (files: File[]) => void): FilePicker;
 }
 
 export class Flash extends Component {
-    constructor(message: string, options: { type: string, icon?: string });
+    protected constructor(message: string, options: { type: string, icon?: string });
 
-    static show(message: string, options: { type: string, icon?: string }): Flash;
+    public static show(message: string, options: { type: string, icon?: string }): Flash;
 }
 
 export class InfoFlash extends Flash {
-    constructor(message: string, options?: { icon?: string });
+    protected constructor(message: string, options?: { icon?: string });
 
-    static show(message: string, options?: { icon?: string }): InfoFlash;
+    public static show(message: string, options?: { icon?: string }): InfoFlash;
 }
 
 export class ErrorFlash extends Flash {
-    constructor(message: string, options?: { icon?: string });
+    protected constructor(message: string, options?: { icon?: string });
 
-    static show(message: string, options?: { icon?: string }): ErrorFlash;
+    public static show(message: string, options?: { icon?: string }): ErrorFlash;
 }
 
 export class SuccessFlash extends Flash {
-    constructor(message: string, options?: { icon?: string });
+    protected constructor(message: string, options?: { icon?: string });
 
-    static show(message: string, options?: { icon?: string }): SuccessFlash;
+    public static show(message: string, options?: { icon?: string }): SuccessFlash;
 }
 
 export class Modal extends Component {
-    buttons: { [s: string]: HTMLElement };
-    fields: { [s: string]: HTMLElement };
-    modalId: number;
-    settings: ModalSettings;
-    modal: HTMLDivElement;
+    protected buttons: { [s: string]: HTMLElement };
+    protected fields: { [s: string]: HTMLElement };
+    protected modalId: number;
+    protected settings: ModalSettings;
+    protected modal: HTMLDivElement;
 
-    promise: Promise<any>;
-    resolve: (value?: any) => void;
-    reject: (reason?: any) => void;
+    protected promise: Promise<any>;
+    protected resolve: (value?: any) => void;
+    protected reject: (reason?: any) => void;
 
-    static get settings(): ModalSettings;
+    public constructor(settings?: ModalSettings);
 
-    static build<T extends typeof Modal>(this: T): InstanceType<T>;
+    public static build<T extends typeof Modal>(this: T): InstanceType<T>;
+    public static hideAllModals(): void;
 
-    constructor(settings?: ModalSettings);
+    protected static get settings(): ModalSettings;
 
-    addEventListeners(): void;
-    cancel(): void;
-    close(openPrevious?: boolean): void;
-    closeButtonClicked(event: UIEvent): false;
-    createModal(): HTMLDivElement;
-    defaultClasses(): string[];
-    focusFirstInput(): void;
-    hide(): void;
-    initialize(): void;
-    open(reopening?: boolean): Promise<any>;
-    openPreviousModal(): void;
-    reloadUIElements(): void;
-    setButtons(buttons: ModalButton[], reload?: boolean): void;
-    setContent(content: string, reload?: boolean): void;
-    setTitle(title: string, options?: { icon?: string }): void;
+    protected static backgroundClicked(): false;
+    protected static keyPressed(event: UIEvent): void;
 
-    static backgroundClicked(): false;
-    static hideAllModals(): void;
-    static keyPressed(event: UIEvent): void;
+    public close(openPrevious?: boolean): void;
+    public hide(): void;
+    public open(reopening?: boolean): Promise<any>;
+
+    protected addEventListeners(): void;
+    protected cancel(): void;
+    protected closeButtonClicked(event: UIEvent): false;
+    protected createModal(): HTMLDivElement;
+    protected defaultClasses(): string[];
+    protected focusFirstInput(): void;
+    protected initialize(): void;
+    protected openPreviousModal(): void;
+    protected reloadUIElements(): void;
+    protected setButtons(buttons: ModalButton[], reload?: boolean): void;
+    protected setContent(content: string, reload?: boolean): void;
+    protected setTitle(title: string, options?: { icon?: string }): void;
 }
 
 export class Pagination extends Component {
-    currentPage: number;
-    totalPages: number;
-    totalEntries: number;
-    perPage: number;
-    base: string;
+    protected currentPage: number;
+    protected totalPages: number;
+    protected totalEntries: number;
+    protected perPage: number;
+    protected base: string;
 
-    constructor(options: PaginationData);
+    public constructor(options: PaginationData);
 
-    generate(): HTMLUListElement;
-    link(text: string, page: number, attributes: { [s: string]: any }): string;
-    nextLink(): HTMLLIElement;
-    previousLink(): HTMLLIElement;
-    windowedPageNumbers(): (string|number)[];
+    public generate(): HTMLUListElement;
 
-    static getCurrentPage(): number;
+    protected static getCurrentPage(): number;
+
+    protected link(text: string, page: number, attributes: { [s: string]: any }): string;
+    protected nextLink(): HTMLLIElement;
+    protected previousLink(): HTMLLIElement;
+    protected windowedPageNumbers(): (string|number)[];
 }
 
 export class Tabs extends Component {
-    tabs: HTMLUListElement;
+    protected tabs: HTMLUListElement;
 
-    constructor(tabs: HTMLUListElement);
+    public constructor(tabs: HTMLUListElement);
 
-    activateTab(tab: HTMLLIElement, changeHash: boolean): void;
+    public static initialize(): Tabs;
 
-    static initialize(): Tabs;
+    protected activateTab(tab: HTMLLIElement, changeHash: boolean): void;
 }
 
 export class FormDataBuilder {
-    static appendObject(data: FormData, key: string, value: any): void;
-    static build(obj: { [s: string]: any }, namespace?: string): FormData;
-    static toFormData(data: FormData, obj: { [s: string]: any }, namespace?: string): FormData;
+    public static appendObject(data: FormData, key: string, value: any): void;
+    public static build(obj: { [s: string]: any }, namespace?: string): FormData;
+    public static toFormData(data: FormData, obj: { [s: string]: any }, namespace?: string): FormData;
 }
 
 export class GenericPage {
-    fields: { [s: string]: HTMLElement };
-    buttons: { [s: string]: HTMLElement };
-    allMethodNamesList: string[];
+    protected fields: { [s: string]: HTMLElement };
+    protected buttons: { [s: string]: HTMLElement };
+    protected allMethodNamesList: string[];
 
-    addEventListeners(): void;
-    callAllMethodsBeginningWith(string: string): void;
-    getAllMethodNames(): string[];
-    initialize(): Promise<any>;
-    refresh(): void;
-    reloadUIElements(): void;
-    setHeader(text: string): void;
+    protected addEventListeners(): void;
+    protected callAllMethodsBeginningWith(string: string): void;
+    protected getAllMethodNames(): string[];
+    public initialize(): Promise<any>;
+    public refresh(): void;
+    protected reloadUIElements(): void;
+    protected setHeader(text: string): void;
 }
 
 export class GenericTable extends GenericPage {
-    table: HTMLTableElement;
-    tbody: HTMLTableSectionElement;
-    settings: GenericTableSettings;
+    protected table: HTMLTableElement;
+    protected tbody: HTMLTableSectionElement;
+    protected settings: GenericTableSettings;
 
-    static blankRow: string;
-    static noRecordsMessage: string;
+    protected static blankRow: string;
+    protected static noRecordsMessage: string;
 
-    constructor(tableSelector: string, settings: GenericTableSettings);
+    public constructor(tableSelector: string, settings: GenericTableSettings);
 
-    addRow(row: HTMLTableRowElement): void;
-    checkAll(event: UIEvent): void;
-    createRow(item: Record | { [s: string]: any }): HTMLTableRowElement;
-    getCheckedIds(): string[];
-    initialize(): Promise<any>;
-    reloadRows(trs: HTMLTableRowElement[], options?: { sort?: (a: HTMLTableRowElement, b: HTMLTableRowElement) => number }): void;
-    reloadTable(): void;
-    removeRow(row: HTMLTableRowElement): void;
-    uncheckAll(): void;
-    updated(): void;
-    updatePagination(data: PaginationData): void;
-    updateRow(row: HTMLTableRowElement, item: any): void;
+    public initialize(): Promise<any>;
+
+    protected addRow(row: HTMLTableRowElement): void;
+    protected checkAll(event: UIEvent): void;
+    protected createRow(item: Record | { [s: string]: any }): HTMLTableRowElement;
+    protected getCheckedIds(): string[];
+    protected reloadRows(trs: HTMLTableRowElement[], options?: { sort?: (a: HTMLTableRowElement, b: HTMLTableRowElement) => number }): void;
+    protected reloadTable(): void;
+    protected removeRow(row: HTMLTableRowElement): void;
+    protected uncheckAll(): void;
+    protected updated(): void;
+    protected updatePagination(data: PaginationData): void;
+    protected updateRow(row: HTMLTableRowElement, item: any): void;
 }
 
 export class Fustrate {
-    static instance: GenericPage;
+    public static instance: GenericPage;
 
-    constructor();
+    public constructor();
 
-    static initialize(): void;
-    static start(klass: typeof GenericPage): void;
+    public static start(klass: typeof GenericPage): void;
+
+    protected static initialize(): void;
 }
 
 export default Fustrate;
