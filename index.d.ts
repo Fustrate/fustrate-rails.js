@@ -1,4 +1,3 @@
-import type Awesomplete from 'awesomplete';
 import type { AxiosResponse } from 'axios';
 
 type ModalButton = 'spacer' | string | { [s: string]: string | { text?: string, type?: string } }
@@ -74,68 +73,6 @@ export class Component extends Listenable {
 export class AlertBox extends Component {
     public static initialize(): void;
     protected static closeAlertBox(event: UIEvent): false;
-}
-
-export class AutocompleteSuggestion extends String {
-    datum: any;
-
-    constructor(datum: any, displayValue: string);
-
-    highlight(input: string, text: string): string;
-    highlightedHTML(value: string): string;
-    item(text: string): HTMLLIElement;
-}
-
-export class PlainAutocompleteSuggestion extends AutocompleteSuggestion {
-    constructor(datum: any);
-}
-
-export class AutocompleteSource {
-    filter(suggestion: AutocompleteSuggestion, userInput: string): boolean;
-    matches(datum: any): boolean;
-    suggestion(datum: any): AutocompleteSuggestion;
-}
-
-export class PlainAutocompleteSource extends AutocompleteSource {
-    list: string[];
-
-    constructor(list: string[]);
-
-    filter(suggestion: AutocompleteSuggestion, userInput: string): boolean;
-    matchingData(searchTerm: string): string[];
-    suggestion(datum: any): PlainAutocompleteSuggestion;
-}
-
-export interface AutocompleteOptions {
-    source?: AutocompleteSource,
-    sources?: AutocompleteSource[],
-    list?: string[],
-    [s: string]: any,
-}
-
-export class Autocomplete extends Component {
-    input: HTMLElement;
-    awesomplete: Awesomplete;
-    sources: AutocompleteSource[];
-    value: string;
-
-    constructor(input: HTMLElement, options?: AutocompleteOptions);
-
-    blanked(): void;
-    extractOptions(options: AutocompleteOptions): void;
-    highlight(text: string): string;
-    onFocus(): void;
-    onKeyup(event: UIEvent): void;
-    onSelect(event: UIEvent): void;
-    replace(suggestion: AutocompleteSuggestion): void;
-    sourceForDatum(datum: any): AutocompleteSource;
-    suggestionForDatum(datum: any): AutocompleteSuggestion;
-
-    static create<T extends typeof Autocomplete>(this: T, input: HTMLElement, options?: AutocompleteOptions): InstanceType<T>;
-}
-
-export class PlainAutocomplete extends Autocomplete {
-    list: any[];
 }
 
 export class Disclosure extends Component {
