@@ -2,15 +2,12 @@ export default class GenericPage {
   initialize() {
     this.reloadUIElements();
 
-    this.callAllMethodsBeginningWith('initialize');
-
     this.addEventListeners();
 
     return Promise.resolve();
   }
 
   addEventListeners() {
-    this.callAllMethodsBeginningWith('addEventListeners');
   }
 
   reloadUIElements() {

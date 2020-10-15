@@ -51,42 +51,6 @@ export const animate = (element, animation, { delay, speed } = {}, callback) => 
   element.classList.add(...scopedClasses);
 };
 
-export const applyMixin = (target, mixin, options) => {
-  // eslint-disable-next-line new-cap
-  const instance = new mixin();
-  const prototype = Object.getPrototypeOf(instance);
-
-  if (options) {
-    Object.getOwnPropertyNames(options).forEach((key) => {
-      target[key] = options[key];
-    });
-  }
-
-  // Assign properties to the prototype
-  Object.getOwnPropertyNames(prototype).forEach((key) => {
-    // Mixins can define their own `initialize` and `addEventListeners` methods, which will be
-    // added with their mixin name appended, and called at the same time as the original methods.
-    const newKey = ['initialize', 'addEventListeners'].includes(key) ? `${key}${mixin.name}` : key;
-
-    if (!target.prototype[newKey]) {
-      target.prototype[newKey] = prototype[key];
-    }
-  }, this);
-
-  // Assign properties to the prototype
-  Object.getOwnPropertyNames(prototype.constructor).forEach((key) => {
-    if (['length', 'name', 'prototype'].includes(key)) {
-      return;
-    }
-
-    if (!target[key]) {
-      target[key] = prototype.constructor[key];
-    }
-  }, this);
-
-  return target;
-};
-
 export const elementFromString = (string) => {
   const template = document.createElement('template');
 
