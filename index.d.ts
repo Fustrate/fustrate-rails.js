@@ -202,8 +202,6 @@ export class GenericPage {
     protected allMethodNamesList: string[];
 
     protected addEventListeners(): void;
-    protected callAllMethodsBeginningWith(string: string): void;
-    protected getAllMethodNames(): string[];
     public initialize(): Promise<any>;
     public refresh(): void;
     protected reloadUIElements(): void;

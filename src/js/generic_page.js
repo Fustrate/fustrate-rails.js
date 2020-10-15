@@ -1,3 +1,5 @@
+import { callDecoratedMethods } from './decorators';
+
 export default class GenericPage {
   initialize() {
     this.reloadUIElements();
@@ -32,31 +34,6 @@ export default class GenericPage {
   }
 
   refresh() {
-    this.callAllMethodsBeginningWith('refresh');
-  }
-
-  callAllMethodsBeginningWith(string) {
-    if (!this.allMethodNamesList) {
-      this.allMethodNamesList = this.getAllMethodNames();
-    }
-
-    this.allMethodNamesList.forEach((name) => {
-      if (name !== string && name.indexOf(string) === 0) {
-        this[name].apply(this);
-      }
-    });
-  }
-
-  getAllMethodNames() {
-    let props = [];
-    let klass = this;
-
-    while (klass) {
-      props = props.concat(Object.getOwnPropertyNames(klass));
-
-      klass = Object.getPrototypeOf(klass);
-    }
-
-    return props.sort().filter((name) => typeof this[name] === 'function');
+    callDecoratedMethods(this, 'refresh');
   }
 }
