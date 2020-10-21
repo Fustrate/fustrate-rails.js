@@ -3,6 +3,10 @@ const decoratedMethodsRegistry = {
 };
 
 function addDecoratedMethod(className, type, methodName) {
+  if (!decoratedMethodsRegistry[type]) {
+    decoratedMethodsRegistry[type] = {};
+  }
+
   if (!decoratedMethodsRegistry[type][className]) {
     decoratedMethodsRegistry[type][className] = [];
   }
