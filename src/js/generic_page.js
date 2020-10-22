@@ -34,6 +34,6 @@ export default class GenericPage {
   }
 
   refresh() {
-    callDecoratedMethods(this, 'refresh');
+    callDecoratedMethods(this, 'autorefresh');
   }
 }

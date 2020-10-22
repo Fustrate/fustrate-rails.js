@@ -1,27 +1,25 @@
-const decoratedMethodsRegistry = {
+// I couldn't figure out how to make this work with "non-legacy" decorators - there doesn't seem to
+// be a way to access the parent class of the data/descriptor that gets passed to the decorator.
+const decoratedMethodsCache = {
   autorefresh: {},
 };
 
-function addDecoratedMethod(className, type, methodName) {
-  if (!decoratedMethodsRegistry[type]) {
-    decoratedMethodsRegistry[type] = {};
-  }
-
-  if (!decoratedMethodsRegistry[type][className]) {
-    decoratedMethodsRegistry[type][className] = [];
-  }
-
-  decoratedMethodsRegistry[type][className].push(methodName);
-}
-
 export function autorefresh() {
   return (target, propertyKey) => {
-    addDecoratedMethod(target.constructor.name, 'autorefresh', propertyKey);
+    const { name } = target.constructor;
+
+    if (!decoratedMethodsCache.autorefresh[name]) {
+      decoratedMethodsCache.autorefresh[name] = [];
+    }
+
+    decoratedMethodsCache.autorefresh[name].push(propertyKey);
   };
 }
 
 export function callDecoratedMethods(instance, type) {
-  const methods = decoratedMethodsRegistry[type][instance.constructor.name] || [];
+  const { name } = instance.constructor;
+
+  const methods = decoratedMethodsCache[type][name] || [];
 
   methods.forEach((methodName) => {
     instance[methodName].apply(instance);
