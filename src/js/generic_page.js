@@ -1,4 +1,4 @@
-import { callDecoratedMethods } from './decorators';
+// import { callDecoratedMethods } from './decorators';
 
 export default class GenericPage {
   initialize() {
@@ -34,6 +34,6 @@ export default class GenericPage {
   }
 
   refresh() {
-    callDecoratedMethods(this, 'autorefresh');
+    // callDecoratedMethods(this, 'autorefresh');
   }
 }
