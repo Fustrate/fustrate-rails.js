@@ -26,6 +26,10 @@ export interface GenericTableSettings {
     noRecordsMessage?: string;
 }
 
+export interface UIElements {
+    [s: string]: HTMLElement | UIElements | UIElements[];
+}
+
 export class Listenable {
     protected listeners: { [s: string]: ((event: CustomEvent) => void)[] };
 
@@ -123,8 +127,8 @@ export class SuccessFlash extends Flash {
 }
 
 export class Modal extends Component {
-    protected buttons: { [s: string]: HTMLElement };
-    protected fields: { [s: string]: HTMLElement };
+    protected buttons: UIElements;
+    protected fields: UIElements;
     protected modalId: number;
     protected settings: ModalSettings;
     protected modal: HTMLDivElement;
@@ -197,8 +201,8 @@ export class FormDataBuilder {
 }
 
 export class GenericPage {
-    protected fields: { [s: string]: HTMLElement };
-    protected buttons: { [s: string]: HTMLElement };
+    protected fields: UIElements;
+    protected buttons: UIElements;
     protected allMethodNamesList: string[];
 
     protected addEventListeners(): void;
