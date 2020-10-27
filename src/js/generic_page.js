@@ -1,4 +1,5 @@
 // import { callDecoratedMethods } from './decorators';
+import set from 'lodash/set';
 
 export default class GenericPage {
   initialize() {
@@ -19,13 +20,13 @@ export default class GenericPage {
     Array.from(document.body.querySelectorAll('[data-field]'))
       .filter((element) => !element.matches('.modal [data-field]'))
       .forEach((element) => {
-        this.fields[element.dataset.field] = element;
+        set(this.fields, element.dataset.field, element);
       });
 
     Array.from(document.body.querySelectorAll('[data-button]'))
       .filter((element) => !element.matches('.modal [data-button]'))
       .forEach((element) => {
-        this.buttons[element.dataset.button] = element;
+        set(this.buttons, element.dataset.button, element);
       });
   }
 
