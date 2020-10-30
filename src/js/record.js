@@ -78,9 +78,9 @@ export default class Record extends BasicObject {
   }
 
   // returns Promise<Record>
-  static create(attributes) {
+  static create(attributes, additionalParameters = {}) {
     const record = new this();
 
-    return record.update(attributes).then(() => record);
+    return record.update(attributes, additionalParameters).then(() => record);
   }
 }
