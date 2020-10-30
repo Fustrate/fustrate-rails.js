@@ -66,7 +66,7 @@ export class Record extends BasicObject {
 
     public get classname(): string;
 
-    public static create<T extends typeof Record>(this: T, attributes: { [s: string]: any }): Promise<InstanceType<T>>;
+    public static create<T extends typeof Record>(this: T, attributes: { [s: string]: any }, additionalParameters?: { [s: string]: any }): Promise<InstanceType<T>>;
 
     public static get paramKey(): string;
 }
