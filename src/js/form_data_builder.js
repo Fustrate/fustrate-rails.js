@@ -7,11 +7,12 @@ export default class FormDataBuilder {
   }
 
   static appendObject(data, key, value) {
+    // TODO: Handle more than just arrays of strings/numbers
     if (value instanceof Array) {
       value.forEach((item) => {
         data.append(`${key}[]`, String(item));
       });
-    } else if (value instanceof File) {
+    } else if (value instanceof Blob) {
       data.append(key, value);
     } else if (moment.isMoment(value)) {
       data.append(key, value.format());
