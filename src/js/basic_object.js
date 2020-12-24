@@ -26,8 +26,16 @@ export default class BasicObject extends Listenable {
     if (this.updatedAt && !moment.isMoment(this.updatedAt)) {
       this.updatedAt = moment(this.updatedAt);
     }
+    
+    this.extractObjectsFromData(data);
+    
+    this.dispatchEvent(new CustomEvent('extracted'));
 
     return data;
+  }
+  
+  extractObjectsFromData(data) {
+    // This is a hook.
   }
 
   get isBasicObject() {
