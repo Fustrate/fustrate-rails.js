@@ -42,12 +42,14 @@ export class Listenable {
 export class BasicObject extends Listenable {
     public constructor(data?: number | string);
 
-    public extractFromData(data: { [s: string]: any }): { [s: string]: any };
+    public extractObjectsFromData(data: { [s: string]: any }): { [s: string]: any };
 
     public get isBasicObject(): boolean;
 
     public static build<T extends typeof BasicObject>(this: T, data?: { [s: string]: any }, attributes?: { [s: string]: any }): InstanceType<T>;
     public static buildList<T extends typeof BasicObject>(this: T, items: any[], attributes?: { [s: string]: any }): InstanceType<T>[];
+
+    protected extractFromData(data: { [s: string]: any }): { [s: string]: any };
 }
 
 export class Record extends BasicObject {
