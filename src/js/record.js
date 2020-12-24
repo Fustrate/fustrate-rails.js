@@ -67,6 +67,8 @@ export default class Record extends BasicObject {
 
       this.isLoaded = true;
 
+      this.dispatchEvent(new CustomEvent('updated'));
+
       return response.data;
     });
   }
