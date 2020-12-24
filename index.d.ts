@@ -42,7 +42,7 @@ export class Listenable {
 export class BasicObject extends Listenable {
     public constructor(data?: number | string);
 
-    public extractObjectsFromData(data: { [s: string]: any }): { [s: string]: any };
+    public extractObjectsFromData(data: { [s: string]: any }): void;
 
     public get isBasicObject(): boolean;
 
