@@ -36,7 +36,7 @@ export class Listenable {
     public addEventListener(type: string, listener: (event: CustomEvent) => void): void;
     public removeEventListener(type: string, listener: (event: CustomEvent) => void): void;
 
-    protected dispatchEvent(event: CustomEvent): boolean;
+    public dispatchEvent(event: CustomEvent): boolean;
 }
 
 export class BasicObject extends Listenable {
