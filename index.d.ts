@@ -230,7 +230,7 @@ export class GenericTable extends GenericPage {
     protected checkAll(event: UIEvent): void;
     protected createRow(item: Record | { [s: string]: any }): HTMLTableRowElement;
     protected getCheckedIds(): string[];
-    protected reloadRows(trs: HTMLTableRowElement[], options?: { sort?: (a: HTMLTableRowElement, b: HTMLTableRowElement) => number }): void;
+    protected reloadRows(trs: HTMLTableRowElement[], options?: { sort?: (row: HTMLTableRowElement) => string }): void;
     protected reloadTable(): void;
     protected removeRow(row: HTMLTableRowElement): void;
     protected uncheckAll(): void;
