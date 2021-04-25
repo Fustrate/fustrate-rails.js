@@ -1,4 +1,4 @@
-import Popper from 'popper.js';
+import { createPopper } from '@popperjs/core';
 import { delegate } from '@rails/ujs';
 
 import Component from '../component';
@@ -14,13 +14,16 @@ export default class Dropdown extends Component {
     // Hide any visible dropdowns before showing this one
     this.hide();
 
-    this.popper = new Popper(event.target, event.target.nextElementSibling, {
+    this.popper = createPopper(event.target, event.target.nextElementSibling, {
       placement: 'bottom-start',
-      modifiers: {
-        flip: {
-          behavior: ['bottom', 'top'],
+      modifiers: [
+        {
+          name: 'flip',
+          options: {
+            behavior: ['bottom', 'top'],
+          }
         },
-      },
+      ],
     });
 
     document.body.addEventListener('click', this.boundHide);
