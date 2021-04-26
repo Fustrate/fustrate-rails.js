@@ -31,7 +31,7 @@ export default class Record extends BasicObject {
       this.extractFromData(response.data);
 
       this.isLoaded = true;
-      
+
       this.dispatchEvent(new CustomEvent('reloaded'));
 
       return response.data;
