@@ -125,14 +125,8 @@ export const redirectTo = (href) => {
   }, 750);
 };
 
-export const toHumanDate = (momentObject, time = false) => {
-  if (momentObject.constructor.name === 'Moment') {
-    const year = momentObject.year() !== new Date().getFullYear() ? '/YY' : '';
+export const toHumanDate = (dateTimeObject, time = false) => {
+  const year = dateTimeObject.year !== new Date().getFullYear() ? '/yy' : '';
 
-    return momentObject.format(`M/D${year}${time ? ' h:mm A' : ''}`);
-  }
-
-  const year = momentObject.year !== new Date().getFullYear() ? '/yy' : '';
-
-  return momentObject.toFormat(`M/d${year}${time ? ' t' : ''}`);
+  return dateTimeObject.toFormat(`M/d${year}${time ? ' t' : ''}`);
 };
