@@ -1,4 +1,3 @@
-import moment from 'moment';
 import Rails from '@rails/ujs';
 
 require('./polyfills');
@@ -15,27 +14,6 @@ export default class Fustrate {
       if (Klass) {
         Fustrate.instance.initialize();
       }
-    });
-  }
-
-  constructor() {
-    moment.updateLocale('en', {
-      longDateFormat: {
-        LTS: 'h:mm:ss A',
-        LT: 'h:mm A',
-        L: 'M/D/YY',
-        LL: 'MMMM D, YYYY',
-        LLL: 'MMMM D, YYYY h:mm A',
-        LLLL: 'dddd, MMMM D, YYYY h:mm A',
-      },
-      calendar: {
-        lastDay: '[Yesterday at] LT',
-        sameDay: '[Today at] LT',
-        nextDay: '[Tomorrow at] LT',
-        lastWeek: 'dddd [at] LT',
-        nextWeek: '[next] dddd [at] LT',
-        sameElse: 'L',
-      },
     });
   }
 
