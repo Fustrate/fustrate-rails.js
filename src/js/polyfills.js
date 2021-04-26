@@ -21,14 +21,14 @@ if (!Element.prototype.matches) {
 // Supports: Internet Explorer (All)
 if (!Element.prototype.closest) {
   Element.prototype.closest = function closest(selector) {
-    let el = this;
+    let element = this;
 
-    while (el != null && el.nodeType === 1) {
-      if (el.matches(selector)) {
-        return el;
+    while (element != null && element.nodeType === 1) {
+      if (element.matches(selector)) {
+        return element;
       }
 
-      el = el.parentElement || el.parentNode;
+      element = element.parentElement || element.parentNode;
     }
 
     return null;

@@ -12,7 +12,6 @@ export const isPresent = (string) => !isBlank(string);
 export const parameterize = (string) => (typeof string !== 'string' ? '' : string
   .replace(/[a-z][A-Z]/, (match) => `${match[0]}_${match[1]}`)
   .replace(/[^a-zA-Z0-9\-_]+/, '-') // Turn unwanted chars into the separator
-  .replace(/-{2,}/, '-') // No more than one of the separator in a row
   .replace(/^-|-$/, '') // Remove leading/trailing separator.
   .toLowerCase());
 
