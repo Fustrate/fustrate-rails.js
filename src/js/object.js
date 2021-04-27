@@ -6,7 +6,7 @@ export const isPlainObject = (object) => {
 
   // isBasicObject is a getter on BasicObject - any sort of basic record shouldn't be iterated
   // We also don't want to mess with Luxon's DateTime objects.
-  return !object.isBasicObject && object.constructor.name !== 'DateTime';
+  return !object.isBasicObject && !object.isLuxonDateTime;
 };
 
 export const deepExtend = (out, ...rest) => {

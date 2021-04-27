@@ -13,8 +13,6 @@ export default class FormDataBuilder {
       });
     } else if (value instanceof Blob) {
       data.append(key, value);
-    } else if (value.constructor.name === 'DateTime') {
-      data.append(key, value.toISO());
     } else if (!(value instanceof BasicObject)) {
       this.toFormData(data, value, key);
     }
