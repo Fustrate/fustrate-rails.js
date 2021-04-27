@@ -30,6 +30,9 @@ export interface UIElements {
     [s: string]: HTMLElement | UIElements | UIElements[];
 }
 
+export type ParamValue = string | number | boolean | null | ParamValue[] | { [s: string]: ParamValue };
+export type Parameters = { [s: string]: ParamValue };
+
 export class Listenable {
     protected listeners: { [s: string]: ((event: CustomEvent) => void)[] };
 
@@ -60,15 +63,15 @@ export class Record extends BasicObject {
 
     public constructor(data?: number | string);
 
-    public delete(params?:  { [s: string]: any }): Promise<AxiosResponse<any>>;
+    public delete(params?: Parameters): Promise<AxiosResponse<any>>;
     public extractFromData(data: number | string | { [s: string]: any }): { [s: string]: any };
     public path(options?: { format?: string }): string;
     public reload(options?: { force?: boolean }): Promise<AxiosResponse<any>>;
-    public update(attributes: { [s: string]: any }, additionalParameters?: { [s: string]: any }): Promise<AxiosResponse<any>>;
+    public update(attributes: Parameters, additionalParameters?: Parameters): Promise<AxiosResponse<any>>;
 
     public get classname(): string;
 
-    public static create<T extends typeof Record>(this: T, attributes: { [s: string]: any }, additionalParameters?: { [s: string]: any }): Promise<InstanceType<T>>;
+    public static create<T extends typeof Record>(this: T, attributes: { [s: string]: any }, additionalParameters?: Parameters): Promise<InstanceType<T>>;
 
     public static get paramKey(): string;
 }
