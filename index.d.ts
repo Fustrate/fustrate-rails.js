@@ -166,6 +166,8 @@ export class Modal extends Component {
     protected openPreviousModal(): void;
     protected reloadUIElements(): void;
     protected setButtons(buttons: ModalButton[], reload?: boolean): void;
+    protected disableButtons(): void;
+    protected enableButtons(): void;
     protected setContent(content: string, reload?: boolean): void;
     protected setTitle(title: string, options?: { icon?: string }): void;
 }
