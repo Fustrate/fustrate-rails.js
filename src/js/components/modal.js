@@ -175,11 +175,11 @@ export default class Modal extends Component {
   }
 
   disableButtons() {
-    this.buttons.forEach((button) => button.setAttribute('disabled', ''));
+    Object.values(this.buttons).forEach((button) => button.setAttribute('disabled', ''));
   }
 
   enableButtons() {
-    this.buttons.forEach((button) => button.removeAttribute('disabled'));
+    Object.values(this.buttons).forEach((button) => button.removeAttribute('disabled'));
   }
 
   addEventListeners() {
