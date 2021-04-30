@@ -1,5 +1,6 @@
 import { escape, startCase } from 'lodash/string';
 import { pull } from 'lodash/array';
+import set from 'lodash/set';
 
 import { delegate, fire, stopEverything } from '@rails/ujs';
 
@@ -116,11 +117,11 @@ export default class Modal extends Component {
     this.buttons = {};
 
     this.modal.querySelectorAll('[data-field]').forEach((element) => {
-      this.fields[element.dataset.field] = element;
+      set(this.fields, element.dataset.field, element);
     });
 
     this.modal.querySelectorAll('[data-button]').forEach((element) => {
-      this.buttons[element.dataset.button] = element;
+      set(this.buttons, element.dataset.button, element);
     });
   }
 
