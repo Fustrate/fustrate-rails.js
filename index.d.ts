@@ -30,7 +30,7 @@ export interface UIElements {
     [s: string]: HTMLElement | UIElements | UIElements[];
 }
 
-export type ParamValue = string | number | boolean | null | File | ParamValue[] | { [s: string]: ParamValue };
+export type ParamValue = string | number | boolean | null | undefined | File | ParamValue[] | { [s: string]: ParamValue };
 export type Parameters = { [s: string]: ParamValue };
 
 export class Listenable {
