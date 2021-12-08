@@ -1,4 +1,8 @@
-export const accountingFormat = (number) => (number < 0 ? `($${(number * -1).toFixed(2)})` : `$${number.toFixed(2)}`);
+export const accountingFormat = (number, stripZeroCents = false) => {
+  const string = number < 0 ? `($${(number * -1).toFixed(2)})` : `$${number.toFixed(2)}`;
+
+  return stripZeroCents ? string.replace(/\.00$/, '') : string;
+};
 
 export const truncate = (number, digits = 2) => number.toFixed(digits).replace(/\.?0+$/, '');
 
