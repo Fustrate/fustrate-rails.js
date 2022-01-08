@@ -1,14 +1,17 @@
 module.exports = {
+  plugins: ['lodash'],
   rules: {
-    'class-methods-use-this': 0,
-    'no-extend-native': 0,
-    'no-param-reassign': 0,
+    'class-methods-use-this': 'off',
+    'no-extend-native': 'off',
+    'no-param-reassign': 'off',
+
+    'lodash/import-scope': 'error',
   },
   env: {
     browser: true,
     node: true,
   },
-  extends: 'airbnb-base',
+  extends: ['airbnb-base'],
   overrides: [
     {
       files: ['**/*.spec.js'],

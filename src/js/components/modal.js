@@ -1,5 +1,6 @@
-import { escape, startCase } from 'lodash/string';
-import { pull } from 'lodash/array';
+import escape from 'lodash/escape';
+import startCase from 'lodash/startCase';
+import pull from 'lodash/pull';
 import set from 'lodash/set';
 
 import { delegate, fire, stopEverything } from '@rails/ujs';

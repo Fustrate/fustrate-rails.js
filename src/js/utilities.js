@@ -1,6 +1,6 @@
 // Internal functions
-import { compact } from 'lodash/array';
-import { escape } from 'lodash/string';
+import compact from 'lodash/compact';
+import escape from 'lodash/escape';
 import { underscore, isBlank } from './string';
 
 function hrefFor(href) {
