@@ -8,7 +8,7 @@ describe('Listenable', () => {
     let received = false;
 
     function callback(event) {
-      expect(event.detail).toEqual('world');
+      expect(event.detail).toBe('world');
 
       received = true;
     }

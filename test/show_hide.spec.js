@@ -18,8 +18,8 @@ describe('toggle', () => {
 
     toggle(spans, false);
 
-    expect(spans[0].style.display).toEqual('none');
-    expect(spans[1].style.display).toEqual('none');
+    expect(spans[0].style.display).toBe('none');
+    expect(spans[1].style.display).toBe('none');
   });
 
   it('toggles a single element', () => {
@@ -27,7 +27,7 @@ describe('toggle', () => {
 
     toggle(element, false);
 
-    expect(element.style.display).toEqual('none');
+    expect(element.style.display).toBe('none');
   });
 });
 
@@ -47,7 +47,7 @@ describe('show', () => {
 
     show(element);
 
-    expect(element.style.display).toEqual('block');
+    expect(element.style.display).toBe('block');
   });
 });
 
@@ -57,6 +57,6 @@ describe('hide', () => {
 
     hide(element);
 
-    expect(element.style.display).toEqual('none');
+    expect(element.style.display).toBe('none');
   });
 });

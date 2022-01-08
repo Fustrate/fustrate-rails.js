@@ -47,7 +47,7 @@ describe('::buildList', () => {
 
     expect(records).toHaveLength(3);
     expect(records[0]).toBeInstanceOf(Record);
-    expect(records[1].age).toEqual(10);
+    expect(records[1].age).toBe(10);
   });
 
   it('builds an array of objects with extra attributes', () => {
@@ -64,7 +64,7 @@ describe('#extractFromData', () => {
 
     record.extractFromData({ age: '5', date: '2019-06-27T00:00:00-07:00' });
 
-    expect(record.age).toEqual(5);
+    expect(record.age).toBe(5);
     expect(record.date).toEqual(new Date('2019-06-27T00:00:00-07:00'));
   });
 

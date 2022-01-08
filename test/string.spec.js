@@ -11,7 +11,7 @@ import {
 
 describe('#humanize()', () => {
   it('dasherizes a string', () => {
-    expect(humanize('helloWorld_test')).toEqual('hello world test');
+    expect(humanize('helloWorld_test')).toBe('hello world test');
   });
 });
 
@@ -41,34 +41,34 @@ describe('#isPresent()', () => {
 
 describe('#parameterize()', () => {
   it('parameterizes a string', () => {
-    expect(parameterize('helloWorld')).toEqual('hello_world');
-    expect(parameterize(',,a')).toEqual('a');
-    expect(parameterize('b,,')).toEqual('b');
-    expect(parameterize('a,,,b')).toEqual('a-b');
+    expect(parameterize('helloWorld')).toBe('hello_world');
+    expect(parameterize(',,a')).toBe('a');
+    expect(parameterize('b,,')).toBe('b');
+    expect(parameterize('a,,,b')).toBe('a-b');
   });
 });
 
 describe('#phoneFormat()', () => {
   it('formats a phone number', () => {
-    expect(phoneFormat('6618675309')).toEqual('(661) 867-5309');
-    expect(phoneFormat('8675309')).toEqual('867-5309');
-    expect(phoneFormat('411')).toEqual('411');
-    expect(phoneFormat('07734')).toEqual('07734');
+    expect(phoneFormat('6618675309')).toBe('(661) 867-5309');
+    expect(phoneFormat('8675309')).toBe('867-5309');
+    expect(phoneFormat('411')).toBe('411');
+    expect(phoneFormat('07734')).toBe('07734');
   });
 });
 
 describe('#pluralize()', () => {
   it('pluralizes a string', () => {
-    expect(pluralize('library')).toEqual('libraries');
-    expect(pluralize('squirrel')).toEqual('squirrels');
-    // expect(pluralize("goose")).toEqual("geese");
-    // expect(pluralize("ox")).toEqual("oxen");
+    expect(pluralize('library')).toBe('libraries');
+    expect(pluralize('squirrel')).toBe('squirrels');
+    // expect(pluralize("goose")).toBe("geese");
+    // expect(pluralize("ox")).toBe("oxen");
   });
 });
 
 describe('#presence()', () => {
   it('checks the presence of a string', () => {
-    expect(presence('hello world')).toEqual('hello world');
+    expect(presence('hello world')).toBe('hello world');
 
     expect(presence('')).toBeUndefined();
     expect(presence(null)).toBeUndefined();
@@ -78,7 +78,7 @@ describe('#presence()', () => {
 
 describe('#underscore()', () => {
   it('underscores a string', () => {
-    expect(underscore('Subreddit::Sidebar')).toEqual('subreddit/sidebar');
-    expect(underscore('helloWorld')).toEqual('hello_world');
+    expect(underscore('Subreddit::Sidebar')).toBe('subreddit/sidebar');
+    expect(underscore('helloWorld')).toBe('hello_world');
   });
 });
