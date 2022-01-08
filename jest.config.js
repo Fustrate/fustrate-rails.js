@@ -9,4 +9,5 @@ module.exports = {
   // timers: 'real',
   // verbose: null,
   // watchman: true,
+  testEnvironment: 'jsdom',
 };

@@ -192,7 +192,7 @@ describe('toHumanDate', () => {
   it('formats a date in the past', () => {
     const date = {
       year: jest.fn().mockReturnValue(2017),
-      format: jest.fn().mockReturnValue('7/1/17'),
+      toFormat: jest.fn().mockReturnValue('7/1/17'),
     };
 
     expect(toHumanDate(date)).toEqual('7/1/17');
@@ -202,7 +202,7 @@ describe('toHumanDate', () => {
   it('formats a date in the current year', () => {
     const date = {
       year: jest.fn().mockReturnValue(2018),
-      format: jest.fn().mockReturnValue('7/1'),
+      toFormat: jest.fn().mockReturnValue('7/1'),
     };
 
     expect(toHumanDate(date)).toEqual('7/1');
@@ -212,7 +212,7 @@ describe('toHumanDate', () => {
   it('formats a date in the future', () => {
     const date = {
       year: jest.fn().mockReturnValue(2019),
-      format: jest.fn().mockReturnValue('7/1/19'),
+      toFormat: jest.fn().mockReturnValue('7/1/19'),
     };
 
     expect(toHumanDate(date)).toEqual('7/1/19');
@@ -222,7 +222,7 @@ describe('toHumanDate', () => {
   it('formats a date with the time', () => {
     const date = {
       year: jest.fn().mockReturnValue(2019),
-      format: jest.fn().mockReturnValue('7/1/19 8:30 AM'),
+      toFormat: jest.fn().mockReturnValue('7/1/19 8:30 AM'),
     };
 
     expect(toHumanDate(date, true)).toEqual('7/1/19 8:30 AM');
