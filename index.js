@@ -1,6 +1,6 @@
 export { default as BasicObject } from './src/js/basic_object';
 export { default as Component } from './src/js/component';
-export { default as GenericPage } from './src/js/generic_page';
+export { default as GenericPage, decorateMethod, autorefresh } from './src/js/generic_page';
 export { default as GenericTable } from './src/js/generic_table';
 export { default as Listenable } from './src/js/listenable';
 export { default as Record } from './src/js/record';

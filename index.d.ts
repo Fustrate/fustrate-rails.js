@@ -207,6 +207,18 @@ export class FormDataBuilder {
     public static toFormData(data: FormData, obj: { [s: string]: any }, namespace?: string): FormData;
 }
 
+interface MethodDecoratorTarget {
+    kind: 'method';
+    key: string | symbol;
+    placement: 'prototype';
+}
+
+type DecoratorFunction = (target: MethodDecoratorTarget, key: string, descriptor: PropertyDescriptor) => void;
+
+export function decorateMethod(tag: string): DecoratorFunction;
+
+export function autorefresh(): any;
+
 export class GenericPage {
     protected fields: UIElements;
     protected buttons: UIElements;
@@ -217,6 +229,7 @@ export class GenericPage {
     public refresh(): void;
     protected reloadUIElements(): void;
     protected setHeader(text: string): void;
+    protected callDecoratedMethods(tag: string): void;
 }
 
 export class GenericTable<T> extends GenericPage {

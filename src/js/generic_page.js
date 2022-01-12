@@ -1,6 +1,16 @@
 // import { callDecoratedMethods } from './decorators';
 import set from 'lodash/set';
 
+export function decorateMethod(tag) {
+  return (target, key, descriptor) => {
+    descriptor.value[tag] = true;
+  };
+}
+
+export function autorefresh() {
+  return decorateMethod('$autorefresh');
+}
+
 export default class GenericPage {
   initialize() {
     this.reloadUIElements();
@@ -35,6 +45,16 @@ export default class GenericPage {
   }
 
   refresh() {
-    // callDecoratedMethods(this, 'autorefresh');
+    this.callDecoratedMethods('$autorefresh');
+  }
+
+  callDecoratedMethods(tag) {
+    const descriptors = Object.getOwnPropertyDescriptors(Object.getPrototypeOf(this));
+
+    Object.entries(descriptors).forEach(([name, descriptor]) => {
+      if (descriptor.value && descriptor.value[tag]) {
+        this[name]();
+      }
+    });
   }
 }
