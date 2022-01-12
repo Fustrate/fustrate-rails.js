@@ -1,4 +1,3 @@
-// import { callDecoratedMethods } from './decorators';
 import set from 'lodash/set';
 
 export function decorateMethod(tag) {
