@@ -10,29 +10,30 @@
   "bugs": "https://github.com/Fustrate/fustrate-rails.js/issues",
   "dependencies": {
     "@popperjs/core": "^2.11.2",
-    "@rails/ujs": "^7.0.1",
+    "@rails/ujs": "^7.0.2-2",
     "animate.css": "^4.1.1",
     "axios": "^0.25.0",
-    "core-js": "^3.20.2",
+    "core-js": "^3.21.0",
     "custom-event-polyfill": "^1.0.7",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.16.7",
+    "@babel/preset-env": "^7.16.11",
     "@types/jest": "^27.4.0",
-    "@types/luxon": "^2.0.8",
-    "babel-jest": "^27.4.6",
-    "eslint": "^8.6.0",
+    "@types/luxon": "^2.0.9",
+    "babel-jest": "^27.5.1",
+    "eslint": "^8.8.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jest": "^26.1.0",
     "eslint-plugin-lodash": "^7.3.0",
-    "jest": "^27.4.7",
+    "jest": "^27.5.1",
     "jest-mock-axios": "^4.5.0"
   },
   "scripts": {
     "lint": "eslint .",
     "precommit": "npm run lint",
-    "test": "jest"
+    "test": "jest",
+    "versions": "node ./lib/update-package-versions.js"
   }
 }
