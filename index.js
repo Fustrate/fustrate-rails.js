@@ -1,3 +1,5 @@
+import Fustrate from './src/js/fustrate';
+
 export { default as BasicObject } from './src/js/basic_object';
 export { default as Component } from './src/js/component';
 export { default as GenericPage, decorateMethod, autorefresh } from './src/js/generic_page';
@@ -15,4 +17,4 @@ export { default as Modal } from './src/js/components/modal';
 export { default as Pagination } from './src/js/components/pagination';
 export { default as Tabs } from './src/js/components/tabs';
 
-export { default } from './src/js/fustrate';
+export default Fustrate;

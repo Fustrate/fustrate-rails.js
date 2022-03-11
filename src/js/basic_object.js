@@ -20,6 +20,7 @@ export default class BasicObject extends Listenable {
     return data;
   }
 
+  // eslint-disable-next-line no-unused-vars
   extractObjectsFromData(data) {
     // This is a hook.
   }

@@ -21,7 +21,7 @@ export default class Dropdown extends Component {
           name: 'flip',
           options: {
             behavior: ['bottom', 'top'],
-          }
+          },
         },
       ],
     });

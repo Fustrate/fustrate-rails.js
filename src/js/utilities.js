@@ -23,7 +23,7 @@ function hrefFor(href) {
 
 // Exported functions
 
-export const animate = (element, animation, { delay, speed } = {}, callback) => {
+export const animate = (element, animation, { delay, speed } = {}, callback = null) => {
   const classes = ['animated', ...animation.split(' ')];
 
   if (delay) {
