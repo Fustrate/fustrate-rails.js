@@ -51,8 +51,10 @@ export default class Record extends BasicObject {
 
     const data = FormDataBuilder.build(attributes, this.constructor.paramKey);
 
-    Object.keys(additionalParameters).forEach((key) => {
-      data.append(key, additionalParameters[key]);
+    Object.entries(additionalParameters).forEach(([key, value]) => {
+      if (value != null) {
+        data.append(key, value);
+      }
     });
 
     return ajax({
