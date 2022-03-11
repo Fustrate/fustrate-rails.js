@@ -1,3 +1,3 @@
 # fustrate-rails.js
 
-[![Build Status](https://travis-ci.com/Fustrate/fustrate-rails.js.svg?branch=master)](https://travis-ci.com/Fustrate/fustrate-rails.js)
+[![Test Suite](https://github.com/Fustrate/fustrate-rails.js/actions/workflows/test.yml/badge.svg)](https://github.com/Fustrate/fustrate-rails.js/actions/workflows/test.yml)
