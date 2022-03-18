@@ -144,7 +144,6 @@ export class Modal<T = void> extends Component {
 
     public constructor(settings?: ModalSettings);
 
-    public static build<U extends typeof Modal>(this: U): InstanceType<U>;
     public static hideAllModals(): void;
 
     protected static get settings(): ModalSettings;

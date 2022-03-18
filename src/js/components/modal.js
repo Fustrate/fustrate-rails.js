@@ -87,6 +87,8 @@ export default class Modal extends Component {
     super();
 
     this.settings = { ...defaultSettings, ...settings };
+
+    this.setup();
   }
 
   setup() {
@@ -101,14 +103,6 @@ export default class Modal extends Component {
     this.reloadUIElements();
     this.addEventListeners();
     this.initialize();
-  }
-
-  static build() {
-    const modal = new this();
-
-    modal.setup();
-
-    return modal;
   }
 
   initialize() { }
