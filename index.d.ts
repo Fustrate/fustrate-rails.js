@@ -131,20 +131,20 @@ export class SuccessFlash extends Flash {
     public static show(message: string, options?: { icon?: string }): SuccessFlash;
 }
 
-export class Modal extends Component {
+export class Modal<T = void> extends Component {
     protected buttons: UIElements;
     protected fields: UIElements;
     protected modalId: number;
     protected settings: ModalSettings;
     protected modal: HTMLDivElement;
 
-    protected promise: Promise<any>;
-    protected resolve: (value?: any) => void;
+    protected promise: Promise<T>;
+    protected resolve: (value?: T) => void;
     protected reject: (reason?: any) => void;
 
     public constructor(settings?: ModalSettings);
 
-    public static build<T extends typeof Modal>(this: T): InstanceType<T>;
+    public static build<U extends typeof Modal>(this: U): InstanceType<U>;
     public static hideAllModals(): void;
 
     protected static get settings(): ModalSettings;
@@ -154,7 +154,7 @@ export class Modal extends Component {
 
     public close(openPrevious?: boolean): void;
     public hide(): void;
-    public open(reopening?: boolean): Promise<any>;
+    public open(reopening?: boolean): Promise<T>;
 
     protected addEventListeners(): void;
     protected cancel(): void;
