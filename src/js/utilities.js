@@ -112,8 +112,8 @@ export const linkTo = (text, href, attributes = {}) => {
   element.href = hrefFor(href);
   element.innerHTML = text;
 
-  Object.keys(attributes).forEach((key) => {
-    element.setAttribute(key, attributes[key]);
+  Object.entries(attributes).forEach(([key, value]) => {
+    element.setAttribute(key, value);
   });
 
   return element.outerHTML;

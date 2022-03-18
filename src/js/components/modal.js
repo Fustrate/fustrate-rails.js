@@ -163,8 +163,8 @@ export default class Modal extends Component {
       } else if (typeof button === 'string') {
         list.push(`<button class="${button}" data-button="${button}">${startCase(button)}</button>`);
       } else if (typeof button === 'object') {
-        Object.keys(button).forEach((name) => {
-          list.push(createButton(name, button[name]));
+        Object.entries(button).forEach(([key, value]) => {
+          list.push(createButton(key, value));
         }, this);
       }
     }, this);
