@@ -104,7 +104,7 @@ describe('label', () => {
   });
 
   it('creates a label with spaces in the classes', () => {
-    expect(label('Work Order', 'work order')).toBe('<span class="label work order">Work Order</span>');
+    expect(label('Work Order', 'work order')).toBe('<span class="label work-order">Work Order</span>');
   });
 });
 

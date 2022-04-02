@@ -82,8 +82,8 @@ export const icon = (types, style = 'regular') => {
   return `<i class="fa${style[0]} ${classes}"></i>`;
 };
 
-export const label = (text, classes = '') => {
-  const cssClasses = (Array.isArray(classes) ? classes : classes.split(' '))
+export const label = (text, ...classes) => {
+  const cssClasses = classes
     .map((klass) => klass.replace(/\s+/g, '-').toLowerCase())
     .filter(Boolean);
 
