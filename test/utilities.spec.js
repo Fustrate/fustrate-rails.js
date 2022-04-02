@@ -95,16 +95,16 @@ describe('icon', () => {
 
 describe('label', () => {
   it('creates a basic label', () => {
-    expect(label('Open', 'work-order')).toBe('<span class="label work-order open">Open</span>');
+    expect(label('Open', 'work-order')).toBe('<span class="label work-order">Open</span>');
     expect(label('Open', 'Open')).toBe('<span class="label open">Open</span>');
   });
 
   it('creates a label with no type', () => {
-    expect(label('Open')).toBe('<span class="label open">Open</span>');
+    expect(label('Open')).toBe('<span class="label">Open</span>');
   });
 
-  it('creates a label with spaces in the text', () => {
-    expect(label('Work Order')).toBe('<span class="label work-order">Work Order</span>');
+  it('creates a label with spaces in the classes', () => {
+    expect(label('Work Order', 'work order')).toBe('<span class="label work order">Work Order</span>');
   });
 });
 

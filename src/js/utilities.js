@@ -1,7 +1,6 @@
 // Internal functions
-import compact from 'lodash/compact';
 import escape from 'lodash/escape';
-import { underscore, isBlank } from './string';
+import { isBlank } from './string';
 
 function hrefFor(href) {
   if (href == null) {
@@ -83,14 +82,14 @@ export const icon = (types, style = 'regular') => {
   return `<i class="fa${style[0]} ${classes}"></i>`;
 };
 
-export const label = (text, type) => {
-  const classes = underscore(compact(['label', type, text.replace(/\s+/g, '-')]).join(' '))
-    .toLowerCase()
-    .split(' ');
+export const label = (text, classes = '') => {
+  const cssClasses = (Array.isArray(classes) ? classes : classes.split(' '))
+    .map((klass) => klass.replace(/\s+/g, '-').toLowerCase())
+    .filter(Boolean);
 
   const span = document.createElement('span');
   span.textContent = text;
-  span.classList.add(...classes);
+  span.classList.add('label', ...cssClasses);
 
   return span.outerHTML;
 };
