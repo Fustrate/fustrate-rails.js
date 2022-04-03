@@ -106,6 +106,10 @@ describe('label', () => {
   it('creates a label with spaces in the classes', () => {
     expect(label('Work Order', 'work order')).toBe('<span class="label work-order">Work Order</span>');
   });
+
+  it('converts underscores to dashes', () => {
+    expect(label('Work Order', 'work_order')).toBe('<span class="label work-order">Work Order</span>');
+  });
 });
 
 describe('multilineEscapeHTML', () => {

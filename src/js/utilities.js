@@ -84,7 +84,7 @@ export const icon = (types, style = 'regular') => {
 
 export const label = (text, ...classes) => {
   const cssClasses = classes
-    .map((klass) => klass.replace(/\s+/g, '-').toLowerCase())
+    .map((klass) => klass.replace(/[\s_-]+/g, '-').toLowerCase())
     .filter(Boolean);
 
   const span = document.createElement('span');
