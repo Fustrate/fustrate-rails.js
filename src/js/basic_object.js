@@ -3,7 +3,7 @@ import { deepExtend } from './object';
 import Listenable from './listenable';
 
 export default class BasicObject extends Listenable {
-  static async build(data, attributes = {}) {
+  static build(data, attributes = {}) {
     if (!data) {
       return undefined;
     }
@@ -18,21 +18,21 @@ export default class BasicObject extends Listenable {
 
     const record = new this();
 
-    await record.extractFromData(deepExtend({}, data, attributes));
+    record.extractFromData(deepExtend({}, data, attributes));
 
     return record;
   }
 
-  static async buildList(items, attributes = {}) {
+  static buildList(items, attributes = {}) {
     if (!Array.isArray(items)) {
       return [];
     }
 
-    return Promise.all(items.map(async (item) => this.build(item, attributes)));
+    return items.map((item) => this.build(item, attributes));
   }
 
   // Simple extractor to assign root keys as properties in the current object.
-  async extractFromData(data) {
+  extractFromData(data) {
     if (!data) {
       return {};
     }
@@ -41,7 +41,7 @@ export default class BasicObject extends Listenable {
       this[key] = data[key];
     }, this);
 
-    await this.extractObjectsFromData(data);
+    this.extractObjectsFromData(data);
 
     this.dispatchEvent(new CustomEvent('extracted'));
 
@@ -49,7 +49,7 @@ export default class BasicObject extends Listenable {
   }
 
   // eslint-disable-next-line no-unused-vars
-  async extractObjectsFromData(data) {
+  extractObjectsFromData(data) {
     // This is a hook.
   }
 

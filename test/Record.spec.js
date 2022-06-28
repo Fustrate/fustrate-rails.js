@@ -14,12 +14,12 @@ describe('constructor', () => {
 describe('#reload', () => { });
 
 describe('#extractFromData', () => {
-  it('extracts attributes for a record', async () => {
+  it('extracts attributes for a record', () => {
     const record = new Record();
 
     const data = { id: 5, name: 'Steven' };
 
-    await record.extractFromData(data);
+    record.extractFromData(data);
 
     expect(record.id).toBe(5);
     expect(record.name).toBe('Steven');

@@ -21,7 +21,7 @@ class Event extends BasicObject {
 }
 
 class Record extends BasicObject {
-  async extractFromData(data) {
+  extractFromData(data) {
     if (!data) {
       return {};
     }
@@ -31,7 +31,7 @@ class Record extends BasicObject {
     }
 
     if (data.events) {
-      this.events = await Event.buildList(data.events, { eventable: this });
+      this.events = Event.buildList(data.events, { eventable: this });
     }
 
     if (data.parent) {
@@ -45,36 +45,36 @@ class Record extends BasicObject {
 }
 
 describe('::buildList', () => {
-  it('builds an array of objects', async () => {
-    const records = await Record.buildList([{ age: 5 }, { age: 10 }, { age: 15 }]);
+  it('builds an array of objects', () => {
+    const records = Record.buildList([{ age: 5 }, { age: 10 }, { age: 15 }]);
 
     expect(records).toHaveLength(3);
     expect(records[0]).toBeInstanceOf(Record);
     expect(records[1].age).toBe(10);
   });
 
-  it('builds an array of objects with extra attributes', async () => {
+  it('builds an array of objects with extra attributes', () => {
     const parent = new Record();
-    const records = await Record.buildList([{ age: 5 }], { parent });
+    const records = Record.buildList([{ age: 5 }], { parent });
 
     expect(records[0].parent).toBe(parent);
   });
 });
 
 describe('#extractFromData', () => {
-  it('sets properties from a plain object', async () => {
+  it('sets properties from a plain object', () => {
     const record = new Record();
 
-    await record.extractFromData({ age: '5', date: '2019-06-27T00:00:00-07:00' });
+    record.extractFromData({ age: '5', date: '2019-06-27T00:00:00-07:00' });
 
     expect(record.age).toBe(5);
     expect(record.date).toEqual(new Date('2019-06-27T00:00:00-07:00'));
   });
 
-  it('creates objects from data when necessary', async () => {
+  it('creates objects from data when necessary', () => {
     const record = new Record();
 
-    await record.extractFromData({ events: [{ note: 'Hello World' }] });
+    record.extractFromData({ events: [{ note: 'Hello World' }] });
 
     expect(record.events).toHaveLength(1);
     expect(record.events[0]).toBeInstanceOf(Event);
