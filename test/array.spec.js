@@ -1,4 +1,4 @@
-import { toSentence } from '../src/js/array';
+import { toSentence } from '../src/array';
 
 describe('toSentence', () => {
   it('joins words and stuff', () => {

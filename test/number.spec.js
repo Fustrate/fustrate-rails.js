@@ -3,7 +3,7 @@ import {
   bytesToString,
   ordinalize,
   truncate,
-} from '../src/js/number';
+} from '../src/number';
 
 describe('#accountingFormat()', () => {
   it('should format a positive integer', () => {

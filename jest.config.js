@@ -3,7 +3,7 @@
 
 module.exports = {
   moduleFileExtensions: ['js', 'json'],
-  roots: ['./src/js/', './test/'],
+  roots: ['./src/', './test/'],
   // resetMocks: false,
   // restoreMocks: false,
   // timers: 'real',

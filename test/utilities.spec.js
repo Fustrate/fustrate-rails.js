@@ -8,7 +8,7 @@ import {
   multilineEscapeHTML,
   redirectTo,
   toHumanDate,
-} from '../src/js/utilities';
+} from '../src/utilities';
 
 describe('animate', () => {
   it('animates for a while', () => {

@@ -1,1 +1,1 @@
-export * from './src/js/show_hide';
+export * from './src/show_hide';

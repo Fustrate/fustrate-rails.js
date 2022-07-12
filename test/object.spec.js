@@ -1,5 +1,5 @@
-import { deepExtend, isPlainObject } from '../src/js/object';
-import BasicObject from '../src/js/basic_object';
+import { deepExtend, isPlainObject } from '../src/object';
+import BasicObject from '../src/basic_object';
 
 describe('#deepExtend()', () => {
   it('extends an object deeply', () => {

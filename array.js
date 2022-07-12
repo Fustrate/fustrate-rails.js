@@ -1,1 +1,1 @@
-export * from './src/js/array';
+export * from './src/array';

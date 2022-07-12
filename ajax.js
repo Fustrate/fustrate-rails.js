@@ -1,4 +1,4 @@
-import ajax from './src/js/ajax';
+import ajax from './src/ajax';
 
-export * from './src/js/ajax';
+export * from './src/ajax';
 export default ajax;

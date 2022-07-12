@@ -1,1 +1,1 @@
-export * from './src/js/string';
+export * from './src/string';

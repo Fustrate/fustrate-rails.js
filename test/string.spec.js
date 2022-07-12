@@ -7,7 +7,7 @@ import {
   pluralize,
   presence,
   underscore,
-} from '../src/js/string';
+} from '../src/string';
 
 describe('#humanize()', () => {
   it('dasherizes a string', () => {

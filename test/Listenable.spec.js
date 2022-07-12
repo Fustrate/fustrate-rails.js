@@ -1,4 +1,4 @@
-import Listenable from '../src/js/listenable';
+import Listenable from '../src/listenable';
 
 class Thing extends Listenable {}
 
