@@ -1,5 +1,0 @@
-@mixin flash-color($bg) {
-  background: $bg;
-  border: 1px solid scale-color($bg, $lightness: 20%);
-  text-shadow: 0 1px 3px scale-color($bg, $lightness: -50%);
-}

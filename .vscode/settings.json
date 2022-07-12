@@ -4,14 +4,6 @@
     "editor.rulers": [100],
     "editor.formatOnSave": true,
   },
-  "[css]": {
-    "editor.tabSize": 2,
-    "editor.rulers": [80],
-  },
-  "[scss]": {
-    "editor.tabSize": 2,
-    "editor.rulers": [80],
-  },
   "[json]": {
     "editor.tabSize": 2,
     "editor.rulers": [80],

@@ -1,6 +1,0 @@
-@mixin modal-width($width: 80%) {
-  left: 50%;
-  margin-left: -($width / 2);
-  top: rem-calc(100);
-  width: $width;
-}
