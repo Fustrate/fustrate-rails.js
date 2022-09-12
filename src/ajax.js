@@ -2,9 +2,6 @@ import axios from 'axios';
 import { ErrorFlash } from './components/flash';
 import { addDebugData } from './debug';
 
-// Supports: Internet Explorer 11
-require('core-js/features/promise');
-
 function processResponseError(response) {
   const { data, status } = response;
 
