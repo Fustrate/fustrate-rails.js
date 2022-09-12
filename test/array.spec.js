@@ -1,5 +1,7 @@
 import { toSentence } from '../src/array';
 
+require('../src/polyfills');
+
 describe('toSentence', () => {
   it('joins words and stuff', () => {
     expect(toSentence([1, 2, 3])).toBe('1, 2, and 3');

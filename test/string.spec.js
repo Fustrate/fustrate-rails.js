@@ -9,6 +9,8 @@ import {
   underscore,
 } from '../src/string';
 
+require('../src/polyfills');
+
 describe('#humanize()', () => {
   it('dasherizes a string', () => {
     expect(humanize('helloWorld_test')).toBe('hello world test');
