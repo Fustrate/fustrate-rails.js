@@ -28,13 +28,9 @@ export const phoneFormat = (string) => {
 };
 
 // This is far too simple for most cases, but it works for the few things we need
-export const pluralize = (string) => {
-  if (string[string.length - 1] === 'y') {
-    return `${string.substr(0, string.length - 1)}ies`;
-  }
-
-  return `${string}s`;
-};
+export const pluralize = (string) => (string.at(-1) === 'y'
+  ? `${string.substr(0, string.length - 1)}ies`
+  : `${string}s`);
 
 export const presence = (string) => (isBlank(string) ? undefined : string);
 

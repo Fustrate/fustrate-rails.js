@@ -8,6 +8,6 @@ export const toSentence = (arr) => {
     case 2:
       return `${arr[0]} and ${arr[1]}`;
     default:
-      return `${arr.slice(0, -1).join(', ')}, and ${arr[arr.length - 1]}`;
+      return `${arr.slice(0, -1).join(', ')}, and ${arr.at(-1)}`;
   }
 };

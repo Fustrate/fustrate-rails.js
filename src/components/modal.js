@@ -305,7 +305,7 @@ export default class Modal extends Component {
 
   openPreviousModal() {
     if (openModals.length > 0) {
-      openModals[openModals.length - 1].open(true);
+      openModals.at(-1).open(true);
     }
   }
 
@@ -341,7 +341,7 @@ export default class Modal extends Component {
 
   // Close the top-most modal if the background is clicked
   static backgroundClicked() {
-    const modal = openModals[openModals.length - 1];
+    const modal = openModals.at(-1);
 
     // Don't continue to close if we're not supposed to
     if (modal && !modal.locked && modal.settings.closeOnBackgroundClick !== false) {
@@ -361,7 +361,7 @@ export default class Modal extends Component {
 
   static keyPressed(event) {
     if (event.which === 27 && openModals.length > 0) {
-      openModals[openModals.length - 1].close();
+      openModals.at(-1).close();
     }
   }
 }

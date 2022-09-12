@@ -138,12 +138,12 @@ export default class Pagination extends Component {
       pages.push(i);
     }
 
-    if (this.totalPages - 3 > pages[pages.length - 1]) {
+    if (this.totalPages - 3 > pages.at(-1)) {
       pages.push('gap');
       pages.push(this.totalPages - 1);
       pages.push(this.totalPages);
-    } else if (pages[pages.length - 1] + 1 <= this.totalPages) {
-      for (let i = pages[pages.length - 1] + 1; i <= this.totalPages; i += 1) {
+    } else if (pages.at(-1) + 1 <= this.totalPages) {
+      for (let i = pages.at(-1) + 1; i <= this.totalPages; i += 1) {
         pages.push(i);
       }
     }
