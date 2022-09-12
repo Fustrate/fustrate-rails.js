@@ -1,3 +1,6 @@
+// Supports: Safari < 15.4 (2022-03-15)
+require('core-js/features/array/at');
+
 // eslint-disable-next-line import/prefer-default-export
 export const toSentence = (arr) => {
   switch (arr.length) {

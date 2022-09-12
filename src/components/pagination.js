@@ -1,6 +1,9 @@
 import Component from '../component';
 import { linkTo } from '../utilities';
 
+// Supports: Safari < 15.4 (2022-03-15)
+require('core-js/features/array/at');
+
 const settings = {
   previousText: '← Previous',
   nextText: 'Next →',
