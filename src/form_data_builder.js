@@ -6,11 +6,16 @@ export default class FormDataBuilder {
   }
 
   static appendObject(data, key, value) {
-    // TODO: Handle more than just arrays of strings/numbers
-    if (value instanceof Array) {
-      value.forEach((item) => {
-        data.append(`${key}[]`, String(item));
-      });
+    if (Array.isArray(value)) {
+      if (value.some((item) => typeof item === 'object')) {
+        value.forEach((item, index) => {
+          this.toFormData(data, item, `${key}[${index}]`);
+        });
+      } else {
+        value.forEach((item) => {
+          data.append(`${key}[]`, String(item));
+        });
+      }
     } else if (value instanceof Blob) {
       data.append(key, value);
     } else if (!(value instanceof BasicObject)) {
