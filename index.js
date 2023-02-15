@@ -2,7 +2,7 @@ import Fustrate from './src/fustrate';
 
 export { default as BasicObject } from './src/basic_object';
 export { default as Component } from './src/component';
-export { default as GenericPage, callDecoratedMethods, decorateMethod } from './src/generic_page';
+export { default as GenericPage } from './src/generic_page';
 export { default as GenericTable } from './src/generic_table';
 export { default as Listenable } from './src/listenable';
 export { default as Record } from './src/record';

@@ -1,25 +1,5 @@
 import set from 'lodash/set';
 
-function makeDecorator(tag) {
-  return (target, key, descriptor) => {
-    descriptor.value[tag] = true;
-  };
-}
-
-export function decorateMethod(tag) {
-  return makeDecorator(tag);
-}
-
-export function callDecoratedMethods(obj, tag) {
-  const descriptors = Object.getOwnPropertyDescriptors(Object.getPrototypeOf(obj));
-
-  Object.entries(descriptors).forEach(([name, descriptor]) => {
-    if (descriptor.value && descriptor.value[tag]) {
-      obj[name]();
-    }
-  });
-}
-
 export default class GenericPage {
   initialize() {
     this.reloadUIElements();
@@ -29,8 +9,9 @@ export default class GenericPage {
     return Promise.resolve();
   }
 
-  addEventListeners() {
-  }
+  addEventListeners() { }
+
+  refresh() { }
 
   reloadUIElements() {
     this.fields = {};
@@ -52,6 +33,4 @@ export default class GenericPage {
   setHeader(text) {
     document.body.querySelector('.header .title').textContent = text;
   }
-
-  refresh() { }
 }
