@@ -1,13 +1,23 @@
 import set from 'lodash/set';
 
-export function decorateMethod(tag) {
+function makeDecorator(tag) {
   return (target, key, descriptor) => {
     descriptor.value[tag] = true;
   };
 }
 
-export function autorefresh() {
-  return decorateMethod('$autorefresh');
+export function decorateMethod(tag) {
+  return makeDecorator(tag);
+}
+
+export function callDecoratedMethods(obj, tag) {
+  const descriptors = Object.getOwnPropertyDescriptors(Object.getPrototypeOf(obj));
+
+  Object.entries(descriptors).forEach(([name, descriptor]) => {
+    if (descriptor.value && descriptor.value[tag]) {
+      obj[name]();
+    }
+  });
 }
 
 export default class GenericPage {
@@ -43,17 +53,5 @@ export default class GenericPage {
     document.body.querySelector('.header .title').textContent = text;
   }
 
-  refresh() {
-    this.callDecoratedMethods('$autorefresh');
-  }
-
-  callDecoratedMethods(tag) {
-    const descriptors = Object.getOwnPropertyDescriptors(Object.getPrototypeOf(this));
-
-    Object.entries(descriptors).forEach(([name, descriptor]) => {
-      if (descriptor.value && descriptor.value[tag]) {
-        this[name]();
-      }
-    });
-  }
+  refresh() { }
 }
