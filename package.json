@@ -1,7 +1,7 @@
 {
   "name": "@fustrate/rails",
-  "description": "I'm too tired to add a description right now.",
   "version": "0.2.0",
+  "description": "A frontend framework built for my personal projects because reinventing the wheel is obviously worth my time.",
   "license": "UNLICENSED",
   "repository": {
     "type": "git",
