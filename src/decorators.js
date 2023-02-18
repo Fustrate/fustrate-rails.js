@@ -1,8 +1,12 @@
+// Travel the prototype chain and get up to 10 levels of property descriptors.
 function buildDecorationList(obj) {
   const decorations = {};
 
-  Object.entries(Object.getOwnPropertyDescriptors(Object.getPrototypeOf(obj)))
-    .forEach(([name, descriptor]) => {
+  let proto = Object.getPrototypeOf(obj);
+  let level = 0;
+
+  while (proto != null && level < 10) {
+    Object.entries(Object.getOwnPropertyDescriptors(proto)).forEach(([name, descriptor]) => {
       if (descriptor.value && descriptor.value.$tags) {
         descriptor.value.$tags.forEach((tag) => {
           if (!decorations[tag]) {
@@ -13,6 +17,10 @@ function buildDecorationList(obj) {
         });
       }
     });
+
+    proto = Object.getPrototypeOf(proto);
+    level += 1;
+  }
 
   return decorations;
 }
