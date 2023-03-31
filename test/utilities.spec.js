@@ -166,8 +166,6 @@ describe('linkTo', () => {
 describe('redirectTo', () => {
   jest.useFakeTimers();
 
-  global.window = Object.create(window);
-
   Object.defineProperty(window, 'location', {
     value: { href: 'https://github.com' },
     writable: true,
