@@ -106,7 +106,7 @@ export default class GenericTable extends GenericPage {
     });
   }
 
-  // This should be fed a response from a JSON request for a paginated collection.
+  // This should be fed a response from a JSON request for a paginated listing.
   updatePagination(responseData) {
     if (!responseData.pagination) {
       return;

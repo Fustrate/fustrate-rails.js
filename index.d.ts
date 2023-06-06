@@ -13,13 +13,15 @@ export interface ModalSettings {
     type?: string;
 }
 
+export interface PaginationData {
+    page?: number;
+    perPage?: number;
+    total?: number;
+}
+
 export interface PaginatedData {
     data: any[];
-    pagination: {
-        page?: number;
-        perPage?: number;
-        total?: number;
-    }
+    pagination: PaginationData;
 }
 
 export interface GenericTableSettings {
@@ -179,7 +181,7 @@ export class Pagination extends Component {
     protected perPage: number;
     protected base: string;
 
-    public constructor(options: PaginatedData);
+    public constructor(options: PaginationData);
 
     public generate(): HTMLUListElement;
 
