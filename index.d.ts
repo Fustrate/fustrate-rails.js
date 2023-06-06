@@ -14,9 +14,10 @@ export interface ModalSettings {
 }
 
 export interface PaginationData {
-    page?: number;
-    perPage?: number;
-    total?: number;
+    page: number;
+    pages: number;
+    perPage: number;
+    total: number;
 }
 
 export interface PaginatedData {
@@ -177,6 +178,7 @@ export class Modal<T = void> extends Component {
 
 export class Pagination extends Component {
     protected page: number;
+    protected pages: number;
     protected total: number;
     protected perPage: number;
     protected base: string;

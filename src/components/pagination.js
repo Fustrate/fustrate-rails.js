@@ -25,12 +25,13 @@ function getPreppedPaginationURL() {
 }
 
 export default class Pagination extends Component {
-  constructor({ page, perPage, total }) {
+  constructor(paginationData) {
     super();
 
-    this.page = page;
-    this.perPage = perPage;
-    this.pages = Math.ceil(total / perPage);
+    this.page = paginationData.page;
+    this.pages = paginationData.pages;
+    this.perPage = paginationData.perPage;
+    this.total = paginationData.total;
 
     this.base = getPreppedPaginationURL();
   }
