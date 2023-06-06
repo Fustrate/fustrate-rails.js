@@ -219,7 +219,7 @@ export class GenericPage {
     protected setHeader(text: string): void;
 }
 
-export class GenericTable<T> extends GenericPage {
+export class GenericTable<T, U = HTMLTableRowElement> extends GenericPage {
     protected table: HTMLTableElement;
     protected tbody: HTMLTableSectionElement;
     protected settings: GenericTableSettings;
@@ -231,17 +231,17 @@ export class GenericTable<T> extends GenericPage {
 
     public initialize(): Promise<any>;
 
-    protected addRow(row: HTMLTableRowElement): void;
+    protected addRow(row: U): void;
     protected checkAll(event: UIEvent): void;
-    protected createRow(item: T): HTMLTableRowElement;
+    protected createRow(item: T): U;
     protected getCheckedIds(): string[];
-    protected reloadRows(trs: HTMLTableRowElement[], options?: { sort?: (row: HTMLTableRowElement) => string }): void;
+    protected reloadRows(trs: U[], options?: { sort?: (row: U) => string }): void;
     protected reloadTable(): void;
-    protected removeRow(row: HTMLTableRowElement): void;
+    protected removeRow(row: U): void;
     protected uncheckAll(): void;
     protected updated(): void;
     protected updatePagination(data: PaginationData): void;
-    protected updateRow(row: HTMLTableRowElement, item: T): void;
+    protected updateRow(row: U, item: T): void;
 }
 
 export class Fustrate {
