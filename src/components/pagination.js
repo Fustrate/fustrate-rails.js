@@ -25,18 +25,12 @@ function getPreppedPaginationURL() {
 }
 
 export default class Pagination extends Component {
-  constructor({
-    currentPage,
-    totalPages,
-    totalEntries,
-    perPage,
-  }) {
+  constructor({ page, perPage, total }) {
     super();
 
-    this.currentPage = currentPage;
-    this.totalPages = totalPages;
-    this.totalEntries = totalEntries;
+    this.page = page;
     this.perPage = perPage;
+    this.pages = Math.ceil(total / perPage);
 
     this.base = getPreppedPaginationURL();
   }
@@ -51,11 +45,11 @@ export default class Pagination extends Component {
     const li = document.createElement('li');
     li.classList.add('previous_page');
 
-    if (this.currentPage === 1) {
+    if (this.page === 1) {
       li.classList.add('unavailable');
       li.innerHTML = `<a href="#">${settings.previousText}</a>`;
     } else {
-      li.innerHTML = this.link(settings.previousText, this.currentPage - 1, { rel: 'prev' });
+      li.innerHTML = this.link(settings.previousText, this.page - 1, { rel: 'prev' });
     }
 
     return li;
@@ -65,11 +59,11 @@ export default class Pagination extends Component {
     const li = document.createElement('li');
     li.classList.add('next_page');
 
-    if (this.currentPage === this.totalPages) {
+    if (this.page === this.pages) {
       li.classList.add('unavailable');
       li.innerHTML = `<a href="#">${settings.nextText}</a>`;
     } else {
-      li.innerHTML = this.link(settings.nextText, this.currentPage + 1, { rel: 'next' });
+      li.innerHTML = this.link(settings.nextText, this.page + 1, { rel: 'next' });
     }
 
     return li;
@@ -79,15 +73,15 @@ export default class Pagination extends Component {
     const ul = document.createElement('ul');
     ul.classList.add('pagination');
 
-    ul.dataset.totalPages = this.totalPages;
-    ul.dataset.currentPage = this.currentPage;
+    ul.dataset.pages = this.pages;
+    ul.dataset.page = this.page;
 
     ul.appendChild(this.previousLink());
 
     this.windowedPageNumbers().forEach((page) => {
       const li = document.createElement('li');
 
-      if (page === this.currentPage) {
+      if (page === this.page) {
         li.classList.add('current');
         li.innerHTML = linkTo(page, '#');
       } else if (page === 'gap') {
@@ -106,26 +100,26 @@ export default class Pagination extends Component {
   }
 
   windowedPageNumbers() {
-    if (this.totalPages === 1) {
+    if (this.pages === 1) {
       return [1];
     }
 
     let pages = [];
 
-    let windowFrom = this.currentPage - 4;
-    let windowTo = this.currentPage + 4;
+    let windowFrom = this.page - 4;
+    let windowTo = this.page + 4;
 
-    if (windowTo > this.totalPages) {
-      windowFrom -= windowTo - this.totalPages;
-      windowTo = this.totalPages;
+    if (windowTo > this.pages) {
+      windowFrom -= windowTo - this.pages;
+      windowTo = this.pages;
     }
 
     if (windowFrom < 1) {
       windowTo += 1 - windowFrom;
       windowFrom = 1;
 
-      if (windowTo > this.totalPages) {
-        windowTo = this.totalPages;
+      if (windowTo > this.pages) {
+        windowTo = this.pages;
       }
     }
 
@@ -141,12 +135,12 @@ export default class Pagination extends Component {
       pages.push(i);
     }
 
-    if (this.totalPages - 3 > pages.at(-1)) {
+    if (this.pages - 3 > pages.at(-1)) {
       pages.push('gap');
-      pages.push(this.totalPages - 1);
-      pages.push(this.totalPages);
-    } else if (pages.at(-1) + 1 <= this.totalPages) {
-      for (let i = pages.at(-1) + 1; i <= this.totalPages; i += 1) {
+      pages.push(this.pages - 1);
+      pages.push(this.pages);
+    } else if (pages.at(-1) + 1 <= this.pages) {
+      for (let i = pages.at(-1) + 1; i <= this.pages; i += 1) {
         pages.push(i);
       }
     }

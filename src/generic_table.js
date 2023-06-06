@@ -107,12 +107,12 @@ export default class GenericTable extends GenericPage {
   }
 
   // This should be fed a response from a JSON request for a paginated collection.
-  updatePagination(data) {
-    if (!data.totalPages) {
+  updatePagination(responseData) {
+    if (!responseData.pagination) {
       return;
     }
 
-    const ul = new Pagination(data).generate();
+    const ul = new Pagination(responseData.pagination).generate();
 
     document.body.querySelectorAll('.pagination').forEach((oldPagination) => {
       oldPagination.parentNode.replaceChild(ul.cloneNode(true), oldPagination);

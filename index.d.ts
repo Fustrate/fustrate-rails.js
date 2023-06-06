@@ -13,11 +13,13 @@ export interface ModalSettings {
     type?: string;
 }
 
-export interface PaginationData {
-    currentPage?: number;
-    perPage?: number;
-    totalEntries?: number;
-    totalPages?: number;
+export interface PaginatedData {
+    data: any[];
+    pagination: {
+        page?: number;
+        perPage?: number;
+        total?: number;
+    }
 }
 
 export interface GenericTableSettings {
@@ -172,13 +174,12 @@ export class Modal<T = void> extends Component {
 }
 
 export class Pagination extends Component {
-    protected currentPage: number;
-    protected totalPages: number;
-    protected totalEntries: number;
+    protected page: number;
+    protected total: number;
     protected perPage: number;
     protected base: string;
 
-    public constructor(options: PaginationData);
+    public constructor(options: PaginatedData);
 
     public generate(): HTMLUListElement;
 
@@ -240,7 +241,7 @@ export class GenericTable<T, U = HTMLTableRowElement> extends GenericPage {
     protected removeRow(row: U): void;
     protected uncheckAll(): void;
     protected updated(): void;
-    protected updatePagination(data: PaginationData): void;
+    protected updatePagination(responseData: PaginatedData): void;
     protected updateRow(row: U, item: T): void;
 }
 
