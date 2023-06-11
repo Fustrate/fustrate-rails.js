@@ -1,7 +1,5 @@
 import Rails from '@rails/ujs';
 
-require('./polyfills');
-
 export default class Fustrate {
   static start(Klass) {
     if (Klass) {
