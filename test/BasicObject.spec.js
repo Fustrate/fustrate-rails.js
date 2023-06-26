@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 
-import BasicObject from '../src/basic_object';
+import BasicObject from '../basic_object';
 
 class Event extends BasicObject {
   extractFromData(data) {

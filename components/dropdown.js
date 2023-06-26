@@ -1,9 +1,9 @@
 import { createPopper } from '@popperjs/core';
 import { delegate } from '@rails/ujs';
 
-import Component from '../component';
+import Listenable from '../listenable';
 
-export default class Dropdown extends Component {
+export default class Dropdown extends Listenable {
   static initialize() {
     delegate(document.body, '.has-dropdown', 'click', this.open.bind(this));
 

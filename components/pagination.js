@@ -1,4 +1,4 @@
-import Component from '../component';
+import Listenable from '../listenable';
 import { linkTo } from '../utilities';
 
 // Supports: Safari < 15.4 (2022-03-15)
@@ -24,7 +24,7 @@ function getPreppedPaginationURL() {
   return `${window.location.pathname}?`;
 }
 
-export default class Pagination extends Component {
+export default class Pagination extends Listenable {
   constructor(paginationData) {
     super();
 

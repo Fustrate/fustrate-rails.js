@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 
-import Component from '../component';
+import Listenable from '../listenable';
 import { animate, icon as createIcon } from '../utilities';
 
 const fadeInSettings = { speed: 'faster' };
@@ -19,7 +19,7 @@ function createFlashBar(message, { type, icon } = {}) {
   return bar;
 }
 
-export class Flash extends Component {
+export class Flash extends Listenable {
   constructor(message, { type, icon } = {}) {
     super();
 

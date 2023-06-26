@@ -1,7 +1,7 @@
-import Component from '../component';
+import Listenable from '../listenable';
 
 // Turn any element into a trigger for file selection.
-export default class FilePicker extends Component {
+export default class FilePicker extends Listenable {
   constructor(callback) {
     super();
 

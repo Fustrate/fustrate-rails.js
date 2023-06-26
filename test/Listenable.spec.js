@@ -1,6 +1,6 @@
-import Listenable from '../src/listenable';
+import Listenable from '../listenable';
 
-class Thing extends Listenable {}
+class Thing extends Listenable { }
 
 describe('Listenable', () => {
   it('adds an event listener', () => {

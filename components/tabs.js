@@ -1,8 +1,8 @@
 import { delegate, stopEverything } from '@rails/ujs';
 
-import Component from '../component';
+import Listenable from '../listenable';
 
-export default class Tabs extends Component {
+export default class Tabs extends Listenable {
   constructor(tabs) {
     super();
 

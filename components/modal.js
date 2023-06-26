@@ -5,7 +5,7 @@ import set from 'lodash/set';
 
 import { delegate, fire, stopEverything } from '@rails/ujs';
 
-import Component from '../component';
+import Listenable from '../listenable';
 import { isVisible } from '../show_hide';
 import {
   animate,
@@ -81,7 +81,7 @@ function toggleOverlay(visible = true) {
   }
 }
 
-export default class Modal extends Component {
+export default class Modal extends Listenable {
   static get settings() {
     return {};
   }

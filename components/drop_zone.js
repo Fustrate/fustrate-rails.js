@@ -1,9 +1,9 @@
 import { stopEverything } from '@rails/ujs';
 
-import Component from '../component';
+import Listenable from '../listenable';
 
 // Allow files to be dropped onto an element
-export default class DropZone extends Component {
+export default class DropZone extends Listenable {
   constructor(target, callback) {
     super();
 

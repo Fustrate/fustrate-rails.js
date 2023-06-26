@@ -3,7 +3,7 @@ import {
   // isVisible,
   show,
   toggle,
-} from '../src/show_hide';
+} from '../show_hide';
 
 // describe('isVisible', () => {
 //   it('', () => {});

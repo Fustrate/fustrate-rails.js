@@ -1,5 +1,5 @@
-import { deepExtend, isPlainObject } from '../src/object';
-import BasicObject from '../src/basic_object';
+import { deepExtend, isPlainObject } from '../object';
+import BasicObject from '../basic_object';
 
 describe('#deepExtend()', () => {
   it('extends an object deeply', () => {
@@ -34,7 +34,7 @@ describe('#isPlainObject()', () => {
   });
 
   it('BasicObject is not a plain object', () => {
-    class Thing extends BasicObject {}
+    class Thing extends BasicObject { }
 
     expect(isPlainObject(new Thing(false))).toBe(false);
   });

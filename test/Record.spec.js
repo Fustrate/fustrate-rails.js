@@ -1,4 +1,4 @@
-import Record from '../src/record';
+import Record from '../record';
 
 describe('constructor', () => {
   it('constructs a Record without an ID', () => {

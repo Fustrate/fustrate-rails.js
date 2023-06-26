@@ -1,4 +1,4 @@
-import FormDataBuilder from '../src/form_data_builder';
+import FormDataBuilder from '../form_data_builder';
 
 function rawDataFor(formData) {
   const data = {};
