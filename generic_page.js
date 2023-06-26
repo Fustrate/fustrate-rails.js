@@ -34,7 +34,7 @@ export default class GenericPage {
     });
 
     delegate(document, '[data-field]', 'dblclick', (element) => {
-      callDecoratedMethods(this, `$ondoubleclick-${element.target.closest('[data-field]').dataset.button}`);
+      callDecoratedMethods(this, `$ondoubleclick-${element.target.closest('[data-field]').dataset.field}`);
     });
 
     delegate(document, '[data-field]', 'change', (element) => {
