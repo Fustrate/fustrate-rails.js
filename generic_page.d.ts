@@ -15,12 +15,12 @@ export default class GenericPage {
   protected setHeader(text: string): void;
 }
 
-export function button(buttonName: string): MethodDecorator;
+export const button: (buttonName: string) => MethodDecorator;
 
-export function onChange(fieldName: string): MethodDecorator;
+export const onChange: (fieldName: string) => MethodDecorator;
 
-export function onDoubleClick(buttonName: string): MethodDecorator;
+export const onDoubleClick: (buttonName: string) => MethodDecorator;
 
-export function onClick(name: string): MethodDecorator;
+export const onClick: (name: string) => MethodDecorator;
 
-export function refresh(): MethodDecorator;
+export const refresh: MethodDecorator;
