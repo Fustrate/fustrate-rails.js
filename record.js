@@ -49,7 +49,10 @@ export default class Record extends BasicObject {
       url = this.constructor.createPath({ format: 'json' });
     }
 
-    const data = FormDataBuilder.build(attributes, this.constructor.paramKey);
+    const paramKey = this.constructor.paramKey
+      || this.classname.replace(/::/g, '').replace(/^[A-Z]/, (match) => match.toLowerCase());
+
+    const data = FormDataBuilder.build(attributes, paramKey);
 
     Object.entries(additionalParameters).forEach(([key, value]) => {
       if (value != null) {
@@ -77,10 +80,6 @@ export default class Record extends BasicObject {
 
   delete(params = {}) {
     return ajax.delete(this.path({ format: 'json' }), { params });
-  }
-
-  static get paramKey() {
-    return this.classname.replace(/::/g, '').replace(/^[A-Z]/, (match) => match.toLowerCase());
   }
 
   // returns Promise<Record>
