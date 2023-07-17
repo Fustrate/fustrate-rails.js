@@ -6,6 +6,7 @@ export type Parameters = { [s: string]: ParamValue };
 
 export default class Record extends BasicObject {
   public static classname: string;
+  public static paramKey: string;
 
   public id?: number;
   protected isLoaded: boolean;
@@ -21,6 +22,4 @@ export default class Record extends BasicObject {
   public get classname(): string;
 
   public static create<T extends typeof Record>(this: T, attributes: { [s: string]: any }, additionalParameters?: Parameters): Promise<InstanceType<T>>;
-
-  public static get paramKey(): string;
 }

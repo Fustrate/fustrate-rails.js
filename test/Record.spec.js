@@ -32,4 +32,4 @@ describe('#delete', () => { });
 
 describe('.paramKey', () => { });
 
-describe('.create', () => { });
+describe('#create', () => { });
