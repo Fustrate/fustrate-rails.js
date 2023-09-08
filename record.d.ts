@@ -1,7 +1,7 @@
 import type { AxiosResponse } from 'axios';
 import BasicObject from './basic_object';
 
-export type ParamValue = string | number | boolean | null | undefined | File | ParamValue[] | { [s: string]: ParamValue };
+export type ParamValue = string | number | boolean | null | undefined | Blob | ParamValue[] | { [s: string]: ParamValue };
 export type Parameters = { [s: string]: ParamValue };
 
 export default class Record extends BasicObject {
