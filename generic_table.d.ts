@@ -22,7 +22,7 @@ export default class GenericTable<T, U = HTMLTableRowElement> extends GenericPag
   public initialize(): Promise<any>;
 
   protected addRow(row: U): void;
-  protected checkAll(event: UIEvent): void;
+  protected checkAll(event: Event): void;
   protected createRow(item: T): U;
   protected getCheckedIds(): string[];
   protected reloadRows(trs: U[], options?: { sort?: (row: U) => string }): void;
