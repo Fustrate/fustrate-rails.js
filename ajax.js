@@ -63,13 +63,15 @@ instance.interceptors.response.use(
   },
 );
 
-export const when = (...requests) => new Promise((resolve) => {
-  axios.all(requests).then(
-    axios.spread((...responses) => resolve(responses)),
-  );
-});
+export function when(...requests) {
+  return new Promise((resolve) => {
+    axios.all(requests).then(
+      axios.spread((...responses) => resolve(responses)),
+    );
+  });
+}
 
-export const getCurrentPageJson = () => {
+export function getCurrentPageJson() {
   let pathname = window.location.pathname.replace(/\/+$/, '');
   let { search } = window.location;
 
@@ -80,6 +82,12 @@ export const getCurrentPageJson = () => {
   }
 
   return instance.get(`${pathname}${search}`);
-};
+}
+
+export function csrfToken() {
+  const meta = document.querySelector('meta[name=csrf-token]');
+
+  return meta && meta.content;
+}
 
 export default instance;

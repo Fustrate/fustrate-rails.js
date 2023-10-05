@@ -1,5 +1,4 @@
-import { delegate, stopEverything } from '@rails/ujs';
-
+import { delegate, stopEverything } from '../events';
 import Listenable from '../listenable';
 
 export default class Tabs extends Listenable {

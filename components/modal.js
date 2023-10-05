@@ -3,8 +3,7 @@ import startCase from 'lodash/startCase';
 import pull from 'lodash/pull';
 import set from 'lodash/set';
 
-import { delegate, fire, stopEverything } from '@rails/ujs';
-
+import { delegate, fire, stopEverything } from '../events';
 import Listenable from '../listenable';
 import { isVisible } from '../show_hide';
 import {

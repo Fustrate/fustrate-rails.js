@@ -1,8 +1,7 @@
-import { fire } from '@rails/ujs';
-
 import BasicObject from './basic_object';
 import FormDataBuilder from './form_data_builder';
 import ajax from './ajax';
+import { fire } from './events';
 
 export default class Record extends BasicObject {
   // static classname = 'Subreddit::GameThread';

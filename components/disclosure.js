@@ -1,5 +1,4 @@
-import { delegate, fire } from '@rails/ujs';
-
+import { delegate, fire } from '../events';
 import Listenable from '../listenable';
 
 function toggleDisclosure(event) {

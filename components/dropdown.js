@@ -1,6 +1,6 @@
 import { createPopper } from '@popperjs/core';
-import { delegate } from '@rails/ujs';
 
+import { delegate } from '../events';
 import Listenable from '../listenable';
 
 export default class Dropdown extends Listenable {

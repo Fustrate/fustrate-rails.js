@@ -1,7 +1,7 @@
 import set from 'lodash/set';
-import { delegate } from '@rails/ujs';
 
 import { callDecoratedMethods, decorateMethod } from './decorators';
+import { delegate } from './events';
 
 export const button = (buttonName) => decorateMethod(`$onclick-${buttonName}`);
 

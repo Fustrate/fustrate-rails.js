@@ -1,5 +1,4 @@
-import { stopEverything } from '@rails/ujs';
-
+import { stopEverything } from '../events';
 import Listenable from '../listenable';
 
 // Allow files to be dropped onto an element

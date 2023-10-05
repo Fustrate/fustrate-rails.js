@@ -1,5 +1,4 @@
-import { delegate } from '@rails/ujs';
-
+import { delegate } from '../events';
 import Listenable from '../listenable';
 import { animate } from '../utilities';
 
