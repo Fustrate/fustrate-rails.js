@@ -18,7 +18,7 @@ export default class Fustrate {
       Fustrate.instance = new Klass();
     }
 
-    document.addEventListener('DOMContentLoaded', this.initialize);
+    document.addEventListener('DOMContentLoaded', this.initialize.bind(this));
   }
 
   static initialize() {
