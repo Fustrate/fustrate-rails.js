@@ -1,6 +1,6 @@
 import '@rails/ujs';
 
-function wrapTableElements(): void {
+function wrapTableElements() {
   document.querySelectorAll('table').forEach((table) => {
     const wrapper = document.createElement('div');
 
