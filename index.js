@@ -18,16 +18,14 @@ export default class Fustrate {
       Fustrate.instance = new Klass();
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      this.initialize();
-
-      if (Klass) {
-        Fustrate.instance.initialize();
-      }
-    });
+    document.addEventListener('DOMContentLoaded', this.initialize);
   }
 
   static initialize() {
+    if (Fustrate.instance) {
+      Fustrate.instance.initialize();
+    }
+
     wrapTableElements();
   }
 }
