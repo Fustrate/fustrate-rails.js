@@ -1,4 +1,4 @@
-import Rails from '@rails/ujs';
+import '@rails/ujs';
 
 export default class Fustrate {
   static start(Klass) {
@@ -24,7 +24,5 @@ export default class Fustrate {
 
       wrapper.appendChild(table);
     });
-
-    Rails.start();
   }
 }
