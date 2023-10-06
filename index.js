@@ -1,5 +1,17 @@
 import '@rails/ujs';
 
+function wrapTableElements(): void {
+  document.querySelectorAll('table').forEach((table) => {
+    const wrapper = document.createElement('div');
+
+    wrapper.classList.add('responsive-table');
+
+    table.parentNode.insertBefore(wrapper, table);
+
+    wrapper.appendChild(table);
+  });
+}
+
 export default class Fustrate {
   static start(Klass) {
     if (Klass) {
@@ -16,13 +28,6 @@ export default class Fustrate {
   }
 
   static initialize() {
-    document.querySelectorAll('table').forEach((table) => {
-      const wrapper = document.createElement('div');
-      wrapper.classList.add('responsive-table');
-
-      table.parentNode.insertBefore(wrapper, table);
-
-      wrapper.appendChild(table);
-    });
+    wrapTableElements();
   }
 }
