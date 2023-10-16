@@ -41,8 +41,8 @@ export function callDecoratedMethods(obj, tag) {
   }
 
   if (obj.$decoratedMethods[tag]) {
-    obj.$decoratedMethods[tag].forEach((name) => {
-      obj[name]();
-    });
+    return [...obj.$decoratedMethods[tag]].map((name) => obj[name]());
   }
+
+  return [];
 }
