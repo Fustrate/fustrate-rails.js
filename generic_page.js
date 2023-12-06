@@ -23,21 +23,21 @@ export default class GenericPage {
   }
 
   addEventListeners() {
-    delegate(document, '[data-button], [data-field]', 'click', (event) => {
+    delegate(document, '[data-button]:not(.modal [data-button]), [data-field]:not(.modal [data-field])', 'click', (event) => {
       const element = event.target.closest('[data-button], [data-field]');
 
       callDecoratedMethods(this, `$onclick-${element.dataset.button || element.dataset.field}`);
     });
 
-    delegate(document, '[data-target]', 'click', (event) => {
+    delegate(document, '[data-target]:not(.modal [data-target])', 'click', (event) => {
       callDecoratedMethods(this, `$onclick-${event.target.closest('[data-target]').dataset.target}`);
     });
 
-    delegate(document, '[data-field]', 'dblclick', (element) => {
+    delegate(document, '[data-field]:not(.modal [data-field])', 'dblclick', (element) => {
       callDecoratedMethods(this, `$ondoubleclick-${element.target.closest('[data-field]').dataset.field}`);
     });
 
-    delegate(document, '[data-field]', 'change', (element) => {
+    delegate(document, '[data-field]:not(.modal [data-field])', 'change', (element) => {
       callDecoratedMethods(this, `$onchange-${element.target.closest('[data-field]').dataset.field}`);
     });
   }
