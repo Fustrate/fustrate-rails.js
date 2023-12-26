@@ -10,9 +10,7 @@ function processResponseError(response) {
     window.alert('The server is not responding - please wait a while before trying again.');
   } else if (status === 401) {
     // eslint-disable-next-line no-alert
-    window.alert(`
-    You are not currently logged in. Please refresh the page and try performing this action again.
-    To prevent this in the future, check the "Remember Me" box when logging in.`);
+    window.alert('You are not currently logged in. Please refresh the page and try performing this action again. To prevent this in the future, check the "Remember Me" box when logging in.');
   } else if (data && data.errors) {
     data.errors.forEach((message) => {
       ErrorFlash.show(message);
