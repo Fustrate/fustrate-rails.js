@@ -1,8 +1,0 @@
-export default class Listenable {
-  protected listeners: { [s: string]: ((event: CustomEvent) => void)[] };
-
-  public addEventListener<T = CustomEvent>(type: string, listener: (event: T) => void): void;
-  public removeEventListener(type: string, listener: (event: CustomEvent) => void): void;
-
-  public dispatchEvent(event: CustomEvent): boolean;
-}

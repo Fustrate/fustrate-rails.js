@@ -18,6 +18,7 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.23.8",
+    "@jest/globals": "^29.7.0",
     "@types/jest": "^29.5.11",
     "@types/luxon": "^3.4.0",
     "babel-jest": "^29.7.0",
@@ -28,7 +29,9 @@
     "eslint-plugin-lodash": "^7.4.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
-    "jest-mock-axios": "^4.7.3"
+    "jest-mock-axios": "^4.7.3",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.3.3"
   },
   "scripts": {
     "lint": "eslint .",
