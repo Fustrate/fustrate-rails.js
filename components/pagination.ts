@@ -54,7 +54,7 @@ export default class Pagination extends Listenable {
     this.base = getPreppedPaginationURL();
   }
 
-  protected link(text: string, page: number, attributes?: { [s: string]: any }): string {
+  protected link(text: string, page: number, attributes: { [s: string]: any } = {}): string {
     attributes['data-page'] = page;
 
     return linkTo(text, `${this.base}page=${page}`, attributes);
