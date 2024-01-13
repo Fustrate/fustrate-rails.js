@@ -87,15 +87,15 @@ describe('hms', () => {
 
 describe('icon', () => {
   it('creates a basic icon', () => {
-    expect(icon('pencil-alt')).toBe('<i class="far fa-pencil-alt"></i>');
+    expect(icon('pencil-alt')).toBe('<i class="fa fa-pencil-alt"></i>');
   });
 
   it('creates an icon with a different style', () => {
-    expect(icon('pencil-alt', 'thin')).toBe('<i class="fat fa-pencil-alt"></i>');
+    expect(icon('pencil-alt', 'thin')).toBe('<i class="fa-thin fa-pencil-alt"></i>');
   });
 
   it('creates an icon with multiple classes', () => {
-    expect(icon('pencil-alt 2x')).toBe('<i class="far fa-pencil-alt fa-2x"></i>');
+    expect(icon('pencil-alt 2x')).toBe('<i class="fa fa-pencil-alt fa-2x"></i>');
   });
 });
 

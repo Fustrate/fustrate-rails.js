@@ -75,13 +75,15 @@ export function hms(seconds: number, zeroDisplay?: string): string {
   return `${seconds < 0 ? '-' : ''}${parts.join(':')}`;
 }
 
-export function icon(types: string, style: string = 'regular'): string {
+type FontAwesomeStyle = 'brands' | 'duotone' | 'light' | 'regular' | 'solid' | 'thin';
+
+export function icon(types: string, style?: FontAwesomeStyle): string {
   const classes = types
     .split(' ')
     .map((thing) => `fa-${thing}`)
     .join(' ');
 
-  return `<i class="fa${style[0]} ${classes}"></i>`;
+  return `<i class="${style ? `fa-${style}` : 'fa'} ${classes}"></i>`;
 }
 
 export function label(text: string, ...classes: string[]): string {
