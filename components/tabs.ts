@@ -1,4 +1,4 @@
-import { delegate, stopEverything } from '../events';
+import { HTMLEvent, delegate, stopEverything } from '../events';
 import Listenable from '../listenable';
 
 export default class Tabs extends Listenable {
@@ -9,7 +9,7 @@ export default class Tabs extends Listenable {
 
     this.tabs = tabs;
 
-    delegate(this.tabs, 'li > a', 'click', (event) => {
+    delegate<HTMLEvent<HTMLAnchorElement>>(this.tabs, 'li > a', 'click', (event) => {
       stopEverything(event);
 
       this.activateTab(event.target, true);

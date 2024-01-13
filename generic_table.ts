@@ -13,10 +13,10 @@ export interface GenericTableSettings {
 
 export { type PaginatedData } from './components/pagination';
 
-type SortFunction = (row: HTMLElement) => string;
+type SortFunction<T = HTMLElement> = (row: T) => string;
 
-function sortRows(rows: HTMLElement[], sortFunction: SortFunction = (row: HTMLElement) => '') {
-  const rowsWithSortOrder: [string, HTMLElement][] = rows.map((row) => [sortFunction(row), row]);
+function sortRows<T = HTMLElement>(rows: T[], sortFunction: SortFunction<T> = (row: T) => '') {
+  const rowsWithSortOrder: [string, T][] = rows.map((row) => [sortFunction(row), row]);
 
   rowsWithSortOrder.sort((x, y) => {
     if (x[0] === y[0]) {
@@ -67,13 +67,13 @@ export default class GenericTable<T, U extends HTMLElement = HTMLTableRowElement
   protected updateRow(row: U, item: T): void {
   }
 
-  protected reloadRows(trs: U[], options?: { sort?: SortFunction }): void {
+  protected reloadRows(trs: U[], options?: { sort?: SortFunction<U> }): void {
     this.tbody.querySelectorAll('tr').forEach((tr) => {
       tr.remove();
     });
 
     if (trs.length > 0) {
-      (options?.sort ? sortRows(trs, options.sort) : trs).forEach((tr) => {
+      (options?.sort ? sortRows<U>(trs, options.sort) : trs).forEach((tr) => {
         this.tbody.appendChild(tr);
       });
     }

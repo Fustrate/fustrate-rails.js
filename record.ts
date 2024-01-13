@@ -8,6 +8,8 @@ import type { AxiosResponse } from 'axios';
 export type ParamValue = string | number | boolean | null | undefined | Blob | ParamValue[] | { [s: string]: ParamValue };
 export type Parameters = { [s: string]: ParamValue };
 
+type AdditionalParameters = { [s: string]: string | Blob | number };
+
 export default class Record extends BasicObject {
   public static classname: string;
   public static paramKey: string;
@@ -51,7 +53,7 @@ export default class Record extends BasicObject {
     });
   }
 
-  public async update(attributes: Parameters, additionalParameters?: { [s: string]: string | Blob }): Promise<AxiosResponse<any>> {
+  public async update(attributes: Parameters, additionalParameters?: AdditionalParameters): Promise<AxiosResponse<any>> {
     let url: string;
 
     if (this.id) {
@@ -70,7 +72,7 @@ export default class Record extends BasicObject {
     if (additionalParameters) {
       Object.entries(additionalParameters).forEach(([key, value]) => {
         if (value != null) {
-          data.append(key, value);
+          data.append(key, value instanceof Blob ? value : String(value));
         }
       });
     }
@@ -97,7 +99,7 @@ export default class Record extends BasicObject {
     return ajax.delete(this.path({ format: 'json' }), { params });
   }
 
-  public static async create<T extends typeof Record>(this: T, attributes: { [s: string]: any }, additionalParameters?: { [s: string]: string | Blob }): Promise<InstanceType<T>> {
+  public static async create<T extends typeof Record>(this: T, attributes: { [s: string]: any }, additionalParameters?: AdditionalParameters): Promise<InstanceType<T>> {
     const record = new this() as InstanceType<T>;
 
     return record.update(attributes, additionalParameters).then(() => record);

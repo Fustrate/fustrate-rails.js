@@ -6,7 +6,7 @@ interface MatchesOptions {
 }
 
 // Checks if the given native dom element matches the selector
-function matches(element: HTMLElement, selector: string | MatchesOptions) {
+function matches(element: Element, selector: string | MatchesOptions) {
   return typeof selector === 'string'
     ? element.matches(selector)
     : element.matches(selector.selector) && !element.matches(selector.exclude);
@@ -28,22 +28,19 @@ export function stopEverything(event: Event): void {
   event.stopImmediatePropagation();
 }
 
-// Delegates events to a specified parent `element`, which fires event `handler` for the specified
-// `selector` when an event of `eventType` is triggered.
+export type HTMLEvent<T = HTMLElement> = UIEvent & { target: T };
 
-export function delegate<K extends keyof HTMLElementEventMap>(element: HTMLElement, selector: string | MatchesOptions, eventType: K, handler: (ev: HTMLElementEventMap[K]) => any): void;
-export function delegate(element: HTMLElement, selector: string | MatchesOptions, eventType: string, handler: EventListenerOrEventListenerObject): void;
-export function delegate(element: HTMLElement, selector: string | MatchesOptions, eventType, handler) {
-  element.addEventListener(eventType, (event: UIEvent & { target: HTMLElement }) => {
+export function delegate<T = HTMLEvent>(element: Element | Document, selector: string | MatchesOptions, eventType: string, handler: (evt: T) => any): void {
+  element.addEventListener(eventType, (event: any) => {
     let { target } = event;
 
     while (target instanceof Element && !matches(target, selector)) {
-      target = target.parentNode as HTMLElement;
+      target = target.parentNode;
     }
 
     if (target instanceof Element && (handler.call(target, event) === false)) {
       event.preventDefault();
       event.stopPropagation();
     }
-  });
+  })
 }
