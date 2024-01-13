@@ -8,7 +8,8 @@ import type { AxiosResponse } from 'axios';
 export type ParamValue = string | number | boolean | null | undefined | Blob | ParamValue[] | { [s: string]: ParamValue };
 export type Parameters = { [s: string]: ParamValue };
 
-type AdditionalParameters = { [s: string]: string | Blob | number };
+// Additional parameters are not recursively processed like the record parameters are.
+export type AdditionalParameters = { [s: string]: string | Blob | number };
 
 export default class Record extends BasicObject {
   public static classname: string;
