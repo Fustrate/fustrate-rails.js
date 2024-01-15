@@ -5,7 +5,7 @@ import {
   // isVisible,
   show,
   toggle,
-} from '../show_hide';
+} from '../show-hide';
 
 // describe('isVisible', () => {
 //   it('', () => {});

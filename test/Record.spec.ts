@@ -17,7 +17,7 @@ describe('constructor', () => {
   });
 });
 
-describe('#reload', () => { });
+// describe('#reload', () => {});
 
 describe('#extractFromData', () => {
   it('extracts attributes for a record', () => {
@@ -32,8 +32,8 @@ describe('#extractFromData', () => {
   });
 });
 
-describe('#update', () => { });
+// describe('#update', () => {});
 
-describe('#delete', () => { });
+// describe('#delete', () => {});
 
-describe('#create', () => { });
+// describe('#create', () => {});

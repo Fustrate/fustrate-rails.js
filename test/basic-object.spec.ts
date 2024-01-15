@@ -2,13 +2,13 @@
 
 import { describe, expect, it } from '@jest/globals';
 
-import BasicObject from '../basic_object';
+import BasicObject from '../basic-object';
 
 class Event extends BasicObject {
   public note: string;
   public eventable: any;
 
-  override extractFromData(data: { [s: string]: any }) {
+  override extractFromData(data: Record<string, any>) {
     if (!data) {
       return {};
     }
@@ -25,13 +25,13 @@ class Event extends BasicObject {
   }
 }
 
-class Record extends BasicObject {
+class TestRecord extends BasicObject {
   public date: Date;
   public events: Event[] = [];
   public parent: any;
   public age: number;
 
-  override extractFromData(data: { [s: string]: any }) {
+  override extractFromData(data: Record<string, any>) {
     if (!data) {
       return {};
     }
@@ -48,7 +48,7 @@ class Record extends BasicObject {
       this.parent = data.parent;
     }
 
-    this.age = parseInt(data.age, 10);
+    this.age = Number(data.age);
 
     return data;
   }
@@ -56,16 +56,16 @@ class Record extends BasicObject {
 
 describe('::buildList', () => {
   it('builds an array of objects', () => {
-    const records = Record.buildList([{ age: 5 }, { age: 10 }, { age: 15 }]);
+    const records = TestRecord.buildList([{ age: 5 }, { age: 10 }, { age: 15 }]);
 
     expect(records).toHaveLength(3);
-    expect(records[0]).toBeInstanceOf(Record);
+    expect(records[0]).toBeInstanceOf(TestRecord);
     expect(records[1].age).toBe(10);
   });
 
   it('builds an array of objects with extra attributes', () => {
-    const parent = new Record();
-    const records = Record.buildList([{ age: 5 }], { parent });
+    const parent = new TestRecord();
+    const records = TestRecord.buildList([{ age: 5 }], { parent });
 
     expect(records[0].parent).toBe(parent);
   });
@@ -73,7 +73,7 @@ describe('::buildList', () => {
 
 describe('#extractFromData', () => {
   it('sets properties from a plain object', () => {
-    const record = new Record();
+    const record = new TestRecord();
 
     record.extractFromData({ age: '5', date: '2019-06-27T00:00:00-07:00' });
 
@@ -82,7 +82,7 @@ describe('#extractFromData', () => {
   });
 
   it('creates objects from data when necessary', () => {
-    const record = new Record();
+    const record = new TestRecord();
 
     record.extractFromData({ events: [{ note: 'Hello World' }] });
 

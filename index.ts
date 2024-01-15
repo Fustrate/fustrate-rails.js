@@ -1,4 +1,4 @@
-import type GenericPage from './generic_page';
+import type GenericPage from './generic-page';
 
 function wrapTableElements() {
   document.querySelectorAll('table').forEach((table) => {
@@ -8,16 +8,16 @@ function wrapTableElements() {
 
     table.parentNode.insertBefore(wrapper, table);
 
-    wrapper.appendChild(table);
+    wrapper.append(table);
   });
 }
 
 export default class Fustrate {
   public static instance: GenericPage;
 
-  public static start(klass: typeof GenericPage): void {
-    if (klass) {
-      Fustrate.instance = new klass();
+  public static start(Klass: typeof GenericPage): void {
+    if (Klass) {
+      Fustrate.instance = new Klass();
     }
 
     document.addEventListener('DOMContentLoaded', this.initialize.bind(this));

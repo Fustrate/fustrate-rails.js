@@ -2,24 +2,24 @@ import Listenable from '../listenable';
 
 // Turn any element into a trigger for file selection.
 export default class FilePicker extends Listenable {
-  protected constructor(callback: (files: File[]) => void) {
+  protected constructor(callback: (files: FileList) => void) {
     super();
 
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
 
     input.addEventListener('change', () => {
-      callback(Array.from(input.files));
+      callback(input.files);
 
-      input.parentNode.removeChild(input);
+      input.remove();
     });
 
-    document.body.appendChild(input);
+    document.body.append(input);
 
     input.click();
   }
 
-  public static open(callback: (files: File[]) => void): FilePicker {
+  public static open(callback: (files: FileList) => void): FilePicker {
     return new this(callback);
   }
 }

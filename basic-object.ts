@@ -3,7 +3,13 @@ import { deepExtend } from './object';
 import Listenable from './listenable';
 
 export default class BasicObject extends Listenable {
-  public static build<T extends typeof BasicObject>(this: T, data?: { [s: string]: any }, attributes?: { [s: string]: any }): InstanceType<T> | null {
+  public isBasicObject = true;
+
+  public static build<T extends typeof BasicObject>(
+    this: T,
+    data?: Record<string, any>,
+    attributes?: Record<string, any>,
+  ): InstanceType<T> | null {
     if (!data) {
       return null;
     }
@@ -23,7 +29,11 @@ export default class BasicObject extends Listenable {
     return record as InstanceType<T>;
   }
 
-  public static buildList<T extends typeof BasicObject>(this: T, items: any[], attributes?: { [s: string]: any }): InstanceType<T>[] {
+  public static buildList<T extends typeof BasicObject>(
+    this: T,
+    items: any[],
+    attributes?: Record<string, any>,
+  ): InstanceType<T>[] {
     if (!Array.isArray(items)) {
       return [];
     }
@@ -36,7 +46,7 @@ export default class BasicObject extends Listenable {
   }
 
   // Simple extractor to assign root keys as properties in the current object.
-  public extractFromData(data: { [s: string]: any }): { [s: string]: any } {
+  public extractFromData(data: Record<string, any>): Record<string, any> {
     if (!data) {
       return {};
     }
@@ -53,11 +63,7 @@ export default class BasicObject extends Listenable {
   }
 
   // eslint-disable-next-line no-unused-vars
-  public extractObjectsFromData(data: { [s: string]: any }): void {
+  public extractObjectsFromData(data: Record<string, any>): void {
     // This is a hook.
-  }
-
-  public get isBasicObject(): boolean {
-    return true;
   }
 }

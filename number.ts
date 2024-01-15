@@ -4,7 +4,7 @@ export function accountingFormat(number: number, stripZeroCents?: boolean): stri
   return stripZeroCents ? string.replace(/\.00$/, '') : string;
 }
 
-export function truncate(number: number, digits: number): string{
+export function truncate(number: number, digits: number): string {
   return number.toFixed(digits).replace(/\.?0+$/, '');
 }
 
@@ -13,15 +13,15 @@ export function bytesToString(number: number): string {
     return `${number} B`;
   }
 
-  if (number < 1000000) {
+  if (number < 1_000_000) {
     return `${truncate(number / 1000, 2)} kB`;
   }
 
-  if (number < 1000000000) {
-    return `${truncate(number / 1000000, 2)} MB`;
+  if (number < 1_000_000_000) {
+    return `${truncate(number / 1_000_000, 2)} MB`;
   }
 
-  return `${truncate(number / 1000000000, 2)} GB`;
+  return `${truncate(number / 1_000_000_000, 2)} GB`;
 }
 
 export function ordinalize(number: number): string {

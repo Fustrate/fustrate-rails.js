@@ -7,13 +7,13 @@ export function isPlainObject(object: any): boolean {
   // isBasicObject is a getter on BasicObject - any sort of basic record shouldn't be iterated
   // We also don't want to mess with Luxon's DateTime objects.
   return !object.isBasicObject && !object.isLuxonDateTime;
-};
+}
 
 export function deepExtend(out: object, ...rest: object[]): object {
   out = out || {};
 
   rest
-    .filter((obj) => obj)
+    .filter(Boolean)
     .forEach((obj) => {
       Object.getOwnPropertyNames(obj).forEach((key) => {
         out[key] = isPlainObject(obj[key]) ? deepExtend(out[key], obj[key]) : obj[key];
@@ -21,4 +21,4 @@ export function deepExtend(out: object, ...rest: object[]): object {
     });
 
   return out;
-};
+}

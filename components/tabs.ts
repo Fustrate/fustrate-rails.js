@@ -40,7 +40,7 @@ export default class Tabs extends Listenable {
 
     const link = tab.closest('a');
 
-    Array.from(this.tabs.querySelectorAll('.active')).forEach((sibling) => {
+    [...this.tabs.querySelectorAll('.active')].forEach((sibling) => {
       sibling.classList.remove('active');
     });
 
@@ -51,11 +51,11 @@ export default class Tabs extends Listenable {
       window.location.hash = hash;
     }
 
-    const tabContent = document.getElementById(hash);
+    const tabContent = document.querySelector(`#${hash}`);
 
     tabContent.classList.add('active');
 
-    Array.from(tabContent.parentElement.children).forEach((sibling) => {
+    [...tabContent.parentElement.children].forEach((sibling) => {
       if (sibling !== tabContent) {
         sibling.classList.remove('active');
       }
@@ -63,6 +63,6 @@ export default class Tabs extends Listenable {
   }
 
   public static initialize(): void {
-    Array.from(document.querySelectorAll<HTMLUListElement>('ul.tabs')).forEach((ul) => new Tabs(ul));
+    [...document.querySelectorAll<HTMLUListElement>('ul.tabs')].forEach((ul) => new Tabs(ul));
   }
 }

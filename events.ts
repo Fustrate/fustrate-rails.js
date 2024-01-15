@@ -30,7 +30,12 @@ export function stopEverything(event: Event): void {
 
 export type HTMLEvent<T = HTMLElement> = UIEvent & { target: T };
 
-export function delegate<T = HTMLEvent>(element: Element | Document, selector: string | MatchesOptions, eventType: string, handler: (evt: T) => any): void {
+export function delegate<T = HTMLEvent>(
+  element: Element | Document,
+  selector: string | MatchesOptions,
+  eventType: string,
+  handler: (evt: T) => any,
+): void {
   element.addEventListener(eventType, (event: any) => {
     let { target } = event;
 
@@ -42,5 +47,5 @@ export function delegate<T = HTMLEvent>(element: Element | Document, selector: s
       event.preventDefault();
       event.stopPropagation();
     }
-  })
+  });
 }

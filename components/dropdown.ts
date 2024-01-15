@@ -1,4 +1,4 @@
-import { createPopper,  type Instance } from '@popperjs/core';
+import { createPopper, type Instance } from '@popperjs/core';
 
 import { delegate } from '../events';
 import Listenable from '../listenable';

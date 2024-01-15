@@ -6,7 +6,7 @@ import startCase from 'lodash/startCase';
 import { delegate, fire, stopEverything } from '../events';
 import { tag } from '../html';
 import Listenable from '../listenable';
-import { isVisible } from '../show_hide';
+import { isVisible } from '../show-hide';
 import {
   animate,
   elementFromString,
@@ -194,7 +194,7 @@ export default class Modal<T = void> extends Listenable {
     this.addEventListeners();
   }
 
-  protected initialize(): void { }
+  protected initialize(): void {}
 
   protected reloadUIElements(): void {
     this.fields = {};
@@ -226,7 +226,7 @@ export default class Modal<T = void> extends Listenable {
   }
 
   protected setButtons(buttons: ModalButton[], reload?: boolean): void {
-    if (buttons == null || buttons.length < 1) {
+    if (buttons == null || buttons.length === 0) {
       this.modal.querySelector('.modal-buttons').innerHTML = '';
 
       return;
@@ -291,8 +291,8 @@ export default class Modal<T = void> extends Listenable {
       return;
     }
 
-    const [firstInput] = Array.from<HTMLInputElement>(this.modal.querySelectorAll('input, select, textarea'))
-      .filter((element) => isVisible(element) && !element.disabled && !element.readOnly);
+    const firstInput = [...this.modal.querySelectorAll<HTMLInputElement>('input, select, textarea')]
+      .find((element) => isVisible(element) && !element.disabled && !element.readOnly);
 
     firstInput?.focus();
   }
@@ -314,7 +314,7 @@ export default class Modal<T = void> extends Listenable {
 
     if (openModals.length > 1) {
       // Hide the modal immediately previous to this one.
-      openModals[openModals.length - 2].hide();
+      openModals.at(-2).hide();
     } else {
       // There are no open modals - show the background overlay
       toggleOverlay(true);
@@ -390,12 +390,6 @@ export default class Modal<T = void> extends Listenable {
     this.close();
   }
 
-  protected openPreviousModal(): void {
-    if (openModals.length > 0) {
-      openModals.at(-1).open(true);
-    }
-  }
-
   protected createModal(): HTMLDivElement {
     // Join and split in case any of the classes include spaces
     const classes = this.defaultClasses()
@@ -409,7 +403,7 @@ export default class Modal<T = void> extends Listenable {
     element.setAttribute('aria-labelledby', `modal_${this.modalId}_title`);
     element.querySelector('.modal-title span').setAttribute('id', `modal_${this.modalId}_title`);
 
-    document.body.appendChild(element);
+    document.body.append(element);
 
     return element;
   }

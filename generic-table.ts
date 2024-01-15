@@ -1,4 +1,4 @@
-import GenericPage from './generic_page';
+import GenericPage from './generic-page';
 import Pagination from './components/pagination';
 import { deepExtend } from './object';
 import { elementFromString } from './utilities';
@@ -74,7 +74,7 @@ export default class GenericTable<T, U extends HTMLElement = HTMLTableRowElement
 
     if (trs.length > 0) {
       (options?.sort ? sortRows<U>(trs, options.sort) : trs).forEach((tr) => {
-        this.tbody.appendChild(tr);
+        this.tbody.append(tr);
       });
     }
 
@@ -82,13 +82,13 @@ export default class GenericTable<T, U extends HTMLElement = HTMLTableRowElement
   }
 
   protected addRow(row: U): void {
-    this.tbody.appendChild(row);
+    this.tbody.append(row);
 
     this.updated();
   }
 
   protected removeRow(row: U): void {
-    row.parentNode.removeChild(row);
+    row.remove();
 
     this.updated();
   }
@@ -103,13 +103,13 @@ export default class GenericTable<T, U extends HTMLElement = HTMLTableRowElement
       td.colSpan = 16;
       td.textContent = this.settings.noRecordsMessage;
 
-      tr.appendChild(td);
-      this.tbody.appendChild(tr);
+      tr.append(td);
+      this.tbody.append(tr);
     }
   }
 
   protected getCheckedIds(): string[] {
-    return Array.from(this.tbody.querySelectorAll<HTMLInputElement>('td:first-child input:checked'))
+    return [...this.tbody.querySelectorAll<HTMLInputElement>('td:first-child input:checked')]
       .map((input) => input.value);
   }
 

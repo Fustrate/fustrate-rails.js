@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
 
-import FormDataBuilder from '../form_data_builder';
+import FormDataBuilder from '../form-data-builder';
 
 function rawDataFor(formData) {
   const data = {};

@@ -2,12 +2,14 @@
 require('core-js/features/array/at');
 
 export function humanize(string?: string): string {
-  return typeof string !== 'string'
-    ? ''
-    : string
-      .replace(/[a-z][A-Z]/, (match) => `${match[0]} ${match[1]}`)
-      .replace(/_/g, ' ')
-      .toLowerCase();
+  if (typeof string !== 'string') {
+    return '';
+  }
+
+  return string
+    .replace(/[a-z][A-Z]/, (match) => `${match[0]} ${match[1]}`)
+    .replace(/_/g, ' ')
+    .toLowerCase();
 }
 
 export function isBlank(string: string | null | undefined): boolean {
@@ -19,9 +21,13 @@ export function isPresent(string?: string): boolean {
 }
 
 export function parameterize(string?: string): string {
-  return typeof string !== 'string' ? '' : string
+  if (typeof string !== 'string') {
+    return '';
+  }
+
+  return string
     .replace(/[a-z][A-Z]/, (match) => `${match[0]}_${match[1]}`)
-    .replace(/[^a-zA-Z0-9\-_]+/, '-') // Turn unwanted chars into the separator
+    .replace(/[^\w-]+/, '-') // Turn unwanted chars into the separator
     .replace(/^-|-$/, '') // Remove leading/trailing separator.
     .toLowerCase();
 }
@@ -41,7 +47,7 @@ export function phoneFormat(input: string): string {
 // This is far too simple for most cases, but it works for the few things we need
 export function pluralize(string: string): string {
   return string.at(-1) === 'y'
-    ? `${string.substring(0, string.length - 1)}ies`
+    ? `${string.slice(0, -1)}ies`
     : `${string}s`;
 }
 
@@ -50,7 +56,11 @@ export function presence(input: string | null | undefined): string | undefined {
 }
 
 export function underscore(string?: string): string {
-  return typeof string !== 'string' ? '' : string
+  if (typeof string !== 'string') {
+    return '';
+  }
+
+  return string
     .replace(/[a-z][A-Z]/, (match) => `${match[0]}_${match[1]}`)
     .replace('::', '/')
     .toLowerCase();

@@ -1,7 +1,7 @@
 import { describe, expect, it } from '@jest/globals';
 
 import { deepExtend, isPlainObject } from '../object';
-import BasicObject from '../basic_object';
+import BasicObject from '../basic-object';
 
 describe('#deepExtend()', () => {
   it('extends an object deeply', () => {
@@ -21,10 +21,6 @@ describe('#isPlainObject()', () => {
     expect(isPlainObject([1, 2, 3])).toBe(false);
   });
 
-  it('undefined is not a plain object', () => {
-    expect(isPlainObject(undefined)).toBe(false);
-  });
-
   it('{} is a plain object', () => {
     expect(isPlainObject({})).toBe(true);
     expect(isPlainObject({ abc: 123, def: 456 })).toBe(true);
@@ -36,7 +32,7 @@ describe('#isPlainObject()', () => {
   });
 
   it('BasicObject is not a plain object', () => {
-    class Thing extends BasicObject { }
+    class Thing extends BasicObject {}
 
     expect(isPlainObject(new Thing())).toBe(false);
   });

@@ -2,7 +2,7 @@ import pull from 'lodash/pull';
 
 // A simple polyfill for objects that aren't DOM nodes to receive events.
 export default class Listenable {
-  protected listeners: { [s: string]: ((event: CustomEvent) => void)[] } = {};
+  protected listeners: Record<string, ((event: CustomEvent) => void)[]> = {};
 
   constructor() {
     this.listeners = {};

@@ -1,36 +1,38 @@
-import BasicObject from './basic_object';
-import FormDataBuilder from './form_data_builder';
+import type { AxiosResponse } from 'axios';
+
+import BasicObject from './basic-object';
+import FormDataBuilder from './form-data-builder';
 import ajax from './ajax';
 import { fire } from './events';
 
-import type { AxiosResponse } from 'axios';
+export type ParamValue = string | number | boolean | null | undefined | Blob | ParamValue[] |
+  { [s: string]: ParamValue };
 
-export type ParamValue = string | number | boolean | null | undefined | Blob | ParamValue[] | { [s: string]: ParamValue };
-export type Parameters = { [s: string]: ParamValue };
+export type Parameters = Record<string, ParamValue>;
 
 // Additional parameters are not recursively processed like the record parameters are.
-export type AdditionalParameters = { [s: string]: string | Blob | number };
+export type AdditionalParameters = Record<string, string | Blob | number>;
 
-export default class Record extends BasicObject {
+export default class BaseRecord extends BasicObject {
   public static classname: string;
   public static paramKey: string;
-  public static createPath: (options?: { format?: string }) => string;;
+  public static createPath: (options?: { format?: string }) => string;
 
   public id?: number;
   protected isLoaded: boolean;
 
   public get classname(): string {
-    return (this.constructor as Function & { classname: string }).classname;
+    return (this.constructor as typeof BaseRecord & { classname: string }).classname;
   }
 
   public path(options?: { format?: string }): string {
     throw new Error('No path implemented.');
-  };
+  }
 
   public constructor(data?: number | string) {
     super();
 
-      // If the parameter was a number or string, it's likely the record ID
+    // If the parameter was a number or string, it's likely the record ID
     if (typeof data === 'number' || typeof data === 'string') {
       this.id = Number(data);
     }
@@ -40,7 +42,7 @@ export default class Record extends BasicObject {
 
   public async reload(options?: { force?: boolean }): Promise<AxiosResponse<any> | void> {
     if (this.isLoaded && !options?.force) {
-      return Promise.resolve();
+      return null;
     }
 
     return ajax.get(this.path({ format: 'json' })).then((response) => {
@@ -54,7 +56,10 @@ export default class Record extends BasicObject {
     });
   }
 
-  public async update(attributes: Parameters, additionalParameters?: AdditionalParameters): Promise<AxiosResponse<any>> {
+  public async update(
+    attributes: Parameters,
+    additionalParameters?: AdditionalParameters,
+  ): Promise<AxiosResponse<any>> {
     let url: string;
 
     if (this.id) {
@@ -62,10 +67,10 @@ export default class Record extends BasicObject {
     } else {
       this.extractFromData(attributes);
 
-      url = (this.constructor as typeof Record).createPath({ format: 'json' });
+      url = (this.constructor as typeof BaseRecord).createPath({ format: 'json' });
     }
 
-    const paramKey = (this.constructor as typeof Record).paramKey
+    const paramKey = (this.constructor as typeof BaseRecord).paramKey
       || this.classname.replace(/::/g, '').replace(/^[A-Z]/, (match) => match.toLowerCase());
 
     const data = FormDataBuilder.build(attributes, paramKey);
@@ -100,7 +105,11 @@ export default class Record extends BasicObject {
     return ajax.delete(this.path({ format: 'json' }), { params });
   }
 
-  public static async create<T extends typeof Record>(this: T, attributes: { [s: string]: any }, additionalParameters?: AdditionalParameters): Promise<InstanceType<T>> {
+  public static async create<T extends typeof BaseRecord>(
+    this: T,
+    attributes: Record<string, any>,
+    additionalParameters?: AdditionalParameters,
+  ): Promise<InstanceType<T>> {
     const record = new this() as InstanceType<T>;
 
     return record.update(attributes, additionalParameters).then(() => record);

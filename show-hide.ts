@@ -26,10 +26,11 @@ function getDefaultDisplay(elem: HTMLElement) {
 
   const { ownerDocument } = elem;
 
-  const temp = ownerDocument.body.appendChild(ownerDocument.createElement(nodeName));
+  const temp = ownerDocument.createElement(nodeName);
+  ownerDocument.body.append(temp);
   ({ display } = temp.style);
 
-  temp.parentNode?.removeChild(temp);
+  temp.remove();
 
   if (display === 'none') {
     display = 'block';
@@ -40,7 +41,7 @@ function getDefaultDisplay(elem: HTMLElement) {
   return display;
 }
 
-function toggleElement(element, makeVisible) {
+function toggleElement(element: HTMLElement, makeVisible?: boolean) {
   if (makeVisible == null) {
     makeVisible = element.style.display === 'none';
   }
@@ -54,17 +55,17 @@ function toggleElement(element, makeVisible) {
 
 export function isVisible(elem: HTMLElement): boolean {
   return !!(
-    elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length
+    elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length > 0
   );
 }
 
 export function toggle(element: NodeList | HTMLElement, showOrHide?: boolean): void {
   if (element instanceof NodeList) {
     element.forEach((elem) => {
-      toggleElement(elem, showOrHide != null ? showOrHide : !isVisible(elem as HTMLElement));
+      toggleElement(elem as HTMLElement, showOrHide == null ? !isVisible(elem as HTMLElement) : showOrHide);
     });
   } else {
-    toggleElement(element, showOrHide != null ? showOrHide : !isVisible(element));
+    toggleElement(element, showOrHide = null ? !isVisible(element) : showOrHide);
   }
 }
 

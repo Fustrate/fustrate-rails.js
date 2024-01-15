@@ -74,14 +74,14 @@ describe('hms', () => {
     expect(hms(1)).toBe('0:00:01');
     expect(hms(61)).toBe('0:01:01');
     expect(hms(5025)).toBe('1:23:45');
-    expect(hms(86400)).toBe('24:00:00');
+    expect(hms(86_400)).toBe('24:00:00');
   });
 
   it('formats negative numbers', () => {
     expect(hms(-1)).toBe('-0:00:01');
     expect(hms(-61)).toBe('-0:01:01');
     expect(hms(-5025)).toBe('-1:23:45');
-    expect(hms(-86400)).toBe('-24:00:00');
+    expect(hms(-86_400)).toBe('-24:00:00');
   });
 });
 
@@ -140,7 +140,7 @@ describe('multilineEscapeHTML', () => {
 describe('linkTo', () => {
   it('creates a link to undefined/null', () => {
     expect(linkTo('test')).toBe('<a href="#">test</a>');
-    expect(linkTo('test', null)).toBe('<a href="#">test</a>');
+    expect(linkTo('test', undefined)).toBe('<a href="#">test</a>');
   });
 
   it('creates a link to a string href', () => {

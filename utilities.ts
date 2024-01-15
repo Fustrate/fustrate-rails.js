@@ -25,7 +25,12 @@ function hrefFor(href: any) {
 
 // Exported functions
 
-export function animate(element: HTMLElement, animation: string, options?: { delay?: AnimationDelay, speed?: AnimationSpeed }, callback?: () => void): void {
+export function animate(
+  element: HTMLElement,
+  animation: string,
+  options?: { delay?: AnimationDelay, speed?: AnimationSpeed },
+  callback?: () => void,
+): void {
   const classes = ['animated', ...animation.split(' ')];
 
   if (options?.delay) {
@@ -109,7 +114,7 @@ export function multilineEscapeHTML(string: string | null | undefined): string {
     .join('<br />');
 }
 
-export function linkTo(text: string, href?: string | any, attributes?: { [s: string]: any }): string {
+export function linkTo(text: string, href?: string | any, attributes?: Record<string, any>): string {
   const element = document.createElement('a');
 
   element.href = hrefFor(href);
@@ -136,7 +141,7 @@ interface DateTimeLike {
 }
 
 export function toHumanDate(dateTimeObject: DateTimeLike, time?: boolean): string {
-  const year = dateTimeObject.year !== new Date().getFullYear() ? '/yy' : '';
+  const year = dateTimeObject.year === new Date().getFullYear() ? '' : '/yy';
 
   return dateTimeObject.toFormat(`M/d${year}${time ? ' t' : ''}`);
 }

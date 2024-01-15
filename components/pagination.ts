@@ -23,7 +23,7 @@ const settings = {
 
 // Just add 'page='
 function getPreppedPaginationURL() {
-  const url = window.location.search.replace(/[?&]page=\d+/, '');
+  const url = window.location.search.replace(/[&?]page=\d+/, '');
 
   if (url[0] === '?') {
     return `${window.location.pathname}${url}&`;
@@ -54,7 +54,7 @@ export default class Pagination extends Listenable {
     this.base = getPreppedPaginationURL();
   }
 
-  protected link(text: string, page: number, attributes: { [s: string]: any } = {}): string {
+  protected link(text: string, page: number, attributes: Record<string, any> = {}): string {
     attributes['data-page'] = page;
 
     return linkTo(text, `${this.base}page=${page}`, attributes);
@@ -95,7 +95,7 @@ export default class Pagination extends Listenable {
     ul.dataset.pages = String(this.pages);
     ul.dataset.page = String(this.page);
 
-    ul.appendChild(this.previousLink());
+    ul.append(this.previousLink());
 
     this.windowedPageNumbers().forEach((page) => {
       const li = document.createElement('li');
@@ -110,10 +110,10 @@ export default class Pagination extends Listenable {
         li.innerHTML = this.link(String(page), Number(page));
       }
 
-      ul.appendChild(li);
+      ul.append(li);
     });
 
-    ul.appendChild(this.nextLink());
+    ul.append(this.nextLink());
 
     return ul;
   }
@@ -155,9 +155,7 @@ export default class Pagination extends Listenable {
     }
 
     if (this.pages - 3 > pages.at(-1)) {
-      pages.push('gap');
-      pages.push(this.pages - 1);
-      pages.push(this.pages);
+      pages.push('gap', this.pages - 1, this.pages);
     } else if (pages.at(-1) + 1 <= this.pages) {
       for (let i = pages.at(-1) + 1; i <= this.pages; i += 1) {
         pages.push(i);
@@ -168,10 +166,10 @@ export default class Pagination extends Listenable {
   }
 
   protected static getCurrentPage(): number {
-    const matchData = window.location.search.match(/[?&]page=(\d+)/);
+    const matchData = window.location.search.match(/[&?]page=(\d+)/);
 
     if (matchData != null) {
-      return parseInt(matchData[0], 10);
+      return Number(matchData[0]);
     }
 
     return 1;

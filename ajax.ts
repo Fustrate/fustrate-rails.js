@@ -1,8 +1,7 @@
-import axios from 'axios';
+import axios, { type AxiosPromise } from 'axios';
+
 import { ErrorFlash } from './components/flash';
 import { addDebugData } from './debug';
-
-import { type AxiosPromise } from 'axios';
 
 export function csrfToken(): string | undefined {
   return document.querySelector<HTMLMetaElement>('meta[name=csrf-token]')?.content;

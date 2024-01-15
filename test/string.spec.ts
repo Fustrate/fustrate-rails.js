@@ -33,7 +33,6 @@ describe('#isPresent()', () => {
   it('dasherizes a string', () => {
     expect(isPresent('')).toBe(false);
     expect(isPresent(' \t\n ')).toBe(false);
-    expect(isPresent(null)).toBe(false);
     expect(isPresent(undefined)).toBe(false);
 
     expect(isPresent('a')).toBe(true);

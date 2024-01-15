@@ -1,7 +1,7 @@
-import BasicObject from './basic_object';
+import BasicObject from './basic-object';
 
 export default class FormDataBuilder {
-  public static build(obj: { [s: string]: any }, namespace?: string): FormData {
+  public static build(obj: Record<string, any>, namespace?: string): FormData {
     return this.toFormData(new FormData(), obj, namespace);
   }
 
@@ -23,9 +23,9 @@ export default class FormDataBuilder {
     }
   }
 
-  public static toFormData(data: FormData, obj: { [s: string]: any }, namespace?: string): FormData {
+  public static toFormData(data: FormData, obj: Record<string, any>, namespace?: string): FormData {
     Object.getOwnPropertyNames(obj).forEach((field) => {
-      if (typeof obj[field] === 'undefined' || Number.isNaN(obj[field])) {
+      if (obj[field] === undefined || Number.isNaN(obj[field])) {
         return;
       }
 

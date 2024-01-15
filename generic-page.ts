@@ -27,11 +27,11 @@ export const onClick = (name: string) => decorateMethod(`$onclick-${name}`);
 export const refresh = decorateMethod('$refresh');
 
 export default class GenericPage {
-    protected fields: UIElements;
-    protected buttons: UIElements;
-    protected allMethodNamesList: string[];
+  protected fields: UIElements;
+  protected buttons: UIElements;
+  protected allMethodNamesList: string[];
 
-    public initialize(): Promise<any> {
+  public initialize(): Promise<any> {
     this.reloadUIElements();
 
     this.addEventListeners();
@@ -40,11 +40,16 @@ export default class GenericPage {
   }
 
   protected addEventListeners(): void {
-    delegate(document, '[data-button]:not(.modal [data-button]), [data-field]:not(.modal [data-field])', 'click', (event) => {
-      const element = event.target.closest<HTMLElement>('[data-button], [data-field]');
+    delegate(
+      document,
+      '[data-button]:not(.modal [data-button]), [data-field]:not(.modal [data-field])',
+      'click',
+      (event) => {
+        const element = event.target.closest<HTMLElement>('[data-button], [data-field]');
 
-      callDecoratedMethods(this, `$onclick-${element.dataset.button || element.dataset.field}`);
-    });
+        callDecoratedMethods(this, `$onclick-${element.dataset.button || element.dataset.field}`);
+      },
+    );
 
     delegate(document, '[data-target]:not(.modal [data-target])', 'click', (event) => {
       callDecoratedMethods(this, `$onclick-${event.target.closest<HTMLElement>('[data-target]').dataset.target}`);
@@ -67,13 +72,13 @@ export default class GenericPage {
     this.fields = {};
     this.buttons = {};
 
-    Array.from<HTMLElement>(document.body.querySelectorAll('[data-field]'))
+    [...document.body.querySelectorAll<HTMLElement>('[data-field]')]
       .filter((element) => !element.matches('.modal [data-field]'))
       .forEach((element) => {
         set(this.fields, element.dataset.field, element);
       });
 
-    Array.from<HTMLElement>(document.body.querySelectorAll('[data-button]'))
+    [...document.body.querySelectorAll<HTMLElement>('[data-button]')]
       .filter((element) => !element.matches('.modal [data-button]'))
       .forEach((element) => {
         set(this.buttons, element.dataset.button, element);

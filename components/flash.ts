@@ -12,7 +12,7 @@ function createFlashBar(message: string, options: { type: string, icon?: string 
   bar.classList.add('flash', options.type || 'info');
   bar.innerHTML = options?.icon ? `${createIcon(options.icon)} ${message}` : message;
 
-  document.getElementById('flashes')?.prepend(bar);
+  document.querySelector('#flashes')?.prepend(bar);
 
   return bar;
 }

@@ -41,17 +41,17 @@ describe('#bytesToString()', () => {
 
   it('shows kilobytes', () => {
     expect(bytesToString(1000)).toBe('1 kB');
-    expect(bytesToString(999999)).toBe('1000 kB');
+    expect(bytesToString(999_999)).toBe('1000 kB');
   });
 
   it('shows megabytes', () => {
-    expect(bytesToString(1000000)).toBe('1 MB');
-    expect(bytesToString(999999999)).toBe('1000 MB');
+    expect(bytesToString(1_000_000)).toBe('1 MB');
+    expect(bytesToString(999_999_999)).toBe('1000 MB');
   });
 
   it('shows gigabytes', () => {
-    expect(bytesToString(1000000000)).toBe('1 GB');
-    expect(bytesToString(999999999999)).toBe('1000 GB');
+    expect(bytesToString(1_000_000_000)).toBe('1 GB');
+    expect(bytesToString(999_999_999_999)).toBe('1000 GB');
   });
 });
 
@@ -115,6 +115,6 @@ describe('#truncate()', () => {
   });
 
   it('truncates (999999 / 1000) to 1000', () => {
-    expect(truncate(999999 / 1000, 2)).toBe('1000');
+    expect(truncate(999_999 / 1000, 2)).toBe('1000');
   });
 });
