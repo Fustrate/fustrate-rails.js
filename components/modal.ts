@@ -242,9 +242,9 @@ export default class Modal<T = void> extends Listenable {
       } else if (typeof button === 'object') {
         Object.entries(button).forEach(([key, value]) => {
           list.push(createButton(key, value));
-        }, this);
+        });
       }
-    }, this);
+    });
 
     this.modal.querySelector('.modal-buttons').innerHTML = list.join(' ');
 
@@ -421,8 +421,6 @@ export default class Modal<T = void> extends Listenable {
   }
 
   protected onMouseDown(event: MouseEventInit): void {
-    // console.log('mousedown', event, this);
-
     this.modal.classList.add('dragging');
 
     onMouseMove = this.onMouseMove.bind(this);
@@ -442,8 +440,6 @@ export default class Modal<T = void> extends Listenable {
   }
 
   protected onMouseMove(event: MouseEventInit): void {
-    // console.log(event, this);
-
     const xTranslation = event.screenX - dragState.mouseDownX + dragState.xOffset;
     const yTranslation = event.screenY - dragState.mouseDownY + dragState.yOffset;
 
