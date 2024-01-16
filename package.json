@@ -10,7 +10,6 @@
   "bugs": "https://github.com/Fustrate/fustrate-rails.js/issues",
   "dependencies": {
     "@popperjs/core": "^2.11.8",
-    "@rails/ujs": "^7.1.2",
     "animate.css": "^4.1.1",
     "axios": "^1.6.5",
     "core-js": "^3.35.0",
