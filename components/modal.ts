@@ -14,7 +14,7 @@ import {
 } from '../utilities';
 
 // Supports: Safari < 15.4 (2022-03-15)
-require('core-js/features/array/at');
+import 'core-js/features/array/at';
 
 interface UIElements {
   [s: string]: HTMLElement | UIElements | UIElements[];

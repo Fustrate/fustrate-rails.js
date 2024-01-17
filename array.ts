@@ -1,5 +1,5 @@
 // Supports: Safari < 15.4 (2022-03-15)
-require('core-js/features/array/at');
+import 'core-js/features/array/at';
 
 // eslint-disable-next-line import/prefer-default-export
 export function toSentence(arr: string[]): string {

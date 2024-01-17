@@ -1,5 +1,5 @@
 // Supports: Safari < 15.4 (2022-03-15)
-require('core-js/features/array/at');
+import 'core-js/features/array/at';
 
 export function humanize(string?: string): string {
   if (typeof string !== 'string') {
