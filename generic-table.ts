@@ -13,9 +13,14 @@ export interface GenericTableSettings {
 
 export { type PaginatedData } from './components/pagination';
 
-type SortFunction<T = HTMLElement> = (row: T) => string;
+type SortFunction<T extends HTMLElement = HTMLElement> = (row: T) => string;
 
-function sortRows<T = HTMLElement>(rows: T[], sortFunction: SortFunction<T> = (row: T) => '') {
+const defaultSortFunction: SortFunction = (row) => row.textContent;
+
+function sortRows<T extends HTMLElement = HTMLElement>(
+  rows: T[],
+  sortFunction: SortFunction<T> = defaultSortFunction,
+) {
   const rowsWithSortOrder: [string, T][] = rows.map((row) => [sortFunction(row), row]);
 
   rowsWithSortOrder.sort((x, y) => {
@@ -34,7 +39,7 @@ const defaultSettings = {
   noRecordsMessage: 'No records found.',
 };
 
-export default class GenericTable<T, U extends HTMLElement = HTMLTableRowElement> extends GenericPage {
+export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableRowElement> extends GenericPage {
   protected table: HTMLTableElement;
   protected tbody: HTMLTableSectionElement;
   protected settings: GenericTableSettings;
@@ -50,11 +55,13 @@ export default class GenericTable<T, U extends HTMLElement = HTMLTableRowElement
     this.settings = deepExtend({}, defaultSettings, settings);
   }
 
+  protected abstract reloadTable(): void;
+
+  protected abstract updateRow(row: U, item: T): void;
+
   public override initialize(): Promise<any> {
     return super.initialize().then(this.reloadTable.bind(this));
   }
-
-  protected reloadTable(): void { }
 
   protected createRow(item: T): U {
     const row = elementFromString<U>(this.settings.blankRow);
@@ -62,9 +69,6 @@ export default class GenericTable<T, U extends HTMLElement = HTMLTableRowElement
     this.updateRow(row, item);
 
     return row;
-  }
-
-  protected updateRow(row: U, item: T): void {
   }
 
   protected reloadRows(trs: U[], options?: { sort?: SortFunction<U> }): void {
