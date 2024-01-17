@@ -64,7 +64,7 @@ instance.interceptors.response.use(
   },
 );
 
-export function when<T>(...requests: any[]): Promise<T> {
+export async function when<T>(...requests: any[]): Promise<T> {
   return new Promise((resolve) => {
     axios.all(requests).then(
       axios.spread((...responses) => resolve(responses as T)),

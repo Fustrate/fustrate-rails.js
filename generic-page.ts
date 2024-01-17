@@ -31,12 +31,10 @@ export default class GenericPage {
   protected buttons: UIElements;
   protected allMethodNamesList: string[];
 
-  public initialize(): Promise<any> {
+  public async initialize(): Promise<any> {
     this.reloadUIElements();
 
     this.addEventListeners();
-
-    return Promise.resolve();
   }
 
   protected addEventListeners(): void {

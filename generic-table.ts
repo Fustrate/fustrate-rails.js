@@ -55,12 +55,14 @@ export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableR
     this.settings = deepExtend({}, defaultSettings, settings);
   }
 
-  protected abstract reloadTable(): void;
+  protected abstract reloadTable(): Promise<void>;
 
   protected abstract updateRow(row: U, item: T): void;
 
-  public override initialize(): Promise<any> {
-    return super.initialize().then(this.reloadTable.bind(this));
+  public override async initialize(): Promise<any> {
+    await super.initialize();
+
+    await this.reloadTable();
   }
 
   protected createRow(item: T): U {

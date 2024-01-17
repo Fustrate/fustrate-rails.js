@@ -297,7 +297,7 @@ export default class Modal<T = void> extends Listenable {
     firstInput?.focus();
   }
 
-  public open(reopening?: boolean): Promise<T> {
+  public async open(reopening?: boolean): Promise<T> {
     if (this.locked || this.modal.classList.contains('open')) {
       return this.promise;
     }
