@@ -65,7 +65,7 @@ export function toggle(element: NodeList | HTMLElement, showOrHide?: boolean): v
       toggleElement(elem as HTMLElement, showOrHide == null ? !isVisible(elem as HTMLElement) : showOrHide);
     });
   } else {
-    toggleElement(element, showOrHide = null ? !isVisible(element) : showOrHide);
+    toggleElement(element, showOrHide == null ? !isVisible(element) : showOrHide);
   }
 }
 
