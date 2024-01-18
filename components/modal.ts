@@ -13,8 +13,7 @@ import {
   icon as createIcon,
 } from '../utilities';
 
-// Supports: Safari < 15.4 (2022-03-15)
-import 'core-js/features/array/at';
+import '../array-at-polyfill';
 
 interface UIElements {
   [s: string]: HTMLElement | UIElements | UIElements[];

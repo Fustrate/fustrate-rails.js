@@ -1,5 +1,4 @@
-// Supports: Safari < 15.4 (2022-03-15)
-import 'core-js/features/array/at';
+import './array-at-polyfill';
 
 export function humanize(string?: string): string {
   if (typeof string !== 'string') {
