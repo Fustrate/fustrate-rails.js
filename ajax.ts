@@ -1,6 +1,6 @@
 import axios, { type AxiosPromise } from 'axios';
 
-import { ErrorFlash } from './components/flash';
+import Flash from './components/flash';
 import { addDebugData } from './debug';
 
 export function csrfToken(): string | undefined {
@@ -18,7 +18,7 @@ function processResponseError(response) {
     window.alert('You are not currently logged in. Please refresh the page and try performing this action again. To prevent this in the future, check the "Remember Me" box when logging in.');
   } else if (data && data.errors) {
     data.errors.forEach((message) => {
-      ErrorFlash.show(message);
+      Flash.show(message, { type: 'error' });
     });
   } else {
     // eslint-disable-next-line no-console
