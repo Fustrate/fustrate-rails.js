@@ -18,7 +18,7 @@ function processResponseError(response) {
     window.alert('You are not currently logged in. Please refresh the page and try performing this action again. To prevent this in the future, check the "Remember Me" box when logging in.');
   } else if (data && data.errors) {
     data.errors.forEach((message) => {
-      Flash.show(message, { type: 'error' });
+      Flash.error(message);
     });
   } else {
     // eslint-disable-next-line no-console

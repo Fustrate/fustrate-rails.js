@@ -32,7 +32,19 @@ export default class Flash extends Listenable {
     });
   }
 
-  public static show(message: string, options?: { type?: FlashType, icon?: string }): Flash {
+  public static error(message: string, options?: { icon?: string }): Flash {
+    return new this(message, { type: 'error', ...options });
+  }
+
+  public static info(message: string, options?: { icon?: string }): Flash {
+    return new this(message, { type: 'info', ...options });
+  }
+
+  public static plain(message: string, options?: { icon?: string }): Flash {
     return new this(message, { type: 'plain', ...options });
+  }
+
+  public static success(message: string, options?: { icon?: string }): Flash {
+    return new this(message, { type: 'success', ...options });
   }
 }
