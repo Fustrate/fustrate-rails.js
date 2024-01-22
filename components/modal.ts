@@ -321,7 +321,7 @@ export default class Modal<T = void> extends Listenable {
 
     const { top } = document.body.getBoundingClientRect();
 
-    this.modal.style.top = `${-top + this.settings.distanceFromTop}px`;
+    this.modal.style.top = `${-top + this.setting('distanceFromTop')}px`;
 
     setTimeout(() => {
       this.modal.classList.add('open');
@@ -408,7 +408,7 @@ export default class Modal<T = void> extends Listenable {
   }
 
   protected defaultClasses(): string[] {
-    return [this.settings.size, this.settings.type].filter((klass) => klass != null);
+    return [this.setting('size'), this.setting('type')].filter((klass) => klass != null);
   }
 
   protected closeButtonClicked(event: UIEvent): false {
