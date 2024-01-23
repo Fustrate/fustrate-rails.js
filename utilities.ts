@@ -57,14 +57,6 @@ export function animate(
   element.classList.add(...scopedClasses);
 }
 
-export function elementFromString<T extends HTMLElement>(string: string): T {
-  const template = document.createElement('template');
-
-  template.innerHTML = string.trim();
-
-  return template.content.firstChild as T;
-}
-
 export function hms(seconds: number, zeroDisplay?: string): string {
   if (zeroDisplay && seconds === 0) {
     return zeroDisplay;
