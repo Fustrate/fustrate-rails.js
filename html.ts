@@ -46,16 +46,6 @@ export function setChildren(parent: HTMLElement, items: HTMLElement[]): void {
   parent.append(fragment);
 }
 
-export function stripHTML(html: string): string {
-  const div = tag.div(html, { html: true });
-
-  const { textContent } = div;
-
-  div.remove();
-
-  return textContent ?? '';
-}
-
 export function toggleAttribute(field: HTMLElement, attribute: ToggleableAttribute, enabled: boolean): void {
   if (enabled) {
     field.setAttribute(attribute, attribute);
@@ -70,3 +60,13 @@ export const tag = {
   p: (text: string, opts?: TagOptions) => textElement('p', text, opts),
   span: (text: string, opts?: TagOptions) => textElement('span', text, opts),
 };
+
+export function stripHTML(html: string): string {
+  const div = tag.div(html, { html: true });
+
+  const { textContent } = div;
+
+  div.remove();
+
+  return textContent ?? '';
+}
