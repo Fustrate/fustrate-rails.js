@@ -1,5 +1,4 @@
 // Internal functions
-import escape from 'lodash/escape';
 import { isBlank } from './string';
 
 type AnimationDelay = 1 | 2 | 3 | 4 | 5;
@@ -93,17 +92,6 @@ export function label(text: string, ...classes: string[]): string {
   span.classList.add('label', ...cssClasses);
 
   return span.outerHTML;
-}
-
-export function multilineEscapeHTML(string: string | null | undefined): string {
-  if (string == null) {
-    return '';
-  }
-
-  return String(string)
-    .split(/\r?\n/)
-    .map((line) => escape(line))
-    .join('<br />');
 }
 
 export function linkTo(text: string, href?: string | any, attributes?: Record<string, any>): string {

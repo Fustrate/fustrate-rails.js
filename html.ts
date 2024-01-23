@@ -37,6 +37,17 @@ export function elementFromString<T extends HTMLElement>(string: string): T {
   return template.content.firstChild as T;
 }
 
+export function escapeMultilineHTML(string: string | null | undefined): string {
+  if (string == null) {
+    return '';
+  }
+
+  return String(string)
+    .split(/\r?\n/)
+    .map((line) => escape(line))
+    .join('<br />');
+}
+
 export function setChildren(parent: HTMLElement, items: HTMLElement[]): void {
   const fragment = document.createDocumentFragment();
 

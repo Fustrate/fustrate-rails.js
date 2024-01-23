@@ -6,7 +6,6 @@ import {
   icon,
   label,
   linkTo,
-  multilineEscapeHTML,
   redirectTo,
   toHumanDate,
 } from '../utilities';
@@ -92,25 +91,6 @@ describe('label', () => {
 
   it('converts underscores to dashes', () => {
     expect(label('Work Order', 'work_order')).toBe('<span class="label work-order">Work Order</span>');
-  });
-});
-
-describe('multilineEscapeHTML', () => {
-  it('escapes null and undefined', () => {
-    expect(multilineEscapeHTML(null)).toBe('');
-    expect(multilineEscapeHTML(undefined)).toBe('');
-  });
-
-  it('turns newlines into br elements', () => {
-    expect(multilineEscapeHTML('The\r\nLos\nAngeles\nDodgers')).toBe(
-      'The<br />Los<br />Angeles<br />Dodgers',
-    );
-  });
-
-  it('escapes entities in a string', () => {
-    expect(multilineEscapeHTML('<strong>\'Bob\' `&` "Bill"</strong>\n=/')).toBe(
-      '&lt;strong&gt;&#39;Bob&#39; `&amp;` &quot;Bill&quot;&lt;/strong&gt;<br />=/',
-    );
   });
 });
 
