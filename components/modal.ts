@@ -4,14 +4,10 @@ import set from 'lodash/set';
 import startCase from 'lodash/startCase';
 
 import { delegate, fire, stopEverything } from '../events';
-import { tag } from '../html';
+import { elementFromString, tag } from '../html';
 import Listenable from '../listenable';
 import { isVisible } from '../show-hide';
-import {
-  animate,
-  elementFromString,
-  icon as createIcon,
-} from '../utilities';
+import { animate, icon as createIcon } from '../utilities';
 
 import '../array-at-polyfill';
 

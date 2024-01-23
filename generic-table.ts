@@ -1,7 +1,7 @@
 import GenericPage from './generic-page';
 import Pagination from './components/pagination';
+import { elementFromString } from './html';
 import { deepExtend } from './object';
-import { elementFromString } from './utilities';
 
 import { type PaginatedData } from './components/pagination';
 
