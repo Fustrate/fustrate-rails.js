@@ -1,3 +1,5 @@
+import escape from 'lodash/escape';
+
 type ToggleableAttribute = 'checked' | 'required' | 'disabled' | 'selected' | 'readonly';
 
 interface TagOptions {
