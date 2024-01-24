@@ -4,7 +4,22 @@ import { isBlank } from './string';
 type AnimationDelay = 1 | 2 | 3 | 4 | 5;
 type AnimationSpeed = 'slow' | 'slower' | 'fast' | 'faster';
 
-function hrefFor(href: any) {
+interface AnimationOptions {
+  delay?: AnimationDelay;
+  speed?: AnimationSpeed;
+}
+
+interface DateTimeLike {
+  year: number;
+  toFormat: (format: string) => string;
+}
+
+type FontAwesomeStyle = 'brands' | 'duotone' | 'light' | 'regular' | 'solid' | 'thin';
+
+type Linkable = string | null | { path: (...args: any[]) => string };
+type LinkableAttributes = Record<string, string | number>;
+
+function hrefFor(href: Linkable) {
   if (href == null) {
     return '#';
   }
@@ -14,12 +29,7 @@ function hrefFor(href: any) {
     return isBlank(href) ? '#' : href;
   }
 
-  // Models have a `path` function.
-  if (href.path) {
-    return href.path();
-  }
-
-  throw new Error(`Invalid href: ${href}`);
+  return href.path();
 }
 
 // Exported functions
@@ -27,7 +37,7 @@ function hrefFor(href: any) {
 export function animate(
   element: HTMLElement,
   animation: string,
-  options?: { delay?: AnimationDelay, speed?: AnimationSpeed },
+  options?: AnimationOptions,
   callback?: () => void,
 ): void {
   const classes = ['animated', ...animation.split(' ')];
@@ -71,8 +81,6 @@ export function hms(seconds: number, zeroDisplay?: string): string {
   return `${seconds < 0 ? '-' : ''}${parts.join(':')}`;
 }
 
-type FontAwesomeStyle = 'brands' | 'duotone' | 'light' | 'regular' | 'solid' | 'thin';
-
 export function icon(types: string, style?: FontAwesomeStyle): string {
   const classes = types
     .split(' ')
@@ -94,7 +102,7 @@ export function label(text: string, ...classes: string[]): string {
   return span.outerHTML;
 }
 
-export function linkTo(text: string, href?: string | any, attributes?: Record<string, any>): string {
+export function linkTo(text: string, href: Linkable, attributes?: LinkableAttributes): string {
   const element = document.createElement('a');
 
   element.href = hrefFor(href);
@@ -102,22 +110,11 @@ export function linkTo(text: string, href?: string | any, attributes?: Record<st
 
   if (attributes) {
     Object.entries(attributes).forEach(([key, value]) => {
-      element.setAttribute(key, value);
+      element.setAttribute(key, String(value));
     });
   }
 
   return element.outerHTML;
-}
-
-export function redirectTo(href: string | any): void {
-  window.setTimeout(() => {
-    window.location.href = href.path ? href.path() : href;
-  }, 750);
-}
-
-interface DateTimeLike {
-  year: number;
-  toFormat: (format: string) => string;
 }
 
 export function toHumanDate(dateTimeObject: DateTimeLike, time?: boolean): string {
