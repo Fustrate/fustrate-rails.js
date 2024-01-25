@@ -343,7 +343,7 @@ export default class Modal<T = void> extends Listenable {
     return this.promise;
   }
 
-  public close(openPrevious?: boolean): void {
+  public close(openPrevious = true): void {
     if (this.locked || !this.modal.classList.contains('open')) {
       return;
     }
