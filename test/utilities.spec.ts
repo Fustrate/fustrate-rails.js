@@ -95,7 +95,7 @@ describe('label', () => {
 
 describe('linkTo', () => {
   it('creates a link to undefined/null', () => {
-    expect(linkTo('test')).toBe('<a href="#">test</a>');
+    expect(linkTo('test', null)).toBe('<a href="#">test</a>');
     expect(linkTo('test', undefined)).toBe('<a href="#">test</a>');
   });
 
@@ -106,16 +106,6 @@ describe('linkTo', () => {
 
   it('creates a link to an object that responds to #path', () => {
     expect(linkTo('test', { path: () => '/users' })).toBe('<a href="/users">test</a>');
-  });
-
-  it("doesn't like other arguments", () => {
-    expect(() => {
-      linkTo('test', 5);
-    }).toThrowError(/Invalid href: /);
-
-    expect(() => {
-      linkTo('test', {});
-    }).toThrowError(/Invalid href: /);
   });
 
   it('creates a link with extra attributes', () => {

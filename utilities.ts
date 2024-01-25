@@ -16,7 +16,7 @@ interface DateTimeLike {
 
 type FontAwesomeStyle = 'brands' | 'duotone' | 'light' | 'regular' | 'solid' | 'thin';
 
-type Linkable = string | null | { path: (...args: any[]) => string };
+type Linkable = string | null | undefined | { path: (...args: any[]) => string };
 type LinkableAttributes = Record<string, string | number>;
 
 function hrefFor(href: Linkable) {
