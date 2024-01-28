@@ -31,7 +31,7 @@ export default class GenericPage {
   protected addEventListeners(): void {
     delegate(
       document,
-      '[data-button]:not(.modal [data-button]), [data-field]:not(.modal [data-field])',
+      { selector: '[data-button], [data-field]', exclude: '.modal [data-button], .modal [data-field]' },
       'click',
       (event) => {
         const element = event.target.closest<HTMLElement>('[data-button], [data-field]');
@@ -40,15 +40,15 @@ export default class GenericPage {
       },
     );
 
-    delegate(document, '[data-target]:not(.modal [data-target])', 'click', (event) => {
+    delegate(document, { selector: '[data-target]', exclude: '.modal [data-target]' }, 'click', (event) => {
       callDecoratedMethods(this, `$onclick-${event.target.closest<HTMLElement>('[data-target]').dataset.target}`);
     });
 
-    delegate(document, '[data-field]:not(.modal [data-field])', 'dblclick', (event) => {
+    delegate(document, { selector: '[data-field]', exclude: '.modal [data-field]' }, 'dblclick', (event) => {
       callDecoratedMethods(this, `$ondoubleclick-${event.target.closest<HTMLElement>('[data-field]').dataset.field}`);
     });
 
-    delegate(document, '[data-field]:not(.modal [data-field])', 'change', (event) => {
+    delegate(document, { selector: '[data-field]', exclude: '.modal [data-field]' }, 'change', (event) => {
       callDecoratedMethods(this, `$onchange-${event.target.closest<HTMLElement>('[data-field]').dataset.field}`);
     });
   }
