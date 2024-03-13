@@ -1,4 +1,4 @@
-import axios, { type AxiosPromise } from 'axios';
+import axios from 'axios';
 
 import Flash from './components/flash';
 import { addDebugData } from './debug';
@@ -70,19 +70,6 @@ export async function when<T>(...requests: any[]): Promise<T> {
       axios.spread((...responses) => resolve(responses as T)),
     );
   });
-}
-
-export function getCurrentPageJson<T = any>(): AxiosPromise<T> {
-  let pathname = window.location.pathname.replace(/\/+$/, '');
-  let { search } = window.location;
-
-  if (pathname === '') {
-    search = search === '' ? '?format=json' : `${search}&format=json`;
-  } else {
-    pathname = `${pathname}.json`;
-  }
-
-  return instance.get(`${pathname}${search}`);
 }
 
 export default instance;
