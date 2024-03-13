@@ -32,6 +32,6 @@ export async function postJSON<T>(url: string, data?: any): AxiosPromise<T> {
   return ajax.post<T>(pathToJsonURL(url), data);
 }
 
-export async function getCurrentPageJson<T = any>(): AxiosPromise<T> {
+export async function getCurrentPageJSON<T = any>(): AxiosPromise<T> {
   return getJSON<T>(window.location.toString());
 }
