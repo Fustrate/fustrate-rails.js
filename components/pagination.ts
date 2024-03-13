@@ -10,8 +10,8 @@ interface PaginationData {
   total: number;
 }
 
-export interface PaginatedData {
-  data: any[];
+export interface PaginatedData<T = any> {
+  data: T[];
   pagination: PaginationData;
 }
 

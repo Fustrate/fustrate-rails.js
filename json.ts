@@ -1,6 +1,7 @@
 import { type AxiosPromise } from 'axios';
 
 import ajax from './ajax';
+import { type PaginatedData } from './components/pagination';
 
 function pathToJsonURL(path: string): string {
   const url = path[0] === '/' ? new URL(path, window.location.origin) : new URL(path);
@@ -34,4 +35,8 @@ export async function postJSON<T>(url: string, data?: any): AxiosPromise<T> {
 
 export async function getCurrentPageJSON<T = any>(): AxiosPromise<T> {
   return getJSON<T>(window.location.toString());
+}
+
+export async function getPaginatedJSON<T>(url: string): AxiosPromise<PaginatedData<T>> {
+  return getJSON<PaginatedData<T>>(url);
 }
