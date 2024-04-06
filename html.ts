@@ -4,24 +4,40 @@ type ToggleableAttribute = 'checked' | 'required' | 'disabled' | 'selected' | 'r
 
 interface TagOptions {
   class?: string | string[];
-  html?: boolean;
+  html?: string;
+  text?: string;
+  children?: HTMLElement[];
+  data?: Record<string, string>;
 }
 
-function textElement<K extends keyof HTMLElementTagNameMap>(
-  tag: K,
-  text: string,
-  opts?: TagOptions,
-): HTMLElementTagNameMap[K] {
+export function setChildren(parent: HTMLElement, items: HTMLElement[]): void {
+  const fragment = document.createDocumentFragment();
+
+  fragment.append(...items);
+
+  parent.textContent = '';
+  parent.append(fragment);
+}
+
+function textElement<K extends keyof HTMLElementTagNameMap>(tag: K, options?: TagOptions): HTMLElementTagNameMap[K] {
   const element = document.createElement(tag);
 
-  if (opts?.html) {
-    element.innerHTML = text;
-  } else {
-    element.textContent = text;
+  if (options?.html) {
+    element.innerHTML = options.html;
+  } else if (options?.text) {
+    element.textContent = options.text;
+  } else if (options?.children) {
+    setChildren(element, options.children);
   }
 
-  if (opts?.class) {
-    element.classList.add(...(typeof opts.class === 'string' ? [opts.class] : opts.class));
+  if (options?.class) {
+    element.classList.add(...(typeof options.class === 'string' ? [options.class] : options.class));
+  }
+
+  if (options?.data) {
+    Object.entries(options.data).forEach(([key, value]) => {
+      element.setAttribute(`data-${key}`, value);
+    });
   }
 
   return element;
@@ -50,15 +66,6 @@ export function escapeMultilineHTML(string: string | null | undefined): string {
     .join('<br />');
 }
 
-export function setChildren(parent: HTMLElement, items: HTMLElement[]): void {
-  const fragment = document.createDocumentFragment();
-
-  fragment.append(...items);
-
-  parent.textContent = '';
-  parent.append(fragment);
-}
-
 export function toggleAttribute(field: HTMLElement, attribute: ToggleableAttribute, enabled: boolean): void {
   if (enabled) {
     field.setAttribute(attribute, attribute);
@@ -69,13 +76,15 @@ export function toggleAttribute(field: HTMLElement, attribute: ToggleableAttribu
 
 // Access tag helpers via `tag.div('text content')`
 export const tag = {
-  div: (text: string, opts?: TagOptions) => textElement('div', text, opts),
-  p: (text: string, opts?: TagOptions) => textElement('p', text, opts),
-  span: (text: string, opts?: TagOptions) => textElement('span', text, opts),
+  div: (options?: TagOptions) => textElement('div', options),
+  li: (options?: TagOptions) => textElement('li', options),
+  p: (options?: TagOptions) => textElement('p', options),
+  span: (options?: TagOptions) => textElement('span', options),
+  ul: (options?: TagOptions) => textElement('ul', options),
 };
 
 export function stripHTML(html: string): string {
-  const div = tag.div(html, { html: true });
+  const div = tag.div({ html });
 
   const { textContent } = div;
 
