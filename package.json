@@ -11,11 +11,11 @@
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "animate.css": "^4.1.1",
-    "axios": "^1.6.7",
+    "axios": "^1.6.8",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.24.0",
+    "@babel/preset-env": "^7.24.4",
     "@jest/globals": "^29.7.0",
     "@types/jest": "^29.5.12",
     "@types/lodash": "^4.17.0",
@@ -34,7 +34,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "jest-mock-axios": "^4.7.3",
     "ts-jest": "^29.1.2",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.4"
   },
   "scripts": {
     "lint": "eslint .",
