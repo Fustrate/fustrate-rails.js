@@ -87,7 +87,7 @@ function createButton(name: string, options) {
 
 function toggleOverlay(visible = true) {
   if (!overlay) {
-    overlay = tag.div('', { class: 'modal-overlay' });
+    overlay = tag.div({ class: 'modal-overlay' });
   }
 
   if (visible) {

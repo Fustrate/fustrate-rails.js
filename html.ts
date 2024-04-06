@@ -74,7 +74,7 @@ export function toggleAttribute(field: HTMLElement, attribute: ToggleableAttribu
   }
 }
 
-// Access tag helpers via `tag.div('text content')`
+// Access tag helpers via `tag.div({ ... })`
 export const tag = {
   div: (options?: TagOptions) => textElement('div', options),
   li: (options?: TagOptions) => textElement('li', options),
