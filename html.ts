@@ -5,20 +5,11 @@ type ToggleableAttribute = 'checked' | 'required' | 'disabled' | 'selected' | 'r
 
 interface TagOptions {
   attributes?: Record<string, string | number>;
-  children?: HTMLElement[];
+  children?: (string | Node)[];
   class?: string | string[];
   data?: Record<string, string | number>;
   html?: string;
   text?: string;
-}
-
-export function setChildren(parent: HTMLElement, items: HTMLElement[]): void {
-  const fragment = document.createDocumentFragment();
-
-  fragment.append(...items);
-
-  parent.textContent = '';
-  parent.append(fragment);
 }
 
 function textElement<K extends keyof HTMLElementTagNameMap>(
@@ -33,7 +24,7 @@ function textElement<K extends keyof HTMLElementTagNameMap>(
     } else if (options.text) {
       element.textContent = options.text;
     } else if (options.children) {
-      setChildren(element, options.children);
+      element.append(...options.children);
     }
 
     if (options.class) {
@@ -77,6 +68,15 @@ export function escapeMultilineHTML(string: string | null | undefined): string {
     .split(/\r?\n/)
     .map((line) => escape(line))
     .join('<br />');
+}
+
+export function setChildren(parent: HTMLElement, items: HTMLElement[]): void {
+  const fragment = document.createDocumentFragment();
+
+  fragment.append(...items);
+
+  parent.textContent = '';
+  parent.append(fragment);
 }
 
 export function toggleAttribute(field: HTMLElement, attribute: ToggleableAttribute, enabled: boolean): void {
