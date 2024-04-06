@@ -76,10 +76,19 @@ export function toggleAttribute(field: HTMLElement, attribute: ToggleableAttribu
 
 // Access tag helpers via `tag.div({ ... })`
 export const tag = {
+  a: (options?: TagOptions) => textElement('a', options),
+  dd: (options?: TagOptions) => textElement('dd', options),
   div: (options?: TagOptions) => textElement('div', options),
+  dt: (options?: TagOptions) => textElement('dt', options),
+  img: (options?: TagOptions) => textElement('img', options),
   li: (options?: TagOptions) => textElement('li', options),
+  option: (options?: TagOptions) => textElement('option', options),
   p: (options?: TagOptions) => textElement('p', options),
+  section: (options?: TagOptions) => textElement('section', options),
   span: (options?: TagOptions) => textElement('span', options),
+  tbody: (options?: TagOptions) => textElement('tbody', options),
+  td: (options?: TagOptions) => textElement('td', options),
+  tr: (options?: TagOptions) => textElement('tr', options),
   ul: (options?: TagOptions) => textElement('ul', options),
 };
 
