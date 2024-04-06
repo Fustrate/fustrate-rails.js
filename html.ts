@@ -4,10 +4,10 @@ import kebabCase from 'lodash/kebabCase';
 type ToggleableAttribute = 'checked' | 'required' | 'disabled' | 'selected' | 'readonly';
 
 interface TagOptions {
-  attributes?: Record<string, string>;
+  attributes?: Record<string, string | number>;
   children?: HTMLElement[];
   class?: string | string[];
-  data?: Record<string, string>;
+  data?: Record<string, string | number>;
   html?: string;
   text?: string;
 }
@@ -42,13 +42,13 @@ function textElement<K extends keyof HTMLElementTagNameMap>(
 
     if (options.attributes) {
       Object.entries(options.attributes).forEach(([key, value]) => {
-        element.setAttribute(key, value);
+        element.setAttribute(key, String(value));
       });
     }
 
     if (options.data) {
       Object.entries(options.data).forEach(([key, value]) => {
-        element.setAttribute(`data-${kebabCase(key)}`, value);
+        element.setAttribute(`data-${kebabCase(key)}`, String(value));
       });
     }
   }
