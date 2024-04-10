@@ -5,7 +5,7 @@ type ToggleableAttribute = 'checked' | 'required' | 'disabled' | 'selected' | 'r
 
 interface TagOptions {
   attributes?: Record<string, string | number | true>;
-  children?: (string | Node)[];
+  children?: Node | (string | Node)[];
   class?: string | string[];
   data?: Record<string, string | number | true>;
   html?: string;
@@ -24,7 +24,11 @@ function textElement<K extends keyof HTMLElementTagNameMap>(
     } else if (options.text) {
       element.textContent = options.text;
     } else if (options.children) {
-      element.append(...options.children);
+      if (Array.isArray(options.children)) {
+        element.append(...options.children);
+      } else {
+        element.append(options.children);
+      }
     }
 
     if (options.class) {
