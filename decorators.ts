@@ -35,7 +35,7 @@ export function decorateMethod(tag: string): MethodDecorator {
   };
 }
 
-export function callDecoratedMethods(obj: object, tag: string): any[] {
+export function callDecoratedMethods<T = any>(obj: object, tag: string): T[] {
   if (!(obj as any).$decoratedMethods) {
     (obj as any).$decoratedMethods = buildDecorationList(obj);
   }
