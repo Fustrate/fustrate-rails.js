@@ -23,7 +23,7 @@ export interface ModalSettings {
   distanceFromTop: number;
   icon: string;
   size: string;
-  template: string;
+  template: string | (() => HTMLElement | HTMLElement[]);
   title: string;
   type: string;
 }
@@ -189,6 +189,7 @@ export default class Modal<T = void> extends Listenable {
     this.addEventListeners();
   }
 
+  // eslint-disable-next-line class-methods-use-this, @typescript-eslint/no-empty-function
   protected initialize(): void {}
 
   protected reloadUIElements(): void {
@@ -210,10 +211,18 @@ export default class Modal<T = void> extends Listenable {
       : title;
   }
 
-  protected setContent(content: string | (() => string), reload?: boolean): void {
-    this.modal.querySelector('.modal-content').innerHTML = typeof content === 'function'
-      ? content()
-      : content;
+  protected setContent(content: string | (() => HTMLElement | HTMLElement[]), reload?: boolean): void {
+    if (typeof content === 'function') {
+      const children = content();
+
+      if (Array.isArray(children)) {
+        this.modal.querySelector('.modal-content').replaceChildren(...children);
+      } else {
+        this.modal.querySelector('.modal-content').replaceChildren(children);
+      }
+    } else {
+      this.modal.querySelector('.modal-content').innerHTML = content;
+    }
 
     if (reload) {
       this.reloadUIElements();
