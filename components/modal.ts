@@ -17,13 +17,15 @@ interface UIElements {
 
 type ModalButton = 'spacer' | string | Record<string, string | { text?: string; type?: string }>;
 
+type ModalContent = string | HTMLElement | HTMLElement[] | (() => HTMLElement | HTMLElement[]);
+
 export interface ModalSettings {
   buttons: ModalButton[];
   closeOnBackgroundClick: boolean;
   distanceFromTop: number;
   icon: string;
   size: string;
-  template: string | (() => HTMLElement | HTMLElement[]);
+  template: ModalContent;
   title: string;
   type: string;
 }
@@ -211,17 +213,17 @@ export default class Modal<T = void> extends Listenable {
       : title;
   }
 
-  protected setContent(content: string | (() => HTMLElement | HTMLElement[]), reload?: boolean): void {
-    if (typeof content === 'function') {
-      const children = content();
-
-      if (Array.isArray(children)) {
-        this.modal.querySelector('.modal-content').replaceChildren(...children);
-      } else {
-        this.modal.querySelector('.modal-content').replaceChildren(children);
-      }
-    } else {
+  protected setContent(content: ModalContent, reload?: boolean): void {
+    if (typeof content === 'string') {
       this.modal.querySelector('.modal-content').innerHTML = content;
+    } else {
+      const elements = typeof content === 'function' ? content() : content;
+
+      if (Array.isArray(elements)) {
+        this.modal.querySelector('.modal-content').replaceChildren(...elements);
+      } else {
+        this.modal.querySelector('.modal-content').replaceChildren(elements);
+      }
     }
 
     if (reload) {
