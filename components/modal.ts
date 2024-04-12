@@ -11,13 +11,17 @@ import { animate, icon as createIcon } from '../utilities';
 
 import '../array-at-polyfill';
 
-interface UIElements {
+export interface UIElements {
   [s: string]: HTMLElement | UIElements | UIElements[];
 }
 
-type ModalButton = 'spacer' | string | Record<string, string | { text?: string; type?: string }>;
+export type ModalButton = 'spacer' | string | Record<string, string | { text?: string; type?: string }>;
 
-type ModalContent = string | HTMLElement | HTMLElement[] | (() => HTMLElement | HTMLElement[]);
+export type ModalContent = string |
+  HTMLElement |
+  HTMLElement[] |
+  (() => HTMLElement | HTMLElement[]) |
+  DocumentFragment;
 
 export interface ModalSettings {
   buttons: ModalButton[];

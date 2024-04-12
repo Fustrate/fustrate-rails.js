@@ -1,12 +1,12 @@
 {
   "[javascript]": {
     "editor.tabSize": 2,
-    "editor.rulers": [100],
+    "editor.rulers": [120],
     "editor.formatOnSave": true,
   },
   "[json]": {
     "editor.tabSize": 2,
-    "editor.rulers": [80],
+    "editor.rulers": [120],
   },
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
