@@ -3,18 +3,52 @@ import kebabCase from 'lodash/kebabCase';
 
 type ToggleableAttribute = 'checked' | 'required' | 'disabled' | 'selected' | 'readonly';
 
-interface TagOptions {
+interface BaseTagOptions {
   attributes?: Record<string, string | number | true>;
-  children?: Node | (string | Node)[];
   class?: string | string[];
   data?: Record<string, string | number | true>;
+}
+
+interface ContentTagOptions extends BaseTagOptions {
+  children?: Node | (string | Node)[];
   html?: string;
   text?: string;
 }
 
-function textElement<K extends keyof HTMLElementTagNameMap>(
+function setBaseOptions(element: HTMLElement, options: BaseTagOptions): void {
+  if (options.class) {
+    element.classList.add(...(typeof options.class === 'string' ? [options.class] : options.class));
+  }
+
+  if (options.attributes) {
+    Object.entries(options.attributes).forEach(([key, value]) => {
+      element.setAttribute(key, value === true ? '' : String(value));
+    });
+  }
+
+  if (options.data) {
+    Object.entries(options.data).forEach(([key, value]) => {
+      element.setAttribute(`data-${kebabCase(key)}`, value === true ? '' : String(value));
+    });
+  }
+}
+
+function selfClosingElement<K extends keyof HTMLElementTagNameMap>(
   tag: K,
-  options?: TagOptions,
+  options?: ContentTagOptions,
+): HTMLElementTagNameMap[K] {
+  const element = document.createElement(tag);
+
+  if (options) {
+    setBaseOptions(element, options);
+  }
+
+  return element;
+}
+
+function contentElement<K extends keyof HTMLElementTagNameMap>(
+  tag: K,
+  options?: ContentTagOptions,
 ): HTMLElementTagNameMap[K] {
   const element = document.createElement(tag);
 
@@ -31,21 +65,7 @@ function textElement<K extends keyof HTMLElementTagNameMap>(
       }
     }
 
-    if (options.class) {
-      element.classList.add(...(typeof options.class === 'string' ? [options.class] : options.class));
-    }
-
-    if (options.attributes) {
-      Object.entries(options.attributes).forEach(([key, value]) => {
-        element.setAttribute(key, value === true ? '' : String(value));
-      });
-    }
-
-    if (options.data) {
-      Object.entries(options.data).forEach(([key, value]) => {
-        element.setAttribute(`data-${kebabCase(key)}`, value === true ? '' : String(value));
-      });
-    }
+    setBaseOptions(element, options);
   }
 
   return element;
@@ -93,40 +113,41 @@ export function toggleAttribute(field: HTMLElement, attribute: ToggleableAttribu
 
 // Access tag helpers via `tag.div({ ... })`
 export const tag = {
-  a: (options?: TagOptions) => textElement('a', options),
-  button: (options?: TagOptions) => textElement('button', options),
-  canvas: (options?: TagOptions) => textElement('canvas', options),
-  dd: (options?: TagOptions) => textElement('dd', options),
-  del: (options?: TagOptions) => textElement('del', options),
-  div: (options?: TagOptions) => textElement('div', options),
-  dl: (options?: TagOptions) => textElement('dl', options),
-  dt: (options?: TagOptions) => textElement('dt', options),
-  em: (options?: TagOptions) => textElement('em', options),
-  h1: (options?: TagOptions) => textElement('h1', options),
-  h2: (options?: TagOptions) => textElement('h2', options),
-  h3: (options?: TagOptions) => textElement('h3', options),
-  h4: (options?: TagOptions) => textElement('h4', options),
-  h5: (options?: TagOptions) => textElement('h5', options),
-  h6: (options?: TagOptions) => textElement('h6', options),
-  i: (options?: TagOptions) => textElement('i', options),
-  img: (options?: TagOptions) => textElement('img', options),
-  input: (options?: TagOptions) => textElement('input', options),
-  ins: (options?: TagOptions) => textElement('ins', options),
-  label: (options?: TagOptions) => textElement('label', options),
-  li: (options?: TagOptions) => textElement('li', options),
-  optgroup: (options?: TagOptions) => textElement('optgroup', options),
-  option: (options?: TagOptions) => textElement('option', options),
-  p: (options?: TagOptions) => textElement('p', options),
-  section: (options?: TagOptions) => textElement('section', options),
-  select: (options?: TagOptions) => textElement('select', options),
-  span: (options?: TagOptions) => textElement('span', options),
-  strong: (options?: TagOptions) => textElement('strong', options),
-  table: (options?: TagOptions) => textElement('table', options),
-  tbody: (options?: TagOptions) => textElement('tbody', options),
-  td: (options?: TagOptions) => textElement('td', options),
-  textarea: (options?: TagOptions) => textElement('textarea', options),
-  tr: (options?: TagOptions) => textElement('tr', options),
-  ul: (options?: TagOptions) => textElement('ul', options),
+  a: (options?: ContentTagOptions) => contentElement('a', options),
+  br: () => selfClosingElement('br'),
+  button: (options?: ContentTagOptions) => contentElement('button', options),
+  canvas: (options?: ContentTagOptions) => contentElement('canvas', options),
+  dd: (options?: ContentTagOptions) => contentElement('dd', options),
+  del: (options?: ContentTagOptions) => contentElement('del', options),
+  div: (options?: ContentTagOptions) => contentElement('div', options),
+  dl: (options?: ContentTagOptions) => contentElement('dl', options),
+  dt: (options?: ContentTagOptions) => contentElement('dt', options),
+  em: (options?: ContentTagOptions) => contentElement('em', options),
+  h1: (options?: ContentTagOptions) => contentElement('h1', options),
+  h2: (options?: ContentTagOptions) => contentElement('h2', options),
+  h3: (options?: ContentTagOptions) => contentElement('h3', options),
+  h4: (options?: ContentTagOptions) => contentElement('h4', options),
+  h5: (options?: ContentTagOptions) => contentElement('h5', options),
+  h6: (options?: ContentTagOptions) => contentElement('h6', options),
+  i: (options?: ContentTagOptions) => contentElement('i', options),
+  img: (options?: ContentTagOptions) => contentElement('img', options),
+  input: (options?: ContentTagOptions) => contentElement('input', options),
+  ins: (options?: ContentTagOptions) => contentElement('ins', options),
+  label: (options?: ContentTagOptions) => contentElement('label', options),
+  li: (options?: ContentTagOptions) => contentElement('li', options),
+  optgroup: (options?: ContentTagOptions) => contentElement('optgroup', options),
+  option: (options?: ContentTagOptions) => contentElement('option', options),
+  p: (options?: ContentTagOptions) => contentElement('p', options),
+  section: (options?: ContentTagOptions) => contentElement('section', options),
+  select: (options?: ContentTagOptions) => contentElement('select', options),
+  span: (options?: ContentTagOptions) => contentElement('span', options),
+  strong: (options?: ContentTagOptions) => contentElement('strong', options),
+  table: (options?: ContentTagOptions) => contentElement('table', options),
+  tbody: (options?: ContentTagOptions) => contentElement('tbody', options),
+  td: (options?: ContentTagOptions) => contentElement('td', options),
+  textarea: (options?: ContentTagOptions) => contentElement('textarea', options),
+  tr: (options?: ContentTagOptions) => contentElement('tr', options),
+  ul: (options?: ContentTagOptions) => contentElement('ul', options),
 };
 
 export function stripHTML(html: string): string {
