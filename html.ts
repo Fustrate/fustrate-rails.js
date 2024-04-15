@@ -25,7 +25,7 @@ function textElement<K extends keyof HTMLElementTagNameMap>(
       element.textContent = options.text;
     } else if (options.children) {
       if (Array.isArray(options.children)) {
-        element.append(...options.children);
+        element.append(...options.children.filter(Boolean));
       } else {
         element.append(options.children);
       }
