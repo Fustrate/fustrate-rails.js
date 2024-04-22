@@ -71,10 +71,6 @@ function contentElement<K extends keyof HTMLElementTagNameMap>(
   return element;
 }
 
-export function cloneTemplate<T = HTMLElement>(selector: string): T {
-  return document.querySelector<HTMLTemplateElement>(selector)?.content?.firstElementChild?.cloneNode(true) as T;
-}
-
 export function elementFromString<T extends HTMLElement>(string: string): T {
   const template = document.createElement('template');
 
