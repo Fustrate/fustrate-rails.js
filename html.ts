@@ -141,6 +141,7 @@ export const tag = {
   table: (options?: ContentTagOptions) => contentElement('table', options),
   tbody: (options?: ContentTagOptions) => contentElement('tbody', options),
   td: (options?: ContentTagOptions) => contentElement('td', options),
+  template: (options?: ContentTagOptions) => contentElement('template', options),
   textarea: (options?: ContentTagOptions) => contentElement('textarea', options),
   tr: (options?: ContentTagOptions) => contentElement('tr', options),
   ul: (options?: ContentTagOptions) => contentElement('ul', options),
