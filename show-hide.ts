@@ -1,5 +1,5 @@
 // A few select tags that we're most likely to show or hide
-const defaultDisplayMap = {
+const defaultDisplayMap: { [s: string]: string } = {
   A: 'inline',
   BUTTON: 'inline',
   DIV: 'block',
@@ -28,6 +28,7 @@ function getDefaultDisplay(elem: HTMLElement) {
 
   const temp = ownerDocument.createElement(nodeName);
   ownerDocument.body.append(temp);
+
   ({ display } = temp.style);
 
   temp.remove();

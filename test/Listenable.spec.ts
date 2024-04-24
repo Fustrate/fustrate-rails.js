@@ -9,7 +9,7 @@ describe('Listenable', () => {
     const thing = new Thing();
     let received = false;
 
-    function callback(event) {
+    function callback(event: CustomEvent) {
       expect(event.detail).toBe('world');
 
       received = true;

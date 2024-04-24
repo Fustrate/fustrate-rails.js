@@ -2,7 +2,7 @@ import { describe, expect, it } from '@jest/globals';
 
 import FormDataBuilder from '../form-data-builder';
 
-function rawDataFor(formData) {
+function rawDataFor(formData: FormData) {
   const data = {};
 
   formData.forEach((value, key) => {

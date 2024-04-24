@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { type AxiosResponse } from 'axios';
 
 import Flash from './components/flash';
 import { addDebugData } from './debug';
@@ -7,7 +7,7 @@ export function csrfToken(): string | undefined {
   return document.querySelector<HTMLMetaElement>('meta[name=csrf-token]')?.content;
 }
 
-function processResponseError(response) {
+function processResponseError(response: AxiosResponse) {
   const { data, status } = response;
 
   if (!status || status === 404) {
@@ -17,7 +17,7 @@ function processResponseError(response) {
     // eslint-disable-next-line no-alert
     window.alert('You are not currently logged in. Please refresh the page and try performing this action again. To prevent this in the future, check the "Remember Me" box when logging in.');
   } else if (data?.errors) {
-    data.errors.forEach((message) => {
+    data.errors.forEach((message: string) => {
       Flash.error(message);
     });
   } else {
@@ -26,7 +26,7 @@ function processResponseError(response) {
   }
 }
 
-function processRequestError(request) {
+function processRequestError(request: Record<string, any>) {
   // eslint-disable-next-line no-alert
   window.alert('There was a problem connecting to the server - please wait a while before trying again.');
 
@@ -34,7 +34,7 @@ function processRequestError(request) {
     status: request.status,
     statusText: request.statusText,
     readyState: request.readyState,
-    resonseType: request.resonseType,
+    responseType: request.responseType,
   });
 }
 
@@ -54,9 +54,9 @@ instance.interceptors.request.use((config) => config, (error) => Promise.reject(
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response) {
+    if ('response' in error && error.response) {
       processResponseError(error.response);
-    } else if (error.request) {
+    } else if ('request' in error && error.request) {
       processRequestError(error.request);
     }
 
