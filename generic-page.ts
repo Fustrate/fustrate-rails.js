@@ -73,8 +73,4 @@ export default class GenericPage {
         set(this.buttons, element.dataset.button, element);
       });
   }
-
-  protected setHeader(text: string): void {
-    document.body.querySelector('.header .title').textContent = text;
-  }
 }
