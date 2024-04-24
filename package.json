@@ -37,9 +37,11 @@
   },
   "scripts": {
     "lint": "eslint .",
+    "lint:fix": "npm run lint --fix",
     "precommit": "npm run lint",
-    "test": "jest --silent",
+    "test": "NODE_OPTIONS='--disable-warning=DeprecationWarning' jest --silent",
     "tsc": "tsc --noEmit --incremental --project .",
+    "tsc:watch": "npm run tsc --watch",
     "versions": "NODE_OPTIONS='--disable-warning=ExperimentalWarning' node ./lib/update-package-versions.js"
   }
 }
