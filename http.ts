@@ -1,7 +1,7 @@
 import { csrfToken } from './ajax';
 
 type FormRedirectMethod = 'post' | 'patch' | 'delete';
-type FormRedirectData = Record<string, string>
+type FormRedirectData = Record<string, string>;
 
 export function formRedirectTo(
   href: string,
@@ -17,7 +17,7 @@ export function formRedirectTo(
 
   csrfInput.type = 'hidden';
   csrfInput.name = 'authenticity_token';
-  csrfInput.value = csrfToken();
+  csrfInput.value = csrfToken() ?? '';
 
   form.append(csrfInput);
 
@@ -51,8 +51,8 @@ export function formRedirectTo(
 }
 
 // Redirect by setting a new location, which performs a simple GET request
-export function redirectTo(href: string | any): void {
+export function redirectTo(href: string | { path(): string }): void {
   window.setTimeout(() => {
-    window.location.href = href.path ? href.path() : href;
+    window.location.href = typeof href === 'string' ? href : href.path();
   }, 750);
 }

@@ -4,7 +4,7 @@ import ajax from './ajax';
 import { type PaginatedData } from './components/pagination';
 
 function pathToJsonURL(path: string): string {
-  const url = path[0] === '/' ? new URL(path, window.location.origin) : new URL(path);
+  const url = path.startsWith('/') ? new URL(path, window.location.origin) : new URL(path);
 
   const pathname = url.pathname.replace(/\/+$/, '');
 

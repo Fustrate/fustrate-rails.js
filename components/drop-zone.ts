@@ -12,7 +12,7 @@ export default class DropZone extends Listenable {
     target.addEventListener('drop', (event) => {
       stopEverything(event);
 
-      callback(event.dataTransfer.files);
+      callback(event.dataTransfer?.files ?? new FileList());
     });
   }
 

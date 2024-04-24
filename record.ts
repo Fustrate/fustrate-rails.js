@@ -42,7 +42,7 @@ export default class BaseRecord extends BasicObject {
 
   public async reload(options?: { force?: boolean }): Promise<AxiosResponse<any> | void> {
     if (this.isLoaded && !options?.force) {
-      return null;
+      return;
     }
 
     return ajax.get(this.path({ format: 'json' })).then((response) => {

@@ -20,7 +20,7 @@ export default class Tabs extends Listenable {
     if (window.location.hash) {
       this.tabs.querySelector(`li > a[href='${window.location.hash}']`);
 
-      this.activateTab(this.tabs.querySelector(`li > a[href='${window.location.hash}']`), false);
+      this.activateTab(this.tabs.querySelector(`li > a[href='${window.location.hash}']`)!, false);
     } else {
       const tabWithActiveClass = this.tabs.querySelector<HTMLAnchorElement>('li > a.active');
 
@@ -28,7 +28,7 @@ export default class Tabs extends Listenable {
         this.activateTab(tabWithActiveClass, false);
       } else {
         // Open the first tab by default
-        this.activateTab(this.tabs.querySelector('li > a'), false);
+        this.activateTab(this.tabs.querySelector('li > a')!, false);
       }
     }
   }
@@ -38,24 +38,24 @@ export default class Tabs extends Listenable {
       return;
     }
 
-    const link = tab.closest('a');
+    const link = tab.closest('a')!;
 
     [...this.tabs.querySelectorAll('.active')].forEach((sibling) => {
       sibling.classList.remove('active');
     });
 
     link.classList.add('active');
-    const hash = link.getAttribute('href').split('#')[1];
+    const hash = link.getAttribute('href')!.split('#')[1];
 
     if (changeHash) {
       window.location.hash = hash;
     }
 
-    const tabContent = document.querySelector(`#${hash}`);
+    const tabContent = document.querySelector(`#${hash}`)!;
 
     tabContent.classList.add('active');
 
-    [...tabContent.parentElement.children].forEach((sibling) => {
+    [...tabContent.parentElement!.children].forEach((sibling) => {
       if (sibling !== tabContent) {
         sibling.classList.remove('active');
       }

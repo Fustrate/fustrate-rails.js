@@ -9,7 +9,7 @@ export default class FilePicker extends Listenable {
     input.setAttribute('type', 'file');
 
     input.addEventListener('change', () => {
-      callback(input.files);
+      callback(input.files ?? new FileList());
 
       input.remove();
     });

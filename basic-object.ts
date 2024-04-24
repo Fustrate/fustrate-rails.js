@@ -24,7 +24,7 @@ export default class BasicObject extends Listenable {
 
     const record = new this();
 
-    record.extractFromData(deepExtend({}, data, attributes || {}));
+    record.extractFromData(deepExtend({}, data, attributes ?? {}));
 
     return record as InstanceType<T>;
   }
@@ -41,6 +41,7 @@ export default class BasicObject extends Listenable {
     return items.map((item) => this.build(item, attributes)) as InstanceType<T>[];
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public constructor(data?: number | string) {
     super();
   }
@@ -62,7 +63,7 @@ export default class BasicObject extends Listenable {
     return data;
   }
 
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public extractObjectsFromData(data: Record<string, any>): void {
     // This is a hook.
   }

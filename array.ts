@@ -1,6 +1,5 @@
 import './array-at-polyfill';
 
-// eslint-disable-next-line import/prefer-default-export
 export function toSentence(arr: string[]): string {
   switch (arr.length) {
     case 0: {

@@ -16,7 +16,7 @@ function processResponseError(response) {
   } else if (status === 401) {
     // eslint-disable-next-line no-alert
     window.alert('You are not currently logged in. Please refresh the page and try performing this action again. To prevent this in the future, check the "Remember Me" box when logging in.');
-  } else if (data && data.errors) {
+  } else if (data?.errors) {
     data.errors.forEach((message) => {
       Flash.error(message);
     });

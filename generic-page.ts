@@ -36,20 +36,22 @@ export default class GenericPage {
       (event) => {
         const element = event.target.closest<HTMLElement>('[data-button], [data-field]');
 
-        callDecoratedMethods(this, `$onclick-${element.dataset.button || element.dataset.field}`);
+        if (element) {
+          callDecoratedMethods(this, `$onclick-${element.dataset.button! || element.dataset.field!}`);
+        }
       },
     );
 
     delegate(document, { selector: '[data-target]', exclude: '.modal [data-target]' }, 'click', (event) => {
-      callDecoratedMethods(this, `$onclick-${event.target.closest<HTMLElement>('[data-target]').dataset.target}`);
+      callDecoratedMethods(this, `$onclick-${event.target.closest<HTMLElement>('[data-target]')!.dataset.target}`);
     });
 
     delegate(document, { selector: '[data-field]', exclude: '.modal [data-field]' }, 'dblclick', (event) => {
-      callDecoratedMethods(this, `$ondoubleclick-${event.target.closest<HTMLElement>('[data-field]').dataset.field}`);
+      callDecoratedMethods(this, `$ondoubleclick-${event.target.closest<HTMLElement>('[data-field]')!.dataset.field}`);
     });
 
     delegate(document, { selector: '[data-field]', exclude: '.modal [data-field]' }, 'change', (event) => {
-      callDecoratedMethods(this, `$onchange-${event.target.closest<HTMLElement>('[data-field]').dataset.field}`);
+      callDecoratedMethods(this, `$onchange-${event.target.closest<HTMLElement>('[data-field]')!.dataset.field}`);
     });
   }
 
@@ -64,13 +66,13 @@ export default class GenericPage {
     [...document.body.querySelectorAll<HTMLElement>('[data-field]')]
       .filter((element) => !element.matches('.modal [data-field]'))
       .forEach((element) => {
-        set(this.fields, element.dataset.field, element);
+        set(this.fields, element.dataset.field!, element);
       });
 
     [...document.body.querySelectorAll<HTMLElement>('[data-button]')]
       .filter((element) => !element.matches('.modal [data-button]'))
       .forEach((element) => {
-        set(this.buttons, element.dataset.button, element);
+        set(this.buttons, element.dataset.button!, element);
       });
   }
 }

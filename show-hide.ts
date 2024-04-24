@@ -62,10 +62,10 @@ export function isVisible(elem: HTMLElement): boolean {
 export function toggle(element: NodeList | HTMLElement, showOrHide?: boolean): void {
   if (element instanceof NodeList) {
     element.forEach((elem) => {
-      toggleElement(elem as HTMLElement, showOrHide == null ? !isVisible(elem as HTMLElement) : showOrHide);
+      toggleElement(elem as HTMLElement, showOrHide ?? !isVisible(elem as HTMLElement));
     });
   } else {
-    toggleElement(element, showOrHide == null ? !isVisible(element) : showOrHide);
+    toggleElement(element, showOrHide ?? !isVisible(element));
   }
 }
 

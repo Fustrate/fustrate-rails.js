@@ -15,7 +15,12 @@ export interface UIElements {
   [s: string]: HTMLElement | UIElements | UIElements[];
 }
 
-export type ModalButton = 'spacer' | string | Record<string, string | { text?: string; type?: string }>;
+interface ButtonAttributes {
+  text?: string;
+  type?: string;
+}
+
+export type ModalButton = 'spacer' | 'cancel' | 'save' | Record<string, string | ButtonAttributes>;
 
 export type ModalContent = string |
   HTMLElement |
@@ -34,15 +39,11 @@ export interface ModalSettings {
   type: string;
 }
 
-export const defaultSettings: ModalSettings = {
+export const defaultSettings: Partial<ModalSettings> = {
   buttons: [],
   closeOnBackgroundClick: true,
   distanceFromTop: 25,
-  icon: undefined,
   size: 'tiny',
-  template: undefined,
-  title: null,
-  type: null,
 };
 
 const template = `
@@ -56,7 +57,7 @@ const template = `
   </div>`;
 
 // A stack of currently-open modals
-let openModals = [];
+let openModals: Modal<any>[] = [];
 
 // We only want to add the global listeners once
 let addedGlobalListeners = false;
@@ -75,9 +76,9 @@ const dragState = {
   yOffset: 0,
 };
 
-function createButton(name: string, options) {
-  let text: string;
-  let type: string;
+function createButton(name: string, options?: string | ButtonAttributes) {
+  let text: string | undefined;
+  let type: string | undefined;
 
   if (typeof options === 'object') {
     ({ text, type } = options);
@@ -86,8 +87,8 @@ function createButton(name: string, options) {
   }
 
   return `
-    <button data-button="${name}" class="${type || name}">
-      ${escape(text || startCase(name))}
+    <button data-button="${name}" class="${type ?? name}">
+      ${escape(text ?? startCase(name))}
     </button>`;
 }
 
@@ -126,7 +127,7 @@ function backgroundClicked() {
   const modal = openModals.at(-1);
 
   // Don't continue to close if we're not supposed to
-  if (modal && !modal.locked && modal.settings.closeOnBackgroundClick !== false) {
+  if (modal && !modal.locked && modal.setting('closeOnBackgroundClick') !== false) {
     modal.close();
   }
 
@@ -152,6 +153,8 @@ function addGlobalListeners() {
 }
 
 export default abstract class Modal<T = void> extends Listenable {
+  #locked: boolean;
+
   protected static defaultSettings: ModalSettings;
   protected static settings: Partial<ModalSettings>;
 
@@ -159,10 +162,9 @@ export default abstract class Modal<T = void> extends Listenable {
   protected fields: UIElements;
   protected modalId: number;
   protected modal: HTMLDivElement;
-  protected locked: boolean;
 
   protected promise: Promise<T>;
-  protected resolve: (value?: T) => void;
+  protected resolve: (value: T | PromiseLike<T>) => void;
   protected reject: (reason?: any) => void;
 
   protected settings: ModalSettings;
@@ -178,7 +180,9 @@ export default abstract class Modal<T = void> extends Listenable {
     this.setup();
   }
 
-  protected setting<K extends keyof ModalSettings>(key: K): Partial<ModalSettings>[K] {
+  public get locked() { return this.#locked; }
+
+  public setting<K extends keyof ModalSettings>(key: K): Partial<ModalSettings>[K] {
     return this.settings[key] ?? defaultSettings[key];
   }
 
@@ -188,9 +192,11 @@ export default abstract class Modal<T = void> extends Listenable {
 
     this.modal = this.createModal();
 
-    this.setTitle(this.setting('title'), { icon: this.setting('icon') });
-    this.setContent(this.setting('template'), false);
-    this.setButtons(this.setting('buttons'), false);
+    const icon = this.setting('icon');
+
+    this.setTitle(this.setting('title') ?? '', icon != null ? { icon } : undefined);
+    this.setContent(this.setting('template') ?? '', false);
+    this.setButtons(this.setting('buttons') ?? [], false);
     this.reloadUIElements();
     this.addEventListeners();
   }
@@ -200,30 +206,30 @@ export default abstract class Modal<T = void> extends Listenable {
     this.buttons = {};
 
     this.modal.querySelectorAll<HTMLElement>('[data-field]').forEach((element) => {
-      set(this.fields, element.dataset.field, element);
+      set(this.fields, element.dataset.field!, element);
     });
 
     this.modal.querySelectorAll<HTMLElement>('[data-button]').forEach((element) => {
-      set(this.buttons, element.dataset.button, element);
+      set(this.buttons, element.dataset.button!, element);
     });
   }
 
-  protected setTitle(title: string, options?: { icon: string }): void {
-    this.modal.querySelector('.modal-title span').innerHTML = options?.icon
+  protected setTitle(title: string, options?: { icon: string | null }): void {
+    this.modal.querySelector('.modal-title span')!.innerHTML = options?.icon
       ? `${createIcon(options.icon)} ${title}`
       : title;
   }
 
   protected setContent(content: ModalContent, reload?: boolean): void {
     if (typeof content === 'string') {
-      this.modal.querySelector('.modal-content').innerHTML = content;
+      this.modal.querySelector('.modal-content')!.innerHTML = content;
     } else {
       const elements = typeof content === 'function' ? content() : content;
 
       if (Array.isArray(elements)) {
-        this.modal.querySelector('.modal-content').replaceChildren(...elements);
+        this.modal.querySelector('.modal-content')!.replaceChildren(...elements);
       } else {
-        this.modal.querySelector('.modal-content').replaceChildren(elements);
+        this.modal.querySelector('.modal-content')!.replaceChildren(elements);
       }
     }
 
@@ -234,12 +240,12 @@ export default abstract class Modal<T = void> extends Listenable {
 
   protected setButtons(buttons: ModalButton[], reload?: boolean): void {
     if (buttons == null || buttons.length === 0) {
-      this.modal.querySelector('.modal-buttons').innerHTML = '';
+      this.modal.querySelector('.modal-buttons')!.innerHTML = '';
 
       return;
     }
 
-    const list = [];
+    const list: string[] = [];
 
     buttons.forEach((button) => {
       if (button === 'spacer') {
@@ -253,7 +259,7 @@ export default abstract class Modal<T = void> extends Listenable {
       }
     });
 
-    this.modal.querySelector('.modal-buttons').innerHTML = list.join(' ');
+    this.modal.querySelector('.modal-buttons')!.innerHTML = list.join(' ');
 
     if (reload) {
       this.reloadUIElements();
@@ -279,11 +285,11 @@ export default abstract class Modal<T = void> extends Listenable {
   protected addEventListeners() {
     this.modal
       .querySelector<HTMLAnchorElement>('a.modal-close')
-      .addEventListener('click', this.closeButtonClicked.bind(this));
+      ?.addEventListener('click', this.closeButtonClicked.bind(this));
 
     this.modal
       .querySelector<HTMLDivElement>('.modal-title')
-      .addEventListener('mousedown', this.onMouseDown.bind(this));
+      ?.addEventListener('mousedown', this.onMouseDown.bind(this));
 
     addGlobalListeners();
 
@@ -305,11 +311,11 @@ export default abstract class Modal<T = void> extends Listenable {
   }
 
   public async open(reopening?: boolean): Promise<T> {
-    if (this.locked || this.modal.classList.contains('open')) {
+    if (this.#locked || this.modal.classList.contains('open')) {
       return this.promise;
     }
 
-    this.locked = true;
+    this.#locked = true;
 
     if (openModals.includes(this)) {
       pull(openModals, this);
@@ -321,7 +327,7 @@ export default abstract class Modal<T = void> extends Listenable {
 
     if (openModals.length > 1) {
       // Hide the modal immediately previous to this one.
-      openModals.at(-2).hide();
+      openModals.at(-2)?.hide();
     } else {
       // There are no open modals - show the background overlay
       toggleOverlay(true);
@@ -329,13 +335,13 @@ export default abstract class Modal<T = void> extends Listenable {
 
     const { top } = document.body.getBoundingClientRect();
 
-    this.modal.style.top = `${-top + this.setting('distanceFromTop')}px`;
+    this.modal.style.top = `${-top + (this.setting('distanceFromTop') ?? 0)}px`;
 
     setTimeout(() => {
       this.modal.classList.add('open');
 
       animate(this.modal, 'fadeInDown', {}, () => {
-        this.locked = false;
+        this.#locked = false;
 
         fire(this.modal, 'modal:opened');
 
@@ -343,7 +349,7 @@ export default abstract class Modal<T = void> extends Listenable {
       });
     }, 125);
 
-    if (reopening && this.promise) {
+    if (reopening && this.promise != null) {
       return this.promise;
     }
 
@@ -356,11 +362,11 @@ export default abstract class Modal<T = void> extends Listenable {
   }
 
   public close(openPrevious = true): void {
-    if (this.locked || !this.modal.classList.contains('open')) {
+    if (this.#locked || !this.modal.classList.contains('open')) {
       return;
     }
 
-    this.locked = true;
+    this.#locked = true;
 
     if (!openPrevious || openModals.length === 1) {
       toggleOverlay(false);
@@ -375,7 +381,7 @@ export default abstract class Modal<T = void> extends Listenable {
 
         this.modal.classList.remove('open');
 
-        this.locked = false;
+        this.#locked = false;
       });
 
       if (openPrevious) {
@@ -388,7 +394,7 @@ export default abstract class Modal<T = void> extends Listenable {
 
   // Just hide the modal immediately and don't bother with an overlay
   public hide(): void {
-    this.locked = false;
+    this.#locked = false;
 
     this.modal.classList.remove('open');
   }
@@ -408,7 +414,7 @@ export default abstract class Modal<T = void> extends Listenable {
 
     // Accessibility
     element.setAttribute('aria-labelledby', `modal_${this.modalId}_title`);
-    element.querySelector('.modal-title span').setAttribute('id', `modal_${this.modalId}_title`);
+    element.querySelector('.modal-title span')!.setAttribute('id', `modal_${this.modalId}_title`);
 
     document.body.append(element);
 
@@ -416,7 +422,7 @@ export default abstract class Modal<T = void> extends Listenable {
   }
 
   protected defaultClasses(): string[] {
-    return [this.setting('size'), this.setting('type')].filter((klass) => klass != null);
+    return [this.setting('size'), this.setting('type')].filter(Boolean) as string[];
   }
 
   protected closeButtonClicked(event: UIEvent): false {
@@ -439,16 +445,16 @@ export default abstract class Modal<T = void> extends Listenable {
     dragState.xOffset = currentTranslation ? Number.parseInt(currentTranslation[1], 10) : 0;
     dragState.yOffset = currentTranslation ? Number.parseInt(currentTranslation[2], 10) : 0;
 
-    dragState.mouseDownX = event.screenX;
-    dragState.mouseDownY = event.screenY;
+    dragState.mouseDownX = event.screenX!;
+    dragState.mouseDownY = event.screenY!;
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   }
 
   protected onMouseMove(event: MouseEventInit): void {
-    const xTranslation = event.screenX - dragState.mouseDownX + dragState.xOffset;
-    const yTranslation = event.screenY - dragState.mouseDownY + dragState.yOffset;
+    const xTranslation = event.screenX! - dragState.mouseDownX + dragState.xOffset;
+    const yTranslation = event.screenY! - dragState.mouseDownY + dragState.yOffset;
 
     this.modal.style.transform = `translate(${xTranslation}px, ${yTranslation}px)`;
   }

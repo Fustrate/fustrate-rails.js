@@ -24,11 +24,11 @@ const settings = {
 function getPreppedPaginationURL() {
   const url = window.location.search.replace(/[&?]page=\d+/, '');
 
-  if (url[0] === '?') {
+  if (url.startsWith('?')) {
     return `${window.location.pathname}${url}&`;
   }
 
-  if (url[0] === '&') {
+  if (url.startsWith('&')) {
     return `${window.location.pathname}?${url.slice(1, url.length)}&`;
   }
 
@@ -117,12 +117,12 @@ export default class Pagination extends Listenable {
     return ul;
   }
 
-  protected windowedPageNumbers(): (string|number)[] {
+  protected windowedPageNumbers(): (string | number)[] {
     if (this.pages === 1) {
       return [1];
     }
 
-    let pages = [];
+    let pages: (number | 'gap')[] = [];
 
     let windowFrom = this.page - 4;
     let windowTo = this.page + 4;
@@ -153,11 +153,15 @@ export default class Pagination extends Listenable {
       pages.push(i);
     }
 
-    if (this.pages - 3 > pages.at(-1)) {
-      pages.push('gap', this.pages - 1, this.pages);
-    } else if (pages.at(-1) + 1 <= this.pages) {
-      for (let i = pages.at(-1) + 1; i <= this.pages; i += 1) {
-        pages.push(i);
+    const lastPage = pages.at(-1);
+
+    if (lastPage != null && lastPage !== 'gap') {
+      if (this.pages - 3 > lastPage) {
+        pages.push('gap', this.pages - 1, this.pages);
+      } else if (lastPage + 1 <= this.pages) {
+        for (let i = lastPage + 1; i <= this.pages; i += 1) {
+          pages.push(i);
+        }
       }
     }
 

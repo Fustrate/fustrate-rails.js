@@ -3,6 +3,11 @@ import Listenable from '../listenable';
 
 function toggleDisclosure(event: UIEvent & { target: HTMLElement }) {
   const disclosure = event.target.closest('.disclosure');
+
+  if (!disclosure) {
+    return;
+  }
+
   const isOpen = disclosure.classList.contains('open');
 
   disclosure.classList.toggle('open');

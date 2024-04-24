@@ -109,7 +109,7 @@ describe('linkTo', () => {
   });
 
   it('creates a link with extra attributes', () => {
-    expect(linkTo('test', '#', { 'data-label': 'Test', class: 'antelope' })).toBe(
+    expect(linkTo('test', '#', { 'data-label': 'Test', 'class': 'antelope' })).toBe(
       '<a href="#" data-label="Test" class="antelope">test</a>',
     );
   });

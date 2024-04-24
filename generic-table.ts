@@ -15,7 +15,7 @@ export { type PaginatedData } from './components/pagination';
 
 type SortFunction<T extends HTMLElement = HTMLElement> = (row: T) => string;
 
-const defaultSortFunction: SortFunction = (row) => row.textContent;
+const defaultSortFunction: SortFunction = (row) => row.textContent ?? '';
 
 function sortRows<T extends HTMLElement = HTMLElement>(
   rows: T[],
@@ -34,9 +34,10 @@ function sortRows<T extends HTMLElement = HTMLElement>(
   return rowsWithSortOrder.map((row) => row[1]);
 }
 
+const noRecordsMessage = 'No records found.';
+
 const defaultSettings = {
   blankRow: '<tr></tr>',
-  noRecordsMessage: 'No records found.',
 };
 
 export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableRowElement> extends GenericPage {
@@ -50,7 +51,7 @@ export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableR
   public constructor(tableSelector: string, settings: GenericTableSettings) {
     super();
 
-    this.table = document.body.querySelector(tableSelector);
+    this.table = document.body.querySelector(tableSelector)!;
     [this.tbody] = this.table.tBodies;
     this.settings = deepExtend({}, defaultSettings, settings);
   }
@@ -66,7 +67,7 @@ export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableR
   }
 
   protected createRow(item: T): U {
-    const row = elementFromString<U>(this.settings.blankRow);
+    const row = elementFromString<U>(this.settings.blankRow!);
 
     this.updateRow(row, item);
 
@@ -107,7 +108,7 @@ export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableR
       tr.classList.add('no-records');
 
       td.colSpan = 16;
-      td.textContent = this.settings.noRecordsMessage;
+      td.textContent = this.settings.noRecordsMessage ?? noRecordsMessage;
 
       tr.append(td);
       this.tbody.append(tr);
@@ -142,7 +143,7 @@ export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableR
     const ul = new Pagination(responseData.pagination).generate();
 
     document.body.querySelectorAll('.pagination').forEach((oldPagination) => {
-      oldPagination.parentNode.replaceChild(ul.cloneNode(true), oldPagination);
+      oldPagination.parentNode!.replaceChild(ul.cloneNode(true), oldPagination);
     });
   }
 }

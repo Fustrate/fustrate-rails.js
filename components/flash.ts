@@ -8,7 +8,7 @@ type FlashType = 'info' | 'success' | 'error' | 'plain';
 const fadeInSettings = { speed: 'faster' } as const;
 const fadeOutSettings = { speed: 'slow', delay: 4 } as const;
 
-function createFlashBar(message: string, options: { type: string, icon?: string }) {
+function createFlashBar(message: string, options: { type: FlashType; icon?: string }) {
   const bar = document.createElement('div');
 
   bar.classList.add('flash', options.type || 'info');
@@ -20,7 +20,7 @@ function createFlashBar(message: string, options: { type: string, icon?: string 
 }
 
 export default class Flash extends Listenable {
-  protected constructor(message: string, options: { type: FlashType, icon?: string }) {
+  protected constructor(message: string, options: { type: FlashType; icon?: string }) {
     super();
 
     const bar = createFlashBar(message, options);

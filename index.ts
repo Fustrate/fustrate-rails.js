@@ -6,7 +6,7 @@ function wrapTableElements() {
 
     wrapper.classList.add('responsive-table');
 
-    table.parentNode.insertBefore(wrapper, table);
+    table.parentNode!.insertBefore(wrapper, table);
 
     wrapper.append(table);
   });

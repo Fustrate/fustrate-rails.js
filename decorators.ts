@@ -7,7 +7,7 @@ function buildDecorationList(obj: object) {
 
   while (proto != null && level < 10) {
     Object.entries(Object.getOwnPropertyDescriptors(proto)).forEach(([name, descriptor]) => {
-      if (descriptor.value && descriptor.value.$tags) {
+      if (descriptor.value?.$tags) {
         descriptor.value.$tags.forEach((tag) => {
           if (!decorations[tag]) {
             decorations[tag] = [];

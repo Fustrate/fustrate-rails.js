@@ -3,7 +3,7 @@ import Listenable from '../listenable';
 import { animate } from '../utilities';
 
 function closeAlertBox(event: { target: HTMLElement }) {
-  const alertBox = event.target.closest<HTMLDivElement>('.alert-box');
+  const alertBox = event.target.closest<HTMLDivElement>('.alert-box')!;
 
   animate(alertBox, 'fadeOut', { speed: 'faster' }, () => {
     alertBox.remove();

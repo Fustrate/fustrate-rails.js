@@ -19,12 +19,11 @@
       "sourceMap": true,
       "strictBindCallApply": true,
       "strictFunctionTypes": true,
-      // "strictNullChecks": true,
+      "strictNullChecks": true,
       // "strictPropertyInitialization": true,
       "target": "es6",
     },
     "exclude": [
-      "**/*.spec.ts",
       "node_modules",
     ],
     "compileOnSave": false,
