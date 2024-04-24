@@ -195,9 +195,6 @@ export default abstract class Modal<T = void> extends Listenable {
     this.addEventListeners();
   }
 
-  // eslint-disable-next-line class-methods-use-this, @typescript-eslint/no-empty-function
-  protected initialize(): void {}
-
   protected reloadUIElements(): void {
     this.fields = {};
     this.buttons = {};

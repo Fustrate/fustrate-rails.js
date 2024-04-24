@@ -112,6 +112,8 @@ export default class BaseRecord extends BasicObject {
   ): Promise<InstanceType<T>> {
     const record = new this() as InstanceType<T>;
 
-    return record.update(attributes, additionalParameters).then(() => record);
+    await record.update(attributes, additionalParameters);
+
+    return record;
   }
 }
