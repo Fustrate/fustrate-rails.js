@@ -151,7 +151,7 @@ function addGlobalListeners() {
   addedGlobalListeners = true;
 }
 
-export default class Modal<T = void> extends Listenable {
+export default abstract class Modal<T = void> extends Listenable {
   protected static defaultSettings: ModalSettings;
   protected static settings: Partial<ModalSettings>;
 
