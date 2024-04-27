@@ -35,13 +35,13 @@ export function decorateMethod(tag: string): MethodDecorator {
   };
 }
 
-export function callDecoratedMethods<T = any>(obj: object, tag: string): T[] {
+export function callDecoratedMethods<T = any>(obj: object, tag: string, ...args: any[]): T[] {
   if (!(obj as any).$decoratedMethods) {
     (obj as any).$decoratedMethods = buildDecorationList(obj);
   }
 
   if ((obj as any).$decoratedMethods[tag]) {
-    return [...(obj as any).$decoratedMethods[tag]].map((name) => obj[name]());
+    return [...(obj as any).$decoratedMethods[tag]].map((name) => obj[name](...args));
   }
 
   return [];

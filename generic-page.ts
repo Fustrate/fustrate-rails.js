@@ -37,21 +37,21 @@ export default class GenericPage {
         const element = event.target.closest<HTMLElement>('[data-button], [data-field]');
 
         if (element) {
-          callDecoratedMethods(this, `$onclick-${element.dataset.button! || element.dataset.field!}`);
+          callDecoratedMethods(this, `$onclick-${element.dataset.button! || element.dataset.field!}`, event);
         }
       },
     );
 
     delegate(document, { selector: '[data-target]', exclude: '.modal [data-target]' }, 'click', (event) => {
-      callDecoratedMethods(this, `$onclick-${event.target.closest<HTMLElement>('[data-target]')!.dataset.target}`);
+      callDecoratedMethods(this, `$onclick-${event.target.closest<HTMLElement>('[data-target]')!.dataset.target}`, event);
     });
 
     delegate(document, { selector: '[data-field]', exclude: '.modal [data-field]' }, 'dblclick', (event) => {
-      callDecoratedMethods(this, `$ondoubleclick-${event.target.closest<HTMLElement>('[data-field]')!.dataset.field}`);
+      callDecoratedMethods(this, `$ondoubleclick-${event.target.closest<HTMLElement>('[data-field]')!.dataset.field}`, event);
     });
 
     delegate(document, { selector: '[data-field]', exclude: '.modal [data-field]' }, 'change', (event) => {
-      callDecoratedMethods(this, `$onchange-${event.target.closest<HTMLElement>('[data-field]')!.dataset.field}`);
+      callDecoratedMethods(this, `$onchange-${event.target.closest<HTMLElement>('[data-field]')!.dataset.field}`, event);
     });
   }
 
