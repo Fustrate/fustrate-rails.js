@@ -110,6 +110,7 @@ export function toggleAttribute(field: HTMLElement, attribute: ToggleableAttribu
 // Access tag helpers via `tag.div({ ... })`
 export const tag = {
   a: (options?: ContentTagOptions) => contentElement('a', options),
+  address: (options?: ContentTagOptions) => contentElement('address', options),
   br: () => selfClosingElement('br'),
   button: (options?: ContentTagOptions) => contentElement('button', options),
   canvas: (options?: ContentTagOptions) => contentElement('canvas', options),
