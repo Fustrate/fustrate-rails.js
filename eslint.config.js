@@ -3,14 +3,21 @@ import path from 'node:path';
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 
-import stylistic from '@stylistic/eslint-plugin';
+import jest from 'eslint-plugin-jest';
 import lodash from 'eslint-plugin-lodash';
+import stylistic from '@stylistic/eslint-plugin';
 import unicorn from 'eslint-plugin-unicorn';
 
 export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
+  unicorn.configs['flat/recommended'],
+  {
+    // eslint-plugin-lodash doesn't have a flat config option (yet?)
+    plugins: { lodash },
+    rules: lodash.configs.recommended.rules,
+  },
   stylistic.configs.customize({
     indent: 2,
     semi: true,
@@ -20,7 +27,7 @@ export default tseslint.config(
     commaDangle: 'always-multiline',
   }),
   {
-    plugins: { lodash, stylistic, unicorn },
+    plugins: { stylistic },
     languageOptions: {
       parserOptions: {
         project: './tsconfig.json',
@@ -90,28 +97,13 @@ export default tseslint.config(
       'max-len': ['error', 120, 2, { ignoreStrings: true }],
     },
   },
-  // {
-  //   files: ['**/*.js'],
-  //   rules: {
-  //     '@typescript-eslint/no-var-requires': 'off',
-  //     'unicorn/prefer-module': 'off',
-  //     'unicorn/prefer-top-level-await': 'off',
-  //   },
-  // },
-  // {
-  //   files: ['**/*.spec.ts'],
-  //   plugins: [jest],
-  //   rules: {
-  //     'jest/expect-expect': 'warn',
-  //     'jest/no-disabled-tests': 'warn',
-  //     'jest/no-focused-tests': 'error',
-  //     'jest/no-identical-title': 'error',
-  //     'jest/no-test-prefixes': 'warn',
-  //     'jest/prefer-to-be': 'warn',
-  //     'jest/prefer-to-contain': 'warn',
-  //     'jest/prefer-to-have-length': 'warn',
-  //     'jest/valid-expect': 'error',
-  //     'unicorn/no-useless-undefined': 'off',
-  //   },
-  // },
+  {
+    files: ['**/*.spec.ts'],
+    extends: [jest.configs['flat/recommended']],
+    rules: {
+      // Disabled tests have
+      'jest/no-disabled-tests': 'off',
+      '@typescript-eslint/no-empty-function': 'off',
+    },
+  },
 );
