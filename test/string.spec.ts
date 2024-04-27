@@ -22,7 +22,7 @@ describe('#isBlank()', () => {
     expect(isBlank('')).toBe(true);
     expect(isBlank(' \t\n ')).toBe(true);
     expect(isBlank(null)).toBe(true);
-    expect(isBlank(undefined)).toBe(true);
+    expect(isBlank(void 0)).toBe(true);
 
     expect(isBlank('a')).toBe(false);
     expect(isBlank(' \ta\n ')).toBe(false);
@@ -33,7 +33,7 @@ describe('#isPresent()', () => {
   it('dasherizes a string', () => {
     expect(isPresent('')).toBe(false);
     expect(isPresent(' \t\n ')).toBe(false);
-    expect(isPresent(undefined)).toBe(false);
+    expect(isPresent(void 0)).toBe(false);
 
     expect(isPresent('a')).toBe(true);
     expect(isPresent(' \ta\n ')).toBe(true);
@@ -73,7 +73,7 @@ describe('#presence()', () => {
 
     expect(presence('')).toBeUndefined();
     expect(presence(null)).toBeUndefined();
-    expect(presence(undefined)).toBeUndefined();
+    expect(presence(void 0)).toBeUndefined();
   });
 });
 

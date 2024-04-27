@@ -30,7 +30,7 @@ describe('elementFromString', () => {
 describe('escapeMultilineHTML', () => {
   it('escapes null and undefined', () => {
     expect(escapeMultilineHTML(null)).toBe('');
-    expect(escapeMultilineHTML(undefined)).toBe('');
+    expect(escapeMultilineHTML(void 0)).toBe('');
   });
 
   it('turns newlines into br elements', () => {

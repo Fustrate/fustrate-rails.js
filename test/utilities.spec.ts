@@ -96,7 +96,7 @@ describe('label', () => {
 describe('linkTo', () => {
   it('creates a link to undefined/null', () => {
     expect(linkTo('test', null)).toBe('<a href="#">test</a>');
-    expect(linkTo('test', undefined)).toBe('<a href="#">test</a>');
+    expect(linkTo('test', void 0)).toBe('<a href="#">test</a>');
   });
 
   it('creates a link to a string href', () => {

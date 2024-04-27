@@ -194,7 +194,7 @@ export default abstract class Modal<T = void> extends Listenable {
 
     const icon = this.setting('icon');
 
-    this.setTitle(this.setting('title') ?? '', icon != null ? { icon } : undefined);
+    this.setTitle(this.setting('title') ?? '', icon == null ? undefined : { icon });
     this.setContent(this.setting('template') ?? '', false);
     this.setButtons(this.setting('buttons') ?? [], false);
     this.reloadUIElements();
