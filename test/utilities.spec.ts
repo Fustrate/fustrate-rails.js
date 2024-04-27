@@ -128,7 +128,7 @@ describe('toHumanDate', () => {
     };
 
     expect(toHumanDate(date)).toBe('7/1/17');
-    expect(date.toFormat).toBeCalledWith('M/d/yy');
+    expect(date.toFormat).toHaveBeenCalledWith('M/d/yy');
   });
 
   it('formats a date in the current year', () => {
@@ -138,7 +138,7 @@ describe('toHumanDate', () => {
     };
 
     expect(toHumanDate(date)).toBe('7/1');
-    expect(date.toFormat).toBeCalledWith('M/d');
+    expect(date.toFormat).toHaveBeenCalledWith('M/d');
   });
 
   it('formats a date in the future', () => {
@@ -148,7 +148,7 @@ describe('toHumanDate', () => {
     };
 
     expect(toHumanDate(date)).toBe('7/1/19');
-    expect(date.toFormat).toBeCalledWith('M/d/yy');
+    expect(date.toFormat).toHaveBeenCalledWith('M/d/yy');
   });
 
   it('formats a date with the time', () => {
@@ -158,6 +158,6 @@ describe('toHumanDate', () => {
     };
 
     expect(toHumanDate(date, true)).toBe('7/1/19 8:30 AM');
-    expect(date.toFormat).toBeCalledWith('M/d/yy t');
+    expect(date.toFormat).toHaveBeenCalledWith('M/d/yy t');
   });
 });

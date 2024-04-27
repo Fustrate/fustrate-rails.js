@@ -2,14 +2,18 @@ import { describe, expect, it } from '@jest/globals';
 
 import {
   hide,
-  // isVisible,
+  isVisible,
   show,
   toggle,
 } from '../show-hide';
 
-// describe('isVisible', () => {
-//   it('', () => {});
-// });
+describe('isVisible', () => {
+  it('detects invisible elements', () => {
+    const div = document.createElement('div');
+
+    expect(isVisible(div)).toBe(false);
+  });
+});
 
 describe('toggle', () => {
   it('toggles a NodeList of elements', () => {

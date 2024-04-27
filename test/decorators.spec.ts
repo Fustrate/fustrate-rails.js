@@ -16,11 +16,11 @@ class BaseClass {
   }
 
   public callDecoratedMethodsWithOneArg(arg: number) {
-    return callDecoratedMethods(this, '$oneArg', arg)
+    return callDecoratedMethods(this, '$oneArg', arg);
   }
 
   public callDecoratedMethodsWithManyArgs(one: number, two: string, three: Record<string, number>) {
-    return callDecoratedMethods(this, '$manyArgs', one, two, three)
+    return callDecoratedMethods(this, '$manyArgs', one, two, three);
   }
 
   public callDynamicDecorator(name: string, ...args: any[]) {
