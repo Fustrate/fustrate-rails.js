@@ -1,6 +1,8 @@
+import { callDecoratedMethods, decorateMethod } from './decorators';
+import Listenable from './listenable';
 import { deepExtend } from './object';
 
-import Listenable from './listenable';
+export const extractData = decorateMethod('$basicObjectExtractData');
 
 export default class BasicObject extends Listenable {
   public isBasicObject = true;
@@ -56,15 +58,10 @@ export default class BasicObject extends Listenable {
       this[key] = data[key];
     }, this);
 
-    this.extractObjectsFromData(data);
+    callDecoratedMethods(this, '$basicObjectExtractData');
 
     this.dispatchEvent(new CustomEvent('extracted'));
 
     return data;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public extractObjectsFromData(data: Record<string, any>): void {
-    // This is a hook.
   }
 }
