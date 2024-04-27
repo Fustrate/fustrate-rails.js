@@ -1,5 +1,5 @@
 // A few select tags that we're most likely to show or hide
-const defaultDisplayMap: { [s: string]: string } = {
+const defaultDisplayMap: Record<string, string> = {
   A: 'inline',
   BUTTON: 'inline',
   DIV: 'block',

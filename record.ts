@@ -25,6 +25,7 @@ export default class BaseRecord extends BasicObject {
     return (this.constructor as typeof BaseRecord & { classname: string }).classname;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public path(options?: { format?: string }): string {
     throw new Error('No path implemented.');
   }
