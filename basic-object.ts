@@ -58,7 +58,8 @@ export default class BasicObject extends Listenable {
       this[key] = data[key];
     }, this);
 
-    callDecoratedMethods(this, '$basicObjectExtractData');
+    // Any more advanced extraction can be done in separate methods
+    callDecoratedMethods(this, '$basicObjectExtractData', data);
 
     this.dispatchEvent(new CustomEvent('extracted'));
 
