@@ -1,53 +1,9 @@
-// A few select tags that we're most likely to show or hide
-const defaultDisplayMap: Record<string, string> = {
-  A: 'inline',
-  BUTTON: 'inline',
-  DIV: 'block',
-  FORM: 'block',
-  IMG: 'inline',
-  INPUT: 'inline',
-  LABEL: 'inline',
-  P: 'block',
-  PRE: 'block',
-  SECTION: 'block',
-  SELECT: 'inline',
-  SPAN: 'inline',
-  TABLE: 'block',
-  TEXTAREA: 'inline',
-};
-
-function getDefaultDisplay(elem: HTMLElement) {
-  const { nodeName } = elem;
-  let display = defaultDisplayMap[nodeName];
-
-  if (display) {
-    return display;
-  }
-
-  const { ownerDocument } = elem;
-
-  const temp = ownerDocument.createElement(nodeName);
-  ownerDocument.body.append(temp);
-
-  ({ display } = temp.style);
-
-  temp.remove();
-
-  if (display === 'none') {
-    display = 'block';
-  }
-
-  defaultDisplayMap[nodeName] = display;
-
-  return display;
-}
-
 function toggleElement(element: HTMLElement, makeVisible?: boolean) {
   if (makeVisible == null) {
     makeVisible = element.style.display === 'none';
   }
 
-  element.style.display = makeVisible ? getDefaultDisplay(element) : 'none';
+  element.style.display = makeVisible ? '' : 'none';
 
   if (makeVisible) {
     element.classList.remove('js-hide');
