@@ -30,8 +30,8 @@ export type ModalContent = string |
 
 export interface ModalSettings {
   buttons: ModalButton[];
-  closeOnBackgroundClick: boolean;
-  distanceFromTop: number;
+  closeOnBackgroundClick?: boolean;
+  distanceFromTop?: number;
   icon: string;
   size: string;
   template: ModalContent;
