@@ -1,48 +1,17 @@
-// Travel the prototype chain and get up to 10 levels of property descriptors.
-function buildDecorationList(obj: object) {
-  const decorations: Record<string, string[]> = {};
+import 'reflect-metadata';
 
-  let proto = Object.getPrototypeOf(obj);
-  let level = 0;
+type DecoratorName = string | symbol;
 
-  while (proto != null && level < 10) {
-    Object.entries(Object.getOwnPropertyDescriptors(proto)).forEach(([name, descriptor]) => {
-      if (descriptor.value?.$tags) {
-        descriptor.value.$tags.forEach((tag: string) => {
-          if (!(tag in decorations)) {
-            decorations[tag] = [];
-          }
-
-          decorations[tag].push(name);
-        });
-      }
-    });
-
-    proto = Object.getPrototypeOf(proto);
-    level += 1;
-  }
-
-  return decorations;
-}
-
-export function decorateMethod(tag: string): MethodDecorator {
-  return (target, key, descriptor) => {
-    if (!(descriptor.value as any).$tags) {
-      (descriptor.value as any).$tags = new Set();
-    }
-
-    (descriptor.value as any).$tags.add(tag);
+export function decorateMethod(name: DecoratorName): MethodDecorator {
+  return (target, key) => {
+    Reflect.defineMetadata(name, [...(Reflect.getMetadata(name, target) ?? []), key], target);
   };
 }
 
-export function callDecoratedMethods<T = any>(obj: object, tag: string, ...args: any[]): T[] {
-  if (!(obj as any).$decoratedMethods) {
-    (obj as any).$decoratedMethods = buildDecorationList(obj);
-  }
+export function callDecoratedMethods<T = any>(obj: object, name: DecoratorName, ...args: any[]): T[] {
+  const taggedMethods: (string | symbol)[] = Reflect.getMetadata(name, Object.getPrototypeOf(obj));
 
-  if ((obj as any).$decoratedMethods[tag]) {
-    return [...(obj as any).$decoratedMethods[tag]].map((name) => obj[name](...args));
-  }
-
-  return [];
+  return taggedMethods == null
+    ? []
+    : [...taggedMethods].map((name) => obj[name](...args));
 }

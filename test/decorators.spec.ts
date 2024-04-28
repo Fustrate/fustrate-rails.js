@@ -2,9 +2,11 @@ import { describe, expect, it } from '@jest/globals';
 
 import { decorateMethod, callDecoratedMethods } from '../decorators';
 
+const oneArgSymbol = Symbol('$oneArg');
+
 const simple = decorateMethod('$simple');
 
-const oneArg = decorateMethod('$oneArg');
+const oneArg = decorateMethod(oneArgSymbol);
 
 const manyArgs = decorateMethod('$manyArgs');
 
@@ -16,7 +18,7 @@ class BaseClass {
   }
 
   public callDecoratedMethodsWithOneArg(arg: number) {
-    return callDecoratedMethods(this, '$oneArg', arg);
+    return callDecoratedMethods(this, oneArgSymbol, arg);
   }
 
   public callDecoratedMethodsWithManyArgs(one: number, two: string, three: Record<string, number>) {
@@ -68,6 +70,9 @@ class Subclass extends BaseClass {
 describe('decorateMethod', () => {
   it('joins words and stuff', () => {
     const record = new Subclass();
+
+    expect(Reflect.getMetadata(oneArgSymbol, Object.getPrototypeOf(record)))
+      .toStrictEqual(['oneArgMethod', 'anotherOneArgMethod']);
 
     expect(record.callDecoratedMethods()).toStrictEqual([1, 11, 111]);
 
