@@ -1,11 +1,11 @@
 import { delegate, fire } from '../events';
 import Listenable from '../listenable';
 
-function toggleDisclosure(event: UIEvent & { target: HTMLElement }) {
+function toggleDisclosure(event: UIEvent & { target: HTMLElement }): false {
   const disclosure = event.target.closest('.disclosure');
 
   if (!disclosure) {
-    return;
+    return false;
   }
 
   const isOpen = disclosure.classList.contains('open');
