@@ -7,6 +7,8 @@ interface UIElements {
   [s: string]: HTMLElement | UIElements | UIElements[];
 }
 
+const $refresh = Symbol('$refresh');
+
 export const button = (buttonName: string) => decorateMethod(`$onclick-${buttonName}`);
 
 export const onChange = (fieldName: string) => decorateMethod(`$onchange-${fieldName}`);
@@ -15,7 +17,7 @@ export const onDoubleClick = (buttonName: string) => decorateMethod(`$ondoublecl
 
 export const onClick = (name: string) => decorateMethod(`$onclick-${name}`);
 
-export const refresh = decorateMethod('$refresh');
+export const refresh = decorateMethod($refresh);
 
 export default class GenericPage {
   protected fields: UIElements;
@@ -56,7 +58,7 @@ export default class GenericPage {
   }
 
   public refresh(): void {
-    callDecoratedMethods(this, '$refresh');
+    callDecoratedMethods(this, $refresh);
   }
 
   protected reloadUIElements(): void {

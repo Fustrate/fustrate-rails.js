@@ -2,7 +2,9 @@ import { callDecoratedMethods, decorateMethod } from './decorators';
 import Listenable from './listenable';
 import { deepExtend } from './object';
 
-export const extractData = decorateMethod('$basicObjectExtractData');
+const $basicObjectExtractData = Symbol('$basicObjectExtractData');
+
+export const extractData = decorateMethod($basicObjectExtractData);
 
 export default class BasicObject extends Listenable {
   public isBasicObject = true;
@@ -59,7 +61,7 @@ export default class BasicObject extends Listenable {
     });
 
     // Any more advanced extraction can be done in separate methods
-    callDecoratedMethods(this, '$basicObjectExtractData', data);
+    callDecoratedMethods(this, $basicObjectExtractData, data);
 
     this.dispatchEvent(new CustomEvent('extracted'));
 
