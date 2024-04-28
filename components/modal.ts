@@ -29,14 +29,14 @@ export type ModalContent = string |
   DocumentFragment;
 
 export interface ModalSettings {
-  buttons: ModalButton[];
+  buttons?: ModalButton[];
   closeOnBackgroundClick?: boolean;
   distanceFromTop?: number;
-  icon: string;
-  size: string;
-  template: ModalContent;
-  title: string;
-  type: string;
+  icon?: string;
+  size?: string;
+  template?: ModalContent;
+  title?: string;
+  type?: string;
 }
 
 export const defaultSettings: Partial<ModalSettings> = {
