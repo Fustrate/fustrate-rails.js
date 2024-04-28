@@ -46,6 +46,17 @@ export const defaultSettings: Partial<ModalSettings> = {
   size: 'tiny',
 };
 
+export function settings(settings: Partial<ModalSettings>): ClassDecorator {
+  return (target) => {
+    Object.defineProperty(target, 'settings', {
+      configurable: false,
+      enumerable: true,
+      value: settings,
+      writable: false,
+    });
+  };
+}
+
 const template = `
   <div class="modal" role="dialog" aria-modal="true">
     <div class="modal-title">
