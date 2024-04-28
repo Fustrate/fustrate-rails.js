@@ -13,6 +13,14 @@ describe('isVisible', () => {
 
     expect(isVisible(div)).toBe(false);
   });
+
+  it('detects visible elements', () => {
+    const div = document.createElement('div');
+
+    document.body.append(div);
+
+    expect(isVisible(div)).toBe(true);
+  });
 });
 
 describe('toggle', () => {

@@ -11,9 +11,8 @@ function toggleElement(element: HTMLElement, makeVisible?: boolean) {
 }
 
 export function isVisible(elem: HTMLElement): boolean {
-  return !!(
-    elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length > 0
-  );
+  return elem.parentElement != null
+    && (elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length > 0) != null;
 }
 
 export function toggle(element: NodeList | HTMLElement, showOrHide?: boolean): void {
