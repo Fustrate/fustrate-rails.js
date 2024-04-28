@@ -53,7 +53,7 @@ describe('show', () => {
 
     show(element);
 
-    expect(element.style.display).toBe('block');
+    expect(element.style.display).toBe('');
   });
 });
 
