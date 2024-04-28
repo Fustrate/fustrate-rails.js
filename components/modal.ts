@@ -39,7 +39,7 @@ export interface ModalSettings {
   type?: string;
 }
 
-export const defaultSettings: Partial<ModalSettings> = {
+const defaultSettings: Partial<ModalSettings> = {
   buttons: [],
   closeOnBackgroundClick: true,
   distanceFromTop: 25,
@@ -51,7 +51,7 @@ export function settings(settings: Partial<ModalSettings>): ClassDecorator {
     Object.defineProperty(target, 'settings', {
       configurable: false,
       enumerable: true,
-      value: settings,
+      value: { ...defaultSettings, ...settings },
       writable: false,
     });
   };
@@ -166,8 +166,7 @@ function addGlobalListeners() {
 export default abstract class Modal<T = void> extends Listenable {
   #locked: boolean;
 
-  protected static defaultSettings: ModalSettings;
-  protected static settings: Partial<ModalSettings>;
+  protected static settings: Partial<ModalSettings> = defaultSettings;
 
   protected buttons: UIElements;
   protected fields: UIElements;
@@ -184,7 +183,6 @@ export default abstract class Modal<T = void> extends Listenable {
     super();
 
     this.settings = {
-      ...(Object.getPrototypeOf(this).constructor as typeof Modal).defaultSettings,
       ...(Object.getPrototypeOf(this).constructor as typeof Modal).settings,
     };
 
