@@ -56,7 +56,7 @@ export default class BasicObject extends Listenable {
 
     Object.getOwnPropertyNames(data).forEach((key) => {
       this[key] = data[key];
-    }, this);
+    });
 
     // Any more advanced extraction can be done in separate methods
     callDecoratedMethods(this, '$basicObjectExtractData', data);
