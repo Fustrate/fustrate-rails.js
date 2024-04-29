@@ -22,7 +22,6 @@ export const refresh = decorateMethod($refresh);
 export default class GenericPage {
   protected fields: UIElements;
   protected buttons: UIElements;
-  protected allMethodNamesList: string[];
 
   public async initialize(): Promise<any> {
     this.reloadUIElements();
