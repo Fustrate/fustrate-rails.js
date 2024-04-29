@@ -7,8 +7,8 @@ import { type PaginatedData } from './components/pagination';
 
 export interface GenericTableSettings {
   [s: string]: any;
-  blankRow?: string;
-  noRecordsMessage?: string;
+  blankRow: string;
+  noRecordsMessage: string;
 }
 
 export { type PaginatedData } from './components/pagination';
@@ -34,19 +34,30 @@ function sortRows<T extends HTMLElement = HTMLElement>(
   return rowsWithSortOrder.map((row) => row[1]);
 }
 
+const blankRow = '<tr></tr>';
+
 const noRecordsMessage = 'No records found.';
 
-const defaultSettings = {
-  blankRow: '<tr></tr>',
+const defaultSettings: Partial<GenericTableSettings> = {
+  blankRow,
+  noRecordsMessage,
 };
+
+export function settings(settings: Partial<GenericTableSettings>): ClassDecorator {
+  return (target) => {
+    Object.defineProperty(target, 'settings', {
+      configurable: false,
+      enumerable: true,
+      value: { ...defaultSettings, ...settings },
+      writable: false,
+    });
+  };
+}
 
 export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableRowElement> extends GenericPage {
   protected table: HTMLTableElement;
   protected tbody: HTMLTableSectionElement;
-  protected settings: GenericTableSettings;
-
-  protected static blankRow: string;
-  protected static noRecordsMessage: string;
+  protected settings: Partial<GenericTableSettings> = defaultSettings;
 
   public constructor(tableSelector: string, settings: GenericTableSettings) {
     super();
@@ -67,7 +78,7 @@ export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableR
   }
 
   protected createRow(item: T): U {
-    const row = elementFromString<U>(this.settings.blankRow!);
+    const row = elementFromString<U>(this.settings.blankRow ?? blankRow);
 
     this.updateRow(row, item);
 
