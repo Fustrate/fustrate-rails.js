@@ -7,8 +7,9 @@ import { type PaginatedData } from './components/pagination';
 
 export interface GenericTableSettings {
   [s: string]: any;
-  blankRow: string;
-  noRecordsMessage: string;
+  blankRow?: string;
+  noRecordsMessage?: string;
+  selector?: string;
 }
 
 export { type PaginatedData } from './components/pagination';
@@ -34,13 +35,10 @@ function sortRows<T extends HTMLElement = HTMLElement>(
   return rowsWithSortOrder.map((row) => row[1]);
 }
 
-const blankRow = '<tr></tr>';
-
-const noRecordsMessage = 'No records found.';
-
-const defaultSettings: Partial<GenericTableSettings> = {
-  blankRow,
-  noRecordsMessage,
+const defaultSettings: GenericTableSettings = {
+  blankRow: '<tr></tr>',
+  noRecordsMessage: 'No records found.',
+  selector: 'table.listing',
 };
 
 export function settings(settings: Partial<GenericTableSettings>): ClassDecorator {
@@ -48,28 +46,38 @@ export function settings(settings: Partial<GenericTableSettings>): ClassDecorato
     Object.defineProperty(target, 'settings', {
       configurable: false,
       enumerable: true,
-      value: { ...defaultSettings, ...settings },
+      value: deepExtend({}, defaultSettings, settings),
       writable: false,
     });
   };
 }
 
 export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableRowElement> extends GenericPage {
+  protected static settings: Partial<GenericTableSettings> = defaultSettings;
+
   protected table: HTMLTableElement;
   protected tbody: HTMLTableSectionElement;
-  protected settings: Partial<GenericTableSettings> = defaultSettings;
 
-  public constructor(tableSelector: string, settings: GenericTableSettings) {
+  protected settings: GenericTableSettings;
+
+  public constructor() {
     super();
 
-    this.table = document.body.querySelector(tableSelector)!;
+    this.settings = {
+      ...(Object.getPrototypeOf(this).constructor as typeof GenericTable).settings,
+    };
+
+    this.table = document.body.querySelector(this.setting('selector')!)!;
     [this.tbody] = this.table.tBodies;
-    this.settings = deepExtend({}, defaultSettings, settings);
   }
 
   protected abstract reloadTable(): Promise<void>;
 
   protected abstract updateRow(row: U, item: T): void;
+
+  public setting<K extends keyof GenericTableSettings>(key: K): GenericTableSettings[K] {
+    return this.settings[key] ?? defaultSettings[key];
+  }
 
   public override async initialize(): Promise<any> {
     await super.initialize();
@@ -78,7 +86,7 @@ export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableR
   }
 
   protected createRow(item: T): U {
-    const row = elementFromString<U>(this.settings.blankRow ?? blankRow);
+    const row = elementFromString<U>(this.setting('blankRow')!);
 
     this.updateRow(row, item);
 
@@ -119,7 +127,7 @@ export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableR
       tr.classList.add('no-records');
 
       td.colSpan = 16;
-      td.textContent = this.settings.noRecordsMessage ?? noRecordsMessage;
+      td.textContent = this.setting('noRecordsMessage')!;
 
       tr.append(td);
       this.tbody.append(tr);
