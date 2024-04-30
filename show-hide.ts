@@ -6,7 +6,11 @@ function toggleElement(element: HTMLElement, makeVisible?: boolean) {
   element.style.display = makeVisible ? '' : 'none';
 
   if (makeVisible) {
-    element.classList.remove('js-hide', 'action');
+    element.classList.remove('js-hide');
+    element.classList.add('js-show');
+  } else {
+    element.classList.remove('js-show');
+    element.classList.add('js-hide');
   }
 }
 

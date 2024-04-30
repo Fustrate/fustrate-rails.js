@@ -52,7 +52,7 @@ describe('show', () => {
 
     show(element);
 
-    expect(element.classList).toHaveLength(0);
+    expect(element.classList).toEqual({ 0: 'js-show' });
   });
 
   it('resets the css display property', () => {
