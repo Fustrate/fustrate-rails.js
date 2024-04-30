@@ -4,14 +4,14 @@ function toggleElement(element: HTMLElement, makeVisible?: boolean) {
   }
 
   element.style.display = makeVisible ? '' : 'none';
+  element.classList.toggle('js-show', makeVisible);
+  element.classList.toggle('js-hide', !makeVisible);
 
-  if (makeVisible) {
-    element.classList.remove('js-hide');
-    element.classList.add('js-show');
-  } else {
-    element.classList.remove('js-show');
-    element.classList.add('js-hide');
-  }
+  // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-hidden
+  // aria-hidden="true" should not be added when:
+  // - The HTML hidden attribute is present
+  // - The element or the element's ancestor is hidden with display: none
+  // - The element or the element's ancestor is hidden with visibility: hidden
 }
 
 export function isVisible(elem: HTMLElement): boolean {
