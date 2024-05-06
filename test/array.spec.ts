@@ -1,5 +1,3 @@
-import { describe, expect, it } from '@jest/globals';
-
 import { toSentence } from '../array';
 
 describe('toSentence', () => {

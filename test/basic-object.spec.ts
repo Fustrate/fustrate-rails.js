@@ -1,7 +1,5 @@
 /* eslint-disable max-classes-per-file */
 
-import { describe, expect, it } from '@jest/globals';
-
 import BasicObject from '../basic-object';
 
 class Event extends BasicObject {

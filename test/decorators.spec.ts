@@ -1,5 +1,3 @@
-import { describe, expect, it } from '@jest/globals';
-
 import { decorateMethod, callDecoratedMethods } from '../decorators';
 
 const oneArgSymbol = Symbol('$oneArg');

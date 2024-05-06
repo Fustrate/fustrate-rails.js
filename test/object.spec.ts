@@ -1,5 +1,3 @@
-import { describe, expect, it } from '@jest/globals';
-
 import { deepExtend, isPlainObject } from '../object';
 import BasicObject from '../basic-object';
 

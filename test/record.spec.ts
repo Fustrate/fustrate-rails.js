@@ -1,5 +1,3 @@
-import { describe, expect, it } from '@jest/globals';
-
 import Record from '../record';
 
 class BasicRecord extends Record {
