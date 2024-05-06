@@ -14,9 +14,18 @@ function toggleElement(element: HTMLElement, makeVisible?: boolean) {
   // - The element or the element's ancestor is hidden with visibility: hidden
 }
 
-export function isVisible(elem: HTMLElement): boolean {
-  return elem.parentElement != null
-    && (elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length > 0) != null;
+export function isVisible(element: HTMLElement): boolean {
+  if (element.classList.contains('js-hide') && !element.classList.contains('js-show')) {
+    return false;
+  }
+
+  // Safari < 17.4 doesn't have this function
+  if (HTMLElement.prototype.checkVisibility != null) {
+    return element.checkVisibility();
+  }
+
+  return element.parentElement != null
+    && (element.offsetWidth || element.offsetHeight || element.getClientRects().length > 0) != null;
 }
 
 export function toggle(element: NodeList | HTMLElement, showOrHide?: boolean): void {
