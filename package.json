@@ -1,6 +1,6 @@
 {
   "name": "@fustrate/rails",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A frontend framework built for my personal projects because reinventing the wheel is obviously worth my time.",
   "license": "UNLICENSED",
   "type": "module",
