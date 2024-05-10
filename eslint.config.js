@@ -10,7 +10,7 @@ import unicorn from 'eslint-plugin-unicorn';
 
 export default tseslint.config(
   eslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
+  ...tseslint.configs.strictTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
   unicorn.configs['flat/recommended'],
   {
@@ -95,6 +95,10 @@ export default tseslint.config(
 
       // Ignore class definition lines that are too long
       'max-len': ['error', 120, 2, { ignoreStrings: true }],
+
+      '@typescript-eslint/restrict-template-expressions': ['error', {
+        allowNumber: true,
+      }],
     },
   },
   {

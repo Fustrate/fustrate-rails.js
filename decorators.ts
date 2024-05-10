@@ -9,9 +9,7 @@ export function decorateMethod(name: DecoratorName): MethodDecorator {
 }
 
 export function callDecoratedMethods<T = any>(obj: object, name: DecoratorName, ...args: any[]): T[] {
-  const taggedMethods: (string | symbol)[] = Reflect.getMetadata(name, Object.getPrototypeOf(obj));
+  const taggedMethods: (string | symbol)[] = Reflect.getMetadata(name, Object.getPrototypeOf(obj)) ?? [];
 
-  return taggedMethods == null
-    ? []
-    : [...taggedMethods].map((name) => obj[name](...args));
+  return taggedMethods.map((name) => obj[name](...args));
 }

@@ -11,8 +11,8 @@ const fadeOutSettings = { speed: 'slow', delay: 4 } as const;
 function createFlashBar(message: string, options: { type: FlashType; icon?: string }) {
   const bar = document.createElement('div');
 
-  bar.classList.add('flash', options.type || 'info');
-  bar.innerHTML = options?.icon ? `${createIcon(options.icon)} ${message}` : message;
+  bar.classList.add('flash', options.type);
+  bar.innerHTML = options.icon ? `${createIcon(options.icon)} ${message}` : message;
 
   document.querySelector('#flashes')?.prepend(bar);
 

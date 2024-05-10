@@ -38,21 +38,33 @@ export default class GenericPage {
         const element = event.target.closest<HTMLElement>('[data-button], [data-field]');
 
         if (element) {
-          callDecoratedMethods(this, `$onclick-${element.dataset.button! || element.dataset.field!}`, event);
+          callDecoratedMethods(this, `$onclick-${element.dataset.button ?? element.dataset.field}`, event);
         }
       },
     );
 
     delegate(document, { selector: '[data-target]', exclude: '.modal [data-target]' }, 'click', (event) => {
-      callDecoratedMethods(this, `$onclick-${event.target.closest<HTMLElement>('[data-target]')!.dataset.target}`, event);
+      const element = event.target.closest<HTMLElement>('[data-target]');
+
+      if (element) {
+        callDecoratedMethods(this, `$onclick-${element.dataset.target}`, event);
+      }
     });
 
     delegate(document, { selector: '[data-field]', exclude: '.modal [data-field]' }, 'dblclick', (event) => {
-      callDecoratedMethods(this, `$ondoubleclick-${event.target.closest<HTMLElement>('[data-field]')!.dataset.field}`, event);
+      const element = event.target.closest<HTMLElement>('[data-field]');
+
+      if (element) {
+        callDecoratedMethods(this, `$ondoubleclick-${element.dataset.field}`, event);
+      }
     });
 
     delegate(document, { selector: '[data-field]', exclude: '.modal [data-field]' }, 'change', (event) => {
-      callDecoratedMethods(this, `$onchange-${event.target.closest<HTMLElement>('[data-field]')!.dataset.field}`, event);
+      const element = event.target.closest<HTMLElement>('[data-field]');
+
+      if (element) {
+        callDecoratedMethods(this, `$onchange-${element.dataset.field}`, event);
+      }
     });
   }
 
@@ -67,13 +79,17 @@ export default class GenericPage {
     [...document.body.querySelectorAll<HTMLElement>('[data-field]')]
       .filter((element) => !element.matches('.modal [data-field]'))
       .forEach((element) => {
-        set(this.fields, element.dataset.field!, element);
+        if (element.dataset.field) {
+          set(this.fields, element.dataset.field, element);
+        }
       });
 
     [...document.body.querySelectorAll<HTMLElement>('[data-button]')]
       .filter((element) => !element.matches('.modal [data-button]'))
       .forEach((element) => {
-        set(this.buttons, element.dataset.button!, element);
+        if (element.dataset.button) {
+          set(this.buttons, element.dataset.button, element);
+        }
       });
   }
 }

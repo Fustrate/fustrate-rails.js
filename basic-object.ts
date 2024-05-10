@@ -51,8 +51,8 @@ export default class BasicObject extends Listenable {
   }
 
   // Simple extractor to assign root keys as properties in the current object.
-  public extractFromData(data: Record<string, any>): Record<string, any> {
-    if (!data) {
+  public extractFromData(data?: Record<string, any>): Record<string, any> {
+    if (data == null) {
       return {};
     }
 

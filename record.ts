@@ -1,7 +1,7 @@
 import type { AxiosResponse } from 'axios';
 
 import BasicObject from './basic-object';
-import FormDataBuilder from './form-data-builder';
+import formDataBuilder from './form-data-builder';
 import ajax from './ajax';
 import { fire } from './events';
 
@@ -11,7 +11,7 @@ export type ParamValue = string | number | boolean | null | undefined | Blob | P
 export type Parameters = Record<string, ParamValue>;
 
 // Additional parameters are not recursively processed like the record parameters are.
-export type AdditionalParameters = Record<string, string | Blob | number>;
+export type AdditionalParameters = Record<string, string | Blob | number | null>;
 
 export default class BaseRecord extends BasicObject {
   public static classname: string;
@@ -41,7 +41,7 @@ export default class BaseRecord extends BasicObject {
     this.isLoaded = false;
   }
 
-  public async reload(options?: { force?: boolean }): Promise<AxiosResponse<any> | void> {
+  public async reload(options?: { force?: boolean }): Promise<AxiosResponse | undefined> {
     if (this.isLoaded && !options?.force) {
       return;
     }
@@ -60,7 +60,7 @@ export default class BaseRecord extends BasicObject {
   public async update(
     attributes: Parameters,
     additionalParameters?: AdditionalParameters,
-  ): Promise<AxiosResponse<any>> {
+  ): Promise<AxiosResponse> {
     let url: string;
 
     if (this.id) {
@@ -74,7 +74,7 @@ export default class BaseRecord extends BasicObject {
     const paramKey = (this.constructor as typeof BaseRecord).paramKey
       || this.classname.replace(/::/g, '').replace(/^[A-Z]/, (match) => match.toLowerCase());
 
-    const data = FormDataBuilder.build(attributes, paramKey);
+    const data = formDataBuilder(attributes, paramKey);
 
     if (additionalParameters) {
       Object.entries(additionalParameters).forEach(([key, value]) => {
@@ -102,7 +102,7 @@ export default class BaseRecord extends BasicObject {
     });
   }
 
-  public async delete(params?: Parameters): Promise<AxiosResponse<any>> {
+  public async delete(params?: Parameters): Promise<AxiosResponse> {
     return ajax.delete(this.path({ format: 'json' }), { params });
   }
 

@@ -9,8 +9,8 @@ export function isPlainObject(object: any): boolean {
   return !object.isBasicObject && !object.isLuxonDateTime;
 }
 
-export function deepExtend(out: object, ...rest: object[]): object {
-  out = out || {};
+export function deepExtend(out: object | null, ...rest: object[]): object {
+  out = out ?? {};
 
   rest
     .filter(Boolean)

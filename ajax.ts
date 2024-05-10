@@ -47,7 +47,7 @@ const instance = axios.create({
   responseType: 'json',
 });
 
-instance.interceptors.request.use((config) => config, (error) => Promise.reject(error));
+instance.interceptors.request.use((config) => config, (error) => Promise.reject(new Error(error)));
 
 // The interceptor only handles basic 401 errors and error responses - it will still throw so that
 // more involved error handling can happen later.
@@ -60,14 +60,14 @@ instance.interceptors.response.use(
       processRequestError(error.request);
     }
 
-    return Promise.reject(error);
+    return Promise.reject(new Error(error));
   },
 );
 
 export async function when<T>(...requests: any[]): Promise<T> {
   return new Promise((resolve) => {
     axios.all(requests).then(
-      axios.spread((...responses) => resolve(responses as T)),
+      axios.spread((...responses) => { resolve(responses as T); }),
     );
   });
 }

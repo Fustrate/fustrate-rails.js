@@ -18,6 +18,9 @@ type SortFunction<T extends HTMLElement = HTMLElement> = (row: T) => string;
 
 const defaultSortFunction: SortFunction = (row) => row.textContent ?? '';
 
+const blankRow = '<tr></tr>';
+const noRecordsMessage = 'No records found.';
+
 function sortRows<T extends HTMLElement = HTMLElement>(
   rows: T[],
   sortFunction: SortFunction<T> = defaultSortFunction,
@@ -36,8 +39,8 @@ function sortRows<T extends HTMLElement = HTMLElement>(
 }
 
 const defaultSettings: GenericTableSettings = {
-  blankRow: '<tr></tr>',
-  noRecordsMessage: 'No records found.',
+  blankRow,
+  noRecordsMessage,
   selector: 'table.listing',
 };
 
@@ -67,8 +70,17 @@ export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableR
       ...(Object.getPrototypeOf(this).constructor as typeof GenericTable).settings,
     };
 
-    this.table = document.body.querySelector(this.setting('selector')!)!;
-    [this.tbody] = this.table.tBodies;
+    const selector = this.setting('selector') ?? 'table.listing';
+
+    const table = document.body.querySelector<HTMLTableElement>(selector);
+
+    if (table == null) {
+      throw new Error(`Could not find table: ${selector}`);
+    } else {
+      this.table = table;
+
+      [this.tbody] = this.table.tBodies;
+    }
   }
 
   protected abstract reloadTable(): Promise<void>;
@@ -86,7 +98,7 @@ export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableR
   }
 
   protected createRow(item: T): U {
-    const row = elementFromString<U>(this.setting('blankRow')!);
+    const row = elementFromString<U>(this.setting('blankRow') ?? blankRow);
 
     this.updateRow(row, item);
 
@@ -127,7 +139,7 @@ export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableR
       tr.classList.add('no-records');
 
       td.colSpan = 16;
-      td.textContent = this.setting('noRecordsMessage')!;
+      td.textContent = this.setting('noRecordsMessage') ?? noRecordsMessage;
 
       tr.append(td);
       this.tbody.append(tr);
@@ -140,10 +152,10 @@ export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableR
   }
 
   protected checkAll(event: Event & { target: HTMLInputElement }): void {
-    const check = event ? event.target.checked : true;
+    const { checked } = event.target;
 
     this.table.querySelectorAll<HTMLInputElement>('td:first-child input[type="checkbox"]').forEach((checkbox) => {
-      checkbox.checked = check;
+      checkbox.checked = checked;
     });
   }
 
@@ -155,14 +167,10 @@ export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableR
 
   // This should be fed a response from a JSON request for a paginated listing.
   protected updatePagination(responseData: PaginatedData): void {
-    if (!responseData.pagination) {
-      return;
-    }
-
     const ul = new Pagination(responseData.pagination).generate();
 
     document.body.querySelectorAll('.pagination').forEach((oldPagination) => {
-      oldPagination.parentNode!.replaceChild(ul.cloneNode(true), oldPagination);
+      oldPagination.replaceWith(ul.cloneNode(true));
     });
   }
 }

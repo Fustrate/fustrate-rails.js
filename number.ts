@@ -28,5 +28,5 @@ export function ordinalize(number: number): string {
   const suffixes = ['th', 'st', 'nd', 'rd'];
   const remainder = number % 100;
 
-  return number + (suffixes[(remainder - 20) % 10] || suffixes[remainder] || 'th');
+  return `${number}${(suffixes[(remainder - 20) % 10] || suffixes[remainder] || 'th')}`;
 }

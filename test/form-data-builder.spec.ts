@@ -1,4 +1,4 @@
-import FormDataBuilder from '../form-data-builder';
+import formDataBuilder from '../form-data-builder';
 
 function rawDataFor(formData: FormData) {
   const data = {};
@@ -15,7 +15,7 @@ describe('#toFormData', () => {
     const input = { hello: 'world', age: 99, vip: true };
     const output = { hello: 'world', age: '99', vip: '1' };
 
-    expect(rawDataFor(FormDataBuilder.build(input))).toEqual(output);
+    expect(rawDataFor(formDataBuilder(input))).toEqual(output);
   });
 
   it('creates nested keys', () => {
@@ -36,7 +36,7 @@ describe('#toFormData', () => {
       'bills[2][face]': 'Hamilton',
     };
 
-    expect(rawDataFor(FormDataBuilder.build(input))).toEqual(output);
+    expect(rawDataFor(formDataBuilder(input))).toEqual(output);
   });
 
   it('starts with a root node', () => {
@@ -55,6 +55,6 @@ describe('#toFormData', () => {
       'bills[2][face]': 'Hamilton',
     };
 
-    expect(rawDataFor(FormDataBuilder.build(input, 'bills'))).toEqual(output);
+    expect(rawDataFor(formDataBuilder(input, 'bills'))).toEqual(output);
   });
 });

@@ -1,33 +1,29 @@
 import type GenericPage from './generic-page';
 
+let instance: GenericPage | undefined;
+
 function wrapTableElements() {
   document.querySelectorAll('table').forEach((table) => {
     const wrapper = document.createElement('div');
 
     wrapper.classList.add('responsive-table');
 
-    table.parentNode!.insertBefore(wrapper, table);
+    if (table.parentNode) {
+      table.parentNode.insertBefore(wrapper, table);
+    }
 
     wrapper.append(table);
   });
 }
 
-export default class Fustrate {
-  public static instance: GenericPage;
+function initialize(): void {
+  instance?.initialize();
 
-  public static start(Klass: typeof GenericPage): void {
-    if (Klass) {
-      Fustrate.instance = new Klass();
-    }
+  wrapTableElements();
+}
 
-    document.addEventListener('DOMContentLoaded', this.initialize.bind(this));
-  }
+export function start(page?: GenericPage): void {
+  instance = page;
 
-  protected static initialize(): void {
-    if (Fustrate.instance) {
-      Fustrate.instance.initialize();
-    }
-
-    wrapTableElements();
-  }
+  document.addEventListener('DOMContentLoaded', initialize);
 }

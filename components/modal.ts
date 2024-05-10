@@ -73,7 +73,7 @@ let openModals: Modal<any>[] = [];
 // We only want to add the global listeners once
 let addedGlobalListeners = false;
 
-let overlay: HTMLDivElement;
+let overlay: HTMLDivElement | null;
 
 let modalCount = 0;
 
@@ -104,7 +104,7 @@ function createButton(name: string, options?: string | ButtonAttributes) {
 }
 
 function toggleOverlay(visible = true) {
-  if (!overlay) {
+  if (overlay == null) {
     overlay = tag.div({ class: 'modal-overlay' });
   }
 
@@ -116,7 +116,7 @@ function toggleOverlay(visible = true) {
     }
   } else {
     animate(overlay, 'fadeOut', { speed: 'faster' }, () => {
-      overlay.remove();
+      overlay?.remove();
     });
   }
 }
@@ -215,30 +215,42 @@ export default abstract class Modal<T = void> extends Listenable {
     this.buttons = {};
 
     this.modal.querySelectorAll<HTMLElement>('[data-field]').forEach((element) => {
-      set(this.fields, element.dataset.field!, element);
+      if (element.dataset.field) {
+        set(this.fields, element.dataset.field, element);
+      }
     });
 
     this.modal.querySelectorAll<HTMLElement>('[data-button]').forEach((element) => {
-      set(this.buttons, element.dataset.button!, element);
+      if (element.dataset.button) {
+        set(this.buttons, element.dataset.button, element);
+      }
     });
   }
 
   protected setTitle(title: string, options?: { icon: string | null }): void {
-    this.modal.querySelector('.modal-title span')!.innerHTML = options?.icon
-      ? `${createIcon(options.icon)} ${title}`
-      : title;
+    const titleSpan = this.modal.querySelector('.modal-title span');
+
+    if (titleSpan) {
+      titleSpan.innerHTML = options?.icon ? `${createIcon(options.icon)} ${title}` : title;
+    }
   }
 
   protected setContent(content: ModalContent, reload?: boolean): void {
+    const contentContainer = this.modal.querySelector('.modal-content');
+
+    if (contentContainer == null) {
+      return;
+    }
+
     if (typeof content === 'string') {
-      this.modal.querySelector('.modal-content')!.innerHTML = content;
+      contentContainer.innerHTML = content;
     } else {
       const elements = typeof content === 'function' ? content() : content;
 
       if (Array.isArray(elements)) {
-        this.modal.querySelector('.modal-content')!.replaceChildren(...elements);
+        contentContainer.replaceChildren(...elements);
       } else {
-        this.modal.querySelector('.modal-content')!.replaceChildren(elements);
+        contentContainer.replaceChildren(elements);
       }
     }
 
@@ -248,8 +260,14 @@ export default abstract class Modal<T = void> extends Listenable {
   }
 
   protected setButtons(buttons: ModalButton[], reload?: boolean): void {
-    if (buttons == null || buttons.length === 0) {
-      this.modal.querySelector('.modal-buttons')!.innerHTML = '';
+    const buttonsContainer = this.modal.querySelector('.modal-buttons');
+
+    if (buttonsContainer == null) {
+      return;
+    }
+
+    if (buttons.length === 0) {
+      buttonsContainer.innerHTML = '';
 
       return;
     }
@@ -268,7 +286,7 @@ export default abstract class Modal<T = void> extends Listenable {
       }
     });
 
-    this.modal.querySelector('.modal-buttons')!.innerHTML = list.join(' ');
+    buttonsContainer.innerHTML = list.join(' ');
 
     if (reload) {
       this.reloadUIElements();
@@ -302,7 +320,7 @@ export default abstract class Modal<T = void> extends Listenable {
 
     addGlobalListeners();
 
-    if (this.buttons.cancel && this.buttons.cancel instanceof HTMLElement) {
+    if ('cancel' in this.buttons && this.buttons.cancel instanceof HTMLElement) {
       this.buttons.cancel.addEventListener('click', this.cancel.bind(this));
     }
   }
@@ -358,7 +376,7 @@ export default abstract class Modal<T = void> extends Listenable {
       });
     }, 125);
 
-    if (reopening && this.promise != null) {
+    if (reopening) {
       return this.promise;
     }
 
@@ -423,7 +441,7 @@ export default abstract class Modal<T = void> extends Listenable {
 
     // Accessibility
     element.setAttribute('aria-labelledby', `modal_${this.modalId}_title`);
-    element.querySelector('.modal-title span')!.setAttribute('id', `modal_${this.modalId}_title`);
+    element.querySelector('.modal-title span')?.setAttribute('id', `modal_${this.modalId}_title`);
 
     document.body.append(element);
 
@@ -454,16 +472,20 @@ export default abstract class Modal<T = void> extends Listenable {
     dragState.xOffset = currentTranslation ? Number.parseInt(currentTranslation[1], 10) : 0;
     dragState.yOffset = currentTranslation ? Number.parseInt(currentTranslation[2], 10) : 0;
 
-    dragState.mouseDownX = event.screenX!;
-    dragState.mouseDownY = event.screenY!;
+    dragState.mouseDownX = event.screenX ?? 0;
+    dragState.mouseDownY = event.screenY ?? 0;
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   }
 
   protected onMouseMove(event: MouseEventInit): void {
-    const xTranslation = event.screenX! - dragState.mouseDownX + dragState.xOffset;
-    const yTranslation = event.screenY! - dragState.mouseDownY + dragState.yOffset;
+    if (event.screenX == null || event.screenY == null) {
+      return;
+    }
+
+    const xTranslation = event.screenX - dragState.mouseDownX + dragState.xOffset;
+    const yTranslation = event.screenY - dragState.mouseDownY + dragState.yOffset;
 
     this.modal.style.transform = `translate(${xTranslation}px, ${yTranslation}px)`;
   }

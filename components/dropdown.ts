@@ -4,7 +4,7 @@ import { delegate } from '../events';
 import Listenable from '../listenable';
 
 export default class Dropdown extends Listenable {
-  private static popper: Instance;
+  private static popper?: Instance;
   private static boundHide: any;
 
   public static initialize(): void {
@@ -35,9 +35,7 @@ export default class Dropdown extends Listenable {
   }
 
   protected static hide(): void {
-    if (this.popper) {
-      this.popper.destroy();
-    }
+    this.popper?.destroy();
 
     document.body.removeEventListener('click', this.boundHide);
   }

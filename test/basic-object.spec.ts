@@ -6,8 +6,8 @@ class Event extends BasicObject {
   public note: string;
   public eventable: any;
 
-  override extractFromData(data: Record<string, any>) {
-    if (!data) {
+  override extractFromData(data?: Record<string, any>) {
+    if (data == null) {
       return {};
     }
 
@@ -29,8 +29,8 @@ class TestRecord extends BasicObject {
   public parent: any;
   public age: number;
 
-  override extractFromData(data: Record<string, any>) {
-    if (!data) {
+  override extractFromData(data?: Record<string, any>) {
+    if (data == null) {
       return {};
     }
 

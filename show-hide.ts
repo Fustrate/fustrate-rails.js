@@ -20,12 +20,12 @@ export function isVisible(element: HTMLElement): boolean {
   }
 
   // Safari < 17.4 doesn't have this function
-  if (HTMLElement.prototype.checkVisibility != null) {
+  if (typeof HTMLElement.prototype.checkVisibility === 'function') {
     return element.checkVisibility();
   }
 
   return element.parentElement != null
-    && (element.offsetWidth || element.offsetHeight || element.getClientRects().length > 0) != null;
+    && (element.offsetWidth > 0 || element.offsetHeight > 0 || element.getClientRects().length > 0);
 }
 
 export function toggle(element: NodeList | HTMLElement, showOrHide?: boolean): void {

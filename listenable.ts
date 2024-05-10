@@ -8,12 +8,12 @@ export default class Listenable {
     this.listeners = {};
   }
 
-  public addEventListener<T = CustomEvent<any>>(type: string, listener: (event: T) => void): void {
-    if (!this.listeners[type]) {
+  public addEventListener<T = CustomEvent>(type: string, listener: (event: T) => void): void {
+    if (!(type in this.listeners)) {
       this.listeners[type] = [];
     }
 
-    this.listeners[type].push(listener as (event: CustomEvent<any>) => void);
+    this.listeners[type].push(listener as (event: CustomEvent) => void);
   }
 
   public removeEventListener(type: string, listener: (event: CustomEvent) => void): void {
@@ -21,7 +21,7 @@ export default class Listenable {
   }
 
   public dispatchEvent(event: CustomEvent): boolean {
-    if (!(event.type && this.listeners[event.type])) {
+    if (!(event.type && event.type in this.listeners)) {
       return true;
     }
 
