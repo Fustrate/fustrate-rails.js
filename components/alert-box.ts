@@ -1,5 +1,4 @@
 import { delegate } from '../events';
-import Listenable from '../listenable';
 import { animate } from '../utilities';
 
 function closeAlertBox(event: { target: HTMLElement }) {
@@ -16,8 +15,6 @@ function closeAlertBox(event: { target: HTMLElement }) {
   return false;
 }
 
-export default class AlertBox extends Listenable {
-  public static initialize(): void {
-    delegate(document.body, '.alert-box .close', 'click', closeAlertBox);
-  }
+export function initialize(): void {
+  delegate(document.body, '.alert-box .close', 'click', closeAlertBox);
 }

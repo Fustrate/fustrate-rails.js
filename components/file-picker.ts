@@ -1,25 +1,15 @@
-import Listenable from '../listenable';
+import { tag } from 'html';
 
-// Turn any element into a trigger for file selection.
-export default class FilePicker extends Listenable {
-  protected constructor(callback: (files: FileList) => void) {
-    super();
+export function open(callback: (files: FileList) => void): void {
+  const input = tag.input({ attributes: { type: 'file' } });
 
-    const input = document.createElement('input');
-    input.setAttribute('type', 'file');
+  input.addEventListener('change', () => {
+    callback(input.files ?? new FileList());
 
-    input.addEventListener('change', () => {
-      callback(input.files ?? new FileList());
+    input.remove();
+  });
 
-      input.remove();
-    });
+  document.body.append(input);
 
-    document.body.append(input);
-
-    input.click();
-  }
-
-  public static open(callback: (files: FileList) => void): FilePicker {
-    return new this(callback);
-  }
+  input.click();
 }

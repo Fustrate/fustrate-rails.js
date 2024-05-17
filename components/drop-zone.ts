@@ -1,22 +1,13 @@
 import { stopEverything } from '../events';
-import Listenable from '../listenable';
 
 // Allow files to be dropped onto an element
-export default class DropZone extends Listenable {
-  protected constructor(target: HTMLElement, callback: (files: FileList) => void) {
-    super();
+export default function dropzone(target: HTMLElement, callback: (files: FileList) => void): void {
+  target.addEventListener('dragover', stopEverything);
+  target.addEventListener('dragenter', stopEverything);
 
-    target.addEventListener('dragover', stopEverything);
-    target.addEventListener('dragenter', stopEverything);
+  target.addEventListener('drop', (event) => {
+    stopEverything(event);
 
-    target.addEventListener('drop', (event) => {
-      stopEverything(event);
-
-      callback(event.dataTransfer?.files ?? new FileList());
-    });
-  }
-
-  public static create(target: HTMLElement, callback: (files: FileList) => void): DropZone {
-    return new DropZone(target, callback);
-  }
+    callback(event.dataTransfer?.files ?? new FileList());
+  });
 }

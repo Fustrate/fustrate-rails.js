@@ -1,12 +1,9 @@
 import { HTMLEvent, delegate, stopEverything } from '../events';
-import Listenable from '../listenable';
 
-export default class Tabs extends Listenable {
+export default class Tabs {
   protected tabs: HTMLUListElement;
 
   public constructor(tabs: HTMLUListElement) {
-    super();
-
     this.tabs = tabs;
 
     delegate<HTMLEvent<HTMLAnchorElement>>(this.tabs, 'li > a', 'click', (event) => {
@@ -73,8 +70,8 @@ export default class Tabs extends Listenable {
       }
     });
   }
+}
 
-  public static initialize(): void {
-    [...document.querySelectorAll<HTMLUListElement>('ul.tabs')].forEach((ul) => new Tabs(ul));
-  }
+export function initialize(): void {
+  [...document.querySelectorAll<HTMLUListElement>('ul.tabs')].forEach((ul) => new Tabs(ul));
 }
