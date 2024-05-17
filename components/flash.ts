@@ -1,4 +1,4 @@
-import { tag } from 'html';
+import { tag } from '../html';
 import { animate, icon as createIcon } from '../utilities';
 
 type FlashType = 'info' | 'success' | 'error' | 'plain';

@@ -1,4 +1,4 @@
-import { tag } from 'html';
+import { tag } from '../html';
 
 export function open(callback: (files: FileList) => void): void {
   const input = tag.input({ attributes: { type: 'file' } });
