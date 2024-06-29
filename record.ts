@@ -39,12 +39,11 @@ export default class BaseRecord extends BasicObject {
     throw new Error('No path implemented.');
   }
 
-  public constructor(data?: number | string) {
+  public constructor(id?: number | string) {
     super();
 
-    // If the parameter was a number or string, it's likely the record ID
-    if (typeof data === 'number' || typeof data === 'string') {
-      this.id = Number(data);
+    if (id != null) {
+      this.id = Number(id);
     }
 
     this.isLoaded = false;
