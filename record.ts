@@ -1,9 +1,10 @@
 import type { AxiosResponse } from 'axios';
 
-import BasicObject from './basic-object';
-import formDataBuilder from './form-data-builder';
 import ajax from './ajax';
+import BasicObject from './basic-object';
 import { fire } from './events';
+import formDataBuilder from './form-data-builder';
+import { underscore } from './string';
 
 export type ParamValue = string | number | boolean | null | undefined | Blob | ParamValue[] |
   { [s: string]: ParamValue };
@@ -22,7 +23,15 @@ export default class BaseRecord extends BasicObject {
   protected isLoaded: boolean;
 
   public get classname(): string {
-    return (this.constructor as typeof BaseRecord & { classname: string }).classname;
+    return this.class.classname;
+  }
+
+  public get langScope(): string {
+    return underscore(this.classname);
+  }
+
+  protected get class() {
+    return this.constructor as typeof BaseRecord;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -68,10 +77,10 @@ export default class BaseRecord extends BasicObject {
     } else {
       this.extractFromData(attributes);
 
-      url = (this.constructor as typeof BaseRecord).createPath({ format: 'json' });
+      url = this.class.createPath({ format: 'json' });
     }
 
-    const paramKey = (this.constructor as typeof BaseRecord).paramKey
+    const paramKey = this.class.paramKey
       || this.classname.replace(/::/g, '').replace(/^[A-Z]/, (match) => match.toLowerCase());
 
     const data = formDataBuilder(attributes, paramKey);
