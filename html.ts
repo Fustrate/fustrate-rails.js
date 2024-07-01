@@ -120,6 +120,7 @@ export const tag = {
   dl: (options?: ContentTagOptions) => contentElement('dl', options),
   dt: (options?: ContentTagOptions) => contentElement('dt', options),
   em: (options?: ContentTagOptions) => contentElement('em', options),
+  fieldset: (options?: ContentTagOptions) => contentElement('fieldset', options),
   h1: (options?: ContentTagOptions) => contentElement('h1', options),
   h2: (options?: ContentTagOptions) => contentElement('h2', options),
   h3: (options?: ContentTagOptions) => contentElement('h3', options),
