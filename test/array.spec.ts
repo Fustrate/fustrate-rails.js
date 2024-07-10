@@ -7,4 +7,9 @@ describe('toSentence', () => {
     expect(toSentence(['1'])).toBe('1');
     expect(toSentence([])).toBe('');
   });
+
+  it('joins them with "or"', () => {
+    expect(toSentence(['1', '2', '3'], 'or')).toBe('1, 2, or 3');
+    expect(toSentence(['1', '2'], 'or')).toBe('1 or 2');
+  });
 });
