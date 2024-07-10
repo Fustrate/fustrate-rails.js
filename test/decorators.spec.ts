@@ -10,6 +10,8 @@ const manyArgs = decorateMethod('$manyArgs');
 
 const dynamic = (name: string) => decorateMethod(name);
 
+const withType = decorateMethod<() => boolean>('$withType');
+
 class BaseClass {
   public callDecoratedMethods() {
     return callDecoratedMethods(this, '$simple');
@@ -25,6 +27,10 @@ class BaseClass {
 
   public callDynamicDecorator(name: string, ...args: any[]) {
     return callDecoratedMethods(this, name, ...args);
+  }
+
+  public callTypedDecorator() {
+    return callDecoratedMethods(this, '$withType');
   }
 }
 
@@ -63,10 +69,15 @@ class Subclass extends BaseClass {
   protected makeFries(sentence: string) {
     return sentence.split(' ');
   }
+
+  @withType
+  protected doSomething() {
+    return true;
+  }
 }
 
 describe('decorateMethod', () => {
-  it('joins words and stuff', () => {
+  it('decorates all kinds of stuff', () => {
     const record = new Subclass();
 
     expect(Reflect.getMetadata(oneArgSymbol, Object.getPrototypeOf(record)))
@@ -81,5 +92,7 @@ describe('decorateMethod', () => {
 
     expect(record.callDynamicDecorator('potato', 'porpoise purpose'))
       .toStrictEqual([['porpoise', 'purpose']]);
+
+    expect(record.callTypedDecorator()).toStrictEqual([true]);
   });
 });
