@@ -1,4 +1,3 @@
-import escape from 'lodash/escape';
 import pull from 'lodash/pull';
 import set from 'lodash/set';
 import startCase from 'lodash/startCase';
@@ -20,7 +19,7 @@ interface ButtonAttributes {
   type?: string;
 }
 
-export type ModalButton = 'spacer' | 'cancel' | 'save' | Record<string, string | ButtonAttributes>;
+export type ModalButton = 'spacer' | 'cancel' | 'save' | HTMLButtonElement | Record<string, string | ButtonAttributes>;
 
 export type ModalContent = string |
   HTMLElement |
@@ -97,10 +96,7 @@ function createButton(name: string, options?: string | ButtonAttributes) {
     text = options;
   }
 
-  return `
-    <button data-button="${name}" class="${type ?? name}">
-      ${escape(text ?? startCase(name))}
-    </button>`;
+  return tag.button({ class: type ?? name, text: text ?? startCase(name), data: { button: name } });
 }
 
 function toggleOverlay(visible = true) {
@@ -205,7 +201,7 @@ export default abstract class Modal<T = void> extends Listenable {
 
     this.setTitle(this.setting('title') ?? '', icon == null ? undefined : { icon });
     this.setContent(this.setting('template') ?? '', false);
-    this.setButtons(this.setting('buttons') ?? [], false);
+    this.setButtons(this.setting('buttons') ?? []);
     this.reloadUIElements();
     this.addEventListeners();
   }
@@ -259,38 +255,28 @@ export default abstract class Modal<T = void> extends Listenable {
     }
   }
 
-  protected setButtons(buttons: ModalButton[], reload?: boolean): void {
-    const buttonsContainer = this.modal.querySelector('.modal-buttons');
+  protected setButtons(buttons: ModalButton[]): void {
+    const buttonsContainer = this.modal.querySelector<HTMLElement>('.modal-buttons');
 
     if (buttonsContainer == null) {
       return;
     }
 
-    if (buttons.length === 0) {
-      buttonsContainer.innerHTML = '';
-
-      return;
-    }
-
-    const list: string[] = [];
+    const list: (HTMLButtonElement | HTMLDivElement)[] = [];
 
     buttons.forEach((button) => {
       if (button === 'spacer') {
-        list.push('<div class="spacer"></div>');
+        list.push(tag.div({ class: 'spacer' }));
       } else if (typeof button === 'string') {
-        list.push(`<button class="${button}" data-button="${button}">${startCase(button)}</button>`);
+        list.push(tag.button({ class: button, text: startCase(button), data: { button } }));
+      } else if (button instanceof HTMLButtonElement) {
+        list.push(button);
       } else if (typeof button === 'object') {
-        Object.entries(button).forEach(([key, value]) => {
-          list.push(createButton(key, value));
-        });
+        list.push(...Object.entries(button).map(([key, value]) => createButton(key, value)));
       }
     });
 
-    buttonsContainer.innerHTML = list.join(' ');
-
-    if (reload) {
-      this.reloadUIElements();
-    }
+    buttonsContainer.replaceChildren(...list);
   }
 
   protected disableButtons(): void {
