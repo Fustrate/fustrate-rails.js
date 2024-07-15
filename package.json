@@ -17,7 +17,7 @@
     "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
-    "@eslint/js": "^9.6.0",
+    "@eslint/js": "^9.7.0",
     "@happy-dom/jest-environment": "^14.12.3",
     "@jest/globals": "^29.7.0",
     "@stylistic/eslint-plugin": "^2.3.0",
