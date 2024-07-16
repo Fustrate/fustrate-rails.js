@@ -33,9 +33,10 @@ function setBaseOptions(element: HTMLElement, options: BaseTagOptions): void {
   }
 }
 
-function selfClosingElement<K extends keyof HTMLElementTagNameMap>(
+// A void tag (i.e. br, hr, img, link, meta) cannot have child nodes
+function voidElement<K extends keyof HTMLElementTagNameMap>(
   tag: K,
-  options?: ContentTagOptions,
+  options?: BaseTagOptions,
 ): HTMLElementTagNameMap[K] {
   const element = document.createElement(tag);
 
@@ -111,7 +112,7 @@ export function toggleAttribute(field: HTMLElement, attribute: ToggleableAttribu
 export const tag = {
   a: (options?: ContentTagOptions) => contentElement('a', options),
   address: (options?: ContentTagOptions) => contentElement('address', options),
-  br: () => selfClosingElement('br'),
+  br: () => voidElement('br'),
   button: (options?: ContentTagOptions) => contentElement('button', options),
   canvas: (options?: ContentTagOptions) => contentElement('canvas', options),
   dd: (options?: ContentTagOptions) => contentElement('dd', options),
@@ -127,17 +128,21 @@ export const tag = {
   h4: (options?: ContentTagOptions) => contentElement('h4', options),
   h5: (options?: ContentTagOptions) => contentElement('h5', options),
   h6: (options?: ContentTagOptions) => contentElement('h6', options),
+  hr: (options?: BaseTagOptions) => voidElement('hr', options),
   i: (options?: ContentTagOptions) => contentElement('i', options),
-  img: (options?: ContentTagOptions) => contentElement('img', options),
-  input: (options?: ContentTagOptions) => contentElement('input', options),
+  img: (options?: BaseTagOptions) => voidElement('img', options),
+  input: (options?: BaseTagOptions) => voidElement('input', options),
   ins: (options?: ContentTagOptions) => contentElement('ins', options),
   label: (options?: ContentTagOptions) => contentElement('label', options),
   li: (options?: ContentTagOptions) => contentElement('li', options),
+  link: (options?: BaseTagOptions) => voidElement('link', options),
+  meta: (options?: BaseTagOptions) => voidElement('meta', options),
   optgroup: (options?: ContentTagOptions) => contentElement('optgroup', options),
   option: (options?: ContentTagOptions) => contentElement('option', options),
   p: (options?: ContentTagOptions) => contentElement('p', options),
   section: (options?: ContentTagOptions) => contentElement('section', options),
   select: (options?: ContentTagOptions) => contentElement('select', options),
+  slot: (options?: ContentTagOptions) => contentElement('slot', options),
   span: (options?: ContentTagOptions) => contentElement('span', options),
   strong: (options?: ContentTagOptions) => contentElement('strong', options),
   table: (options?: ContentTagOptions) => contentElement('table', options),
