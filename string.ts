@@ -6,7 +6,7 @@ export function humanize(string?: string): string {
   }
 
   return string
-    .replace(/[a-z][A-Z]/, (match) => `${match[0]} ${match[1]}`)
+    .replace(/[a-z][A-Z]/g, (match) => `${match[0]} ${match[1]}`)
     .replace(/_/g, ' ')
     .toLowerCase();
 }
@@ -25,7 +25,7 @@ export function parameterize(string?: string): string {
   }
 
   return string
-    .replace(/[a-z][A-Z]/, (match) => `${match[0]}_${match[1]}`)
+    .replace(/[a-z][A-Z]/g, (match) => `${match[0]}_${match[1]}`)
     .replace(/[^\w-]+/, '-') // Turn unwanted chars into the separator
     .replace(/^-|-$/, '') // Remove leading/trailing separator.
     .toLowerCase();
@@ -60,7 +60,7 @@ export function underscore(string?: string): string {
   }
 
   return string
-    .replace(/[a-z][A-Z]/, (match) => `${match[0]}_${match[1]}`)
+    .replace(/[a-z][A-Z]/g, (match) => `${match[0]}_${match[1]}`)
     .replace('::', '/')
     .toLowerCase();
 }
