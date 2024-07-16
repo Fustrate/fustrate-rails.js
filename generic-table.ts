@@ -14,6 +14,8 @@ export interface GenericTableSettings {
 
 export { type PaginatedData } from './components/pagination';
 
+export { initialize, refresh } from './generic-page';
+
 type SortFunction<T extends HTMLElement = HTMLElement> = (row: T) => string;
 
 const defaultSortFunction: SortFunction = (row) => row.textContent ?? '';

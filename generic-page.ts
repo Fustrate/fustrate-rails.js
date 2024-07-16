@@ -8,6 +8,7 @@ interface UIElements {
 }
 
 const $refresh = Symbol('$refresh');
+const $initialize = Symbol('$initialize');
 
 export const button = (buttonName: string) => decorateMethod(`$onclick-${buttonName}`);
 
@@ -17,6 +18,8 @@ export const onDoubleClick = (buttonName: string) => decorateMethod(`$ondoublecl
 
 export const onClick = (name: string) => decorateMethod(`$onclick-${name}`);
 
+export const initialize = decorateMethod($initialize);
+
 export const refresh = decorateMethod($refresh);
 
 export default class GenericPage {
@@ -24,9 +27,12 @@ export default class GenericPage {
   protected buttons: UIElements;
 
   public async initialize(): Promise<any> {
+    // Always call this function first, because decorated functions might use fields/buttons.
     this.reloadUIElements();
 
     this.addEventListeners();
+
+    callDecoratedMethods(this, $initialize);
   }
 
   protected addEventListeners(): void {
