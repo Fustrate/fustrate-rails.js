@@ -78,6 +78,7 @@ describe('#presence()', () => {
 describe('#underscore()', () => {
   it('underscores a string', () => {
     expect(underscore('Subreddit::Sidebar')).toBe('subreddit/sidebar');
+    expect(underscore('ParentModule::SubClass')).toBe('parent_module/sub_class');
     expect(underscore('helloWorld')).toBe('hello_world');
   });
 });
