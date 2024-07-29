@@ -60,7 +60,7 @@ const template = `
   <div class="modal" role="dialog" aria-modal="true">
     <div class="modal-title">
       <span></span>
-      <a href="#" class="modal-close">&#215;</a>
+      <a href="#" class="modal-close" data-modal-close>&#215;</a>
     </div>
     <div class="modal-content"></div>
     <div class="modal-buttons"></div>
@@ -267,6 +267,8 @@ export default abstract class Modal<T = void> extends Listenable {
     buttons.forEach((button) => {
       if (button === 'spacer') {
         list.push(tag.div({ class: 'spacer' }));
+      } else if (button === 'cancel') {
+        list.push(tag.button({ class: button, text: 'Cancel', data: { modalClose: true } }));
       } else if (typeof button === 'string') {
         list.push(tag.button({ class: button, text: startCase(button), data: { button } }));
       } else if (button instanceof HTMLButtonElement) {
@@ -297,18 +299,12 @@ export default abstract class Modal<T = void> extends Listenable {
 
   protected addEventListeners() {
     this.modal
-      .querySelector<HTMLAnchorElement>('a.modal-close')
-      ?.addEventListener('click', this.closeButtonClicked.bind(this));
-
-    this.modal
       .querySelector<HTMLDivElement>('.modal-title')
       ?.addEventListener('mousedown', this.onMouseDown.bind(this));
 
-    addGlobalListeners();
+    delegate(this.modal, '[data-modal-close]', 'click', this.closeButtonClicked.bind(this));
 
-    if ('cancel' in this.buttons && this.buttons.cancel instanceof HTMLElement) {
-      this.buttons.cancel.addEventListener('click', this.cancel.bind(this));
-    }
+    addGlobalListeners();
   }
 
   protected focusFirstInput(): void {
@@ -410,10 +406,6 @@ export default abstract class Modal<T = void> extends Listenable {
     this.#locked = false;
 
     this.modal.classList.remove('open');
-  }
-
-  protected cancel(): void {
-    this.close();
   }
 
   protected createModal(): HTMLDivElement {
