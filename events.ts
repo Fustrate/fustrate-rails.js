@@ -31,7 +31,7 @@ export function stopEverything(event: Event): void {
 export type HTMLEvent<T = HTMLElement> = UIEvent & { target: T };
 
 export function delegate<T = HTMLEvent>(
-  element: Element | Document,
+  element: Element | Document | DocumentFragment,
   selector: string | MatchesOptions,
   eventType: string,
   handler: (evt: T) => any,
