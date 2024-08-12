@@ -7,7 +7,7 @@ export function csrfToken(): string | undefined {
   return document.querySelector<HTMLMetaElement>('meta[name=csrf-token]')?.content;
 }
 
-function processResponseError(response: AxiosResponse) {
+function processResponseError(response: AxiosResponse<{ errors?: string[] }>) {
   const { data, status } = response;
 
   if (!status || status === 404) {
@@ -16,10 +16,10 @@ function processResponseError(response: AxiosResponse) {
   } else if (status === 401) {
     // eslint-disable-next-line no-alert
     window.alert('You are not currently logged in. Please refresh the page and try performing this action again. To prevent this in the future, check the "Remember Me" box when logging in.');
-  } else if (data?.errors) {
-    data.errors.forEach((message: string) => {
+  } else if (data.errors) {
+    for (const message of data.errors) {
       Flash.error(message);
-    });
+    }
   } else {
     // eslint-disable-next-line no-console
     console.log(`Unhandled interception (${status})`, response);

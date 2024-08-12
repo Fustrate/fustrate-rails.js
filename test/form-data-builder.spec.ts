@@ -3,9 +3,9 @@ import formDataBuilder from '../form-data-builder';
 function rawDataFor(formData: FormData) {
   const data = {};
 
-  formData.forEach((value, key) => {
+  for (const [key, value] of formData.entries()) {
     data[key] = value;
-  });
+  }
 
   return data;
 }

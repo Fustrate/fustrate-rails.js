@@ -13,9 +13,9 @@ describe('animate', () => {
 
     animate(element, 'wacky');
 
-    ['animate__animated', 'animate__wacky'].forEach((classname) => {
+    for (const classname of ['animate__animated', 'animate__wacky']) {
       expect(element.classList).toContain(classname);
-    });
+    }
 
     element.dispatchEvent(new CustomEvent('animationend'));
 
@@ -27,9 +27,9 @@ describe('animate', () => {
 
     animate(element, 'wacky', { delay: 3, speed: 'fast' });
 
-    ['animate__animated', 'animate__wacky', 'animate__delay-3s', 'animate__fast'].forEach((classname) => {
+    for (const classname of ['animate__animated', 'animate__wacky', 'animate__delay-3s', 'animate__fast']) {
       expect(element.classList).toContain(classname);
-    });
+    }
 
     element.dispatchEvent(new CustomEvent('animationend'));
 

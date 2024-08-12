@@ -109,9 +109,9 @@ export function linkTo(text: string, href: Linkable, attributes?: LinkableAttrib
   element.innerHTML = text;
 
   if (attributes) {
-    Object.entries(attributes).forEach(([key, value]) => {
+    for (const [key, value] of Object.entries(attributes)) {
       element.setAttribute(key, String(value));
-    });
+    }
   }
 
   return element.outerHTML;

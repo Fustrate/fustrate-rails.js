@@ -122,9 +122,9 @@ function openPreviousModal() {
 }
 
 function hideAllModals() {
-  openModals.forEach((modal) => {
+  for (const modal of openModals) {
     modal.hide();
-  });
+  }
 
   openModals = [];
 }
@@ -210,17 +210,17 @@ export default abstract class Modal<T = void> extends Listenable {
     this.fields = {};
     this.buttons = {};
 
-    this.modal.querySelectorAll<HTMLElement>('[data-field]').forEach((element) => {
+    for (const element of this.modal.querySelectorAll<HTMLElement>('[data-field]')) {
       if (element.dataset.field) {
         set(this.fields, element.dataset.field, element);
       }
-    });
+    }
 
-    this.modal.querySelectorAll<HTMLElement>('[data-button]').forEach((element) => {
+    for (const element of this.modal.querySelectorAll<HTMLElement>('[data-button]')) {
       if (element.dataset.button) {
         set(this.buttons, element.dataset.button, element);
       }
-    });
+    }
   }
 
   protected setTitle(title: string, options?: { icon: string | null }): void {
@@ -264,7 +264,7 @@ export default abstract class Modal<T = void> extends Listenable {
 
     const list: (HTMLButtonElement | HTMLDivElement)[] = [];
 
-    buttons.forEach((button) => {
+    for (const button of buttons) {
       if (button === 'spacer') {
         list.push(tag.div({ class: 'spacer' }));
       } else if (button === 'cancel') {
@@ -276,25 +276,25 @@ export default abstract class Modal<T = void> extends Listenable {
       } else if (typeof button === 'object') {
         list.push(...Object.entries(button).map(([key, value]) => createButton(key, value)));
       }
-    });
+    }
 
     buttonsContainer.replaceChildren(...list);
   }
 
   protected disableButtons(): void {
-    Object.values(this.buttons).forEach((button) => {
+    for (const button of Object.values(this.buttons)) {
       if (button instanceof HTMLElement) {
         button.setAttribute('disabled', '');
       }
-    });
+    }
   }
 
   protected enableButtons(): void {
-    Object.values(this.buttons).forEach((button) => {
+    for (const button of Object.values(this.buttons)) {
       if (button instanceof HTMLElement) {
         button.removeAttribute('disabled');
       }
-    });
+    }
   }
 
   protected addEventListeners() {

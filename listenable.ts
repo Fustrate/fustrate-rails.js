@@ -25,9 +25,9 @@ export default class Listenable {
       return true;
     }
 
-    this.listeners[event.type].forEach((listener) => {
+    for (const listener of this.listeners[event.type]) {
       listener.call(this, event);
-    });
+    }
 
     return true;
   }

@@ -21,15 +21,15 @@ function setBaseOptions(element: HTMLElement, options: BaseTagOptions): void {
   }
 
   if (options.attributes) {
-    Object.entries(options.attributes).forEach(([key, value]) => {
+    for (const [key, value] of Object.entries(options.attributes)) {
       element.setAttribute(key, value === true ? '' : String(value));
-    });
+    }
   }
 
   if (options.data) {
-    Object.entries(options.data).forEach(([key, value]) => {
+    for (const [key, value] of Object.entries(options.data)) {
       element.setAttribute(`data-${kebabCase(key)}`, value === true ? '' : String(value));
-    });
+    }
   }
 }
 

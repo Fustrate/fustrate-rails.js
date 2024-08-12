@@ -3,7 +3,7 @@ import type GenericPage from './generic-page';
 let instance: GenericPage | undefined;
 
 function wrapTableElements() {
-  document.querySelectorAll('table').forEach((table) => {
+  for (const table of document.querySelectorAll('table')) {
     const wrapper = document.createElement('div');
 
     wrapper.classList.add('responsive-table');
@@ -13,7 +13,7 @@ function wrapTableElements() {
     }
 
     wrapper.append(table);
-  });
+  }
 }
 
 function initialize(): void {

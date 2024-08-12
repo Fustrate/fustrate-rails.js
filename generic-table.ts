@@ -1,4 +1,4 @@
-import GenericPage from './generic-page';
+import GenericPage, { initialize } from './generic-page';
 import Pagination from './components/pagination';
 import { elementFromString } from './html';
 import { deepExtend } from './object';
@@ -93,9 +93,8 @@ export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableR
     return this.settings[key] ?? defaultSettings[key];
   }
 
-  public override async initialize(): Promise<any> {
-    await super.initialize();
-
+  @initialize
+  public async initializeTable(): Promise<any> {
     await this.reloadTable();
   }
 
@@ -108,14 +107,14 @@ export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableR
   }
 
   protected reloadRows(trs: U[], options?: { sort?: SortFunction<U> }): void {
-    this.tbody.querySelectorAll('tr').forEach((tr) => {
+    for (const tr of this.tbody.querySelectorAll('tr')) {
       tr.remove();
-    });
+    }
 
     if (trs.length > 0) {
-      (options?.sort ? sortRows<U>(trs, options.sort) : trs).forEach((tr) => {
+      for (const tr of (options?.sort ? sortRows<U>(trs, options.sort) : trs)) {
         this.tbody.append(tr);
-      });
+      }
     }
 
     this.updated();
@@ -156,23 +155,23 @@ export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableR
   protected checkAll(event: Event & { target: HTMLInputElement }): void {
     const { checked } = event.target;
 
-    this.table.querySelectorAll<HTMLInputElement>('td:first-child input[type="checkbox"]').forEach((checkbox) => {
+    for (const checkbox of this.table.querySelectorAll<HTMLInputElement>('td:first-child input[type="checkbox"]')) {
       checkbox.checked = checked;
-    });
+    }
   }
 
   protected uncheckAll(): void {
-    this.table.querySelectorAll<HTMLInputElement>('td:first-child input:checked').forEach((input) => {
+    for (const input of this.table.querySelectorAll<HTMLInputElement>('td:first-child input:checked')) {
       input.checked = false;
-    });
+    }
   }
 
   // This should be fed a response from a JSON request for a paginated listing.
   protected updatePagination(responseData: PaginatedData): void {
     const ul = new Pagination(responseData.pagination).generate();
 
-    document.body.querySelectorAll('.pagination').forEach((oldPagination) => {
+    for (const oldPagination of document.body.querySelectorAll('.pagination')) {
       oldPagination.replaceWith(ul.cloneNode(true));
-    });
+    }
   }
 }

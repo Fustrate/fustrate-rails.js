@@ -3,13 +3,13 @@ import BasicObject from './basic-object';
 function appendObject(data: FormData, key: string, value: any): void {
   if (Array.isArray(value)) {
     if (value.some((item) => typeof item === 'object')) {
-      value.forEach((item, index) => {
+      for (const [index, item] of value.entries()) {
         toFormData(data, item, `${key}[${index}]`);
-      });
+      }
     } else {
-      value.forEach((item) => {
+      for (const item of value) {
         data.append(`${key}[]`, String(item));
-      });
+      }
     }
   } else if (value instanceof Blob) {
     data.append(key, value);
@@ -19,9 +19,9 @@ function appendObject(data: FormData, key: string, value: any): void {
 }
 
 function toFormData(data: FormData, obj: Record<string, any>, namespace?: string): FormData {
-  Object.getOwnPropertyNames(obj).forEach((field) => {
+  for (const field of Object.getOwnPropertyNames(obj)) {
     if (obj[field] === undefined || Number.isNaN(obj[field])) {
-      return;
+      continue;
     }
 
     const key = namespace ? `${namespace}[${field}]` : field;
@@ -33,7 +33,7 @@ function toFormData(data: FormData, obj: Record<string, any>, namespace?: string
     } else if (obj[field] != null) {
       data.append(key, obj[field]);
     }
-  });
+  }
 
   return data;
 }

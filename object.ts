@@ -12,13 +12,11 @@ export function isPlainObject(object: any): boolean {
 export function deepExtend(out: object | null, ...rest: object[]): object {
   out = out ?? {};
 
-  rest
-    .filter(Boolean)
-    .forEach((obj) => {
-      Object.getOwnPropertyNames(obj).forEach((key) => {
-        out[key] = isPlainObject(obj[key]) ? deepExtend(out[key], obj[key]) : obj[key];
-      });
-    });
+  for (const obj of rest.filter(Boolean)) {
+    for (const key of Object.getOwnPropertyNames(obj)) {
+      out[key] = isPlainObject(obj[key]) ? deepExtend(out[key], obj[key]) : obj[key];
+    }
+  }
 
   return out;
 }

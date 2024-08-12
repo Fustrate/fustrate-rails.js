@@ -12,12 +12,6 @@ export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.strictTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
-  unicorn.configs['flat/recommended'],
-  {
-    // eslint-plugin-lodash doesn't have a flat config option (yet?)
-    plugins: { lodash },
-    rules: lodash.configs.recommended.rules,
-  },
   stylistic.configs.customize({
     indent: 2,
     semi: true,
@@ -27,7 +21,7 @@ export default tseslint.config(
     commaDangle: 'always-multiline',
   }),
   {
-    plugins: { stylistic },
+    // ---------------------------------------------- Tweak the defaults -----------------------------------------------
     languageOptions: {
       parserOptions: {
         project: './tsconfig.json',
@@ -35,16 +29,24 @@ export default tseslint.config(
       },
     },
     rules: {
-      // ----------------------------------------------- Disabled Rules ------------------------------------------------
+      // Only enforce spacing between methods, not properties.
+      // https://eslint.style/rules/default/lines-between-class-members
+      'lines-between-class-members': ['error', {
+        enforce: [{ next: 'method', blankLine: 'always', prev: 'method' }],
+      }],
 
-      // I want to allow 0 spaces between property definitions.
-      'lines-between-class-members': 'off',
+      // Ignore class definition lines that are too long
+      'max-len': ['error', 120, 2, { ignoreStrings: true }],
 
       'no-alert': 'off',
 
       // This is just ridiculous - can't even assign to a property of a parameter
       'no-param-reassign': 'off',
-
+    },
+  },
+  {
+    // ----------------------------------------------- Typescript Rules ------------------------------------------------
+    rules: {
       // I'm just not there yet on types
       // https://typescript-eslint.io/rules/
       '@typescript-eslint/no-explicit-any': 'off',
@@ -56,7 +58,17 @@ export default tseslint.config(
       '@typescript-eslint/no-unsafe-return': 'off',
       '@typescript-eslint/require-await': 'off',
 
-      // -------------------------------------------- Disabled Lodash Rules --------------------------------------------
+      '@typescript-eslint/restrict-template-expressions': ['error', {
+        allowNumber: true,
+      }],
+    },
+  },
+  {
+    // ------------------------------------------------- Lodash Rules --------------------------------------------------
+    plugins: { lodash },
+    rules: {
+      // eslint-plugin-lodash doesn't have a flat config option (yet?)
+      ...lodash.configs.recommended.rules,
 
       // Wants to use _.constant('constant') instead of a getter that returns a constant
       'lodash/prefer-constant': 'off',
@@ -73,12 +85,12 @@ export default tseslint.config(
 
       // Recommends `_.map(col, 'owner.name')` instead of `col.map((prop) => prop.owner.name)`
       'lodash/prop-shorthand': 'off',
-
-      // ------------------------------------------- Disabled Unicorn Rules --------------------------------------------
-
-      // `for (const x of y)` is restricted by airbnb's `no-restricted-syntax` rule.
-      'unicorn/no-array-for-each': 'off',
-
+    },
+  },
+  unicorn.configs['flat/recommended'],
+  {
+    // ------------------------------------------------- Unicorn Rules -------------------------------------------------
+    rules: {
       // `window.prompt` returns `null` when you click the cancel button. I don't get this rule.
       'unicorn/no-null': 'off',
 
@@ -90,22 +102,14 @@ export default tseslint.config(
 
       // I use abbreviations, sue me.
       'unicorn/prevent-abbreviations': 'off',
-
-      // --------------------------------------------- Tweak the defaults ----------------------------------------------
-
-      // Ignore class definition lines that are too long
-      'max-len': ['error', 120, 2, { ignoreStrings: true }],
-
-      '@typescript-eslint/restrict-template-expressions': ['error', {
-        allowNumber: true,
-      }],
     },
   },
   {
+    // -------------------------------------------------- Test Files ---------------------------------------------------
     files: ['**/*.spec.ts'],
     extends: [jest.configs['flat/recommended']],
     rules: {
-      // Disabled tests have
+      // Disabled tests have empty functions
       'jest/no-disabled-tests': 'off',
       '@typescript-eslint/no-empty-function': 'off',
     },

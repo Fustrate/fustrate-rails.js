@@ -82,20 +82,16 @@ export default class GenericPage {
     this.fields = {};
     this.buttons = {};
 
-    [...document.body.querySelectorAll<HTMLElement>('[data-field]')]
-      .filter((element) => !element.matches('.modal [data-field]'))
-      .forEach((element) => {
-        if (element.dataset.field) {
-          set(this.fields, element.dataset.field, element);
-        }
-      });
+    for (const element of document.body.querySelectorAll<HTMLElement>('[data-field]')) {
+      if (!element.matches('.modal [data-field]') && element.dataset.field) {
+        set(this.fields, element.dataset.field, element);
+      }
+    }
 
-    [...document.body.querySelectorAll<HTMLElement>('[data-button]')]
-      .filter((element) => !element.matches('.modal [data-button]'))
-      .forEach((element) => {
-        if (element.dataset.button) {
-          set(this.buttons, element.dataset.button, element);
-        }
-      });
+    for (const element of document.body.querySelectorAll<HTMLElement>('[data-button]')) {
+      if (!element.matches('.modal [data-button]') && element.dataset.button) {
+        set(this.buttons, element.dataset.button, element);
+      }
+    }
   }
 }

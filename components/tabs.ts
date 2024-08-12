@@ -45,9 +45,9 @@ export default class Tabs {
       return;
     }
 
-    [...this.tabs.querySelectorAll('.active')].forEach((sibling) => {
+    for (const sibling of this.tabs.querySelectorAll('.active')) {
       sibling.classList.remove('active');
-    });
+    }
 
     link.classList.add('active');
     const hash = link.href.split('#')[1];
@@ -64,14 +64,14 @@ export default class Tabs {
 
     tabContent.classList.add('active');
 
-    [...tabContent.parentElement.children].forEach((sibling) => {
+    for (const sibling of tabContent.parentElement.children) {
       if (sibling !== tabContent) {
         sibling.classList.remove('active');
       }
-    });
+    }
   }
 }
 
 export function initialize(): void {
-  [...document.querySelectorAll<HTMLUListElement>('ul.tabs')].forEach((ul) => new Tabs(ul));
+  for (const ul of document.querySelectorAll<HTMLUListElement>('ul.tabs')) new Tabs(ul);
 }

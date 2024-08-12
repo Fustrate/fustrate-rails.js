@@ -31,7 +31,7 @@ export function formRedirectTo(
     form.append(methodInput);
   }
 
-  Object.entries(data).forEach(([name, value]) => {
+  for (const [name, value] of Object.entries(data)) {
     const input = document.createElement('input');
 
     input.type = 'hidden';
@@ -39,7 +39,7 @@ export function formRedirectTo(
     input.value = value;
 
     form.append(input);
-  });
+  }
 
   const submitButton = document.createElement('input');
   submitButton.type = 'submit';

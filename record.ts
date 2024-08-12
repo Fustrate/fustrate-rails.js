@@ -85,11 +85,11 @@ export default class BaseRecord extends BasicObject {
     const data = formDataBuilder(attributes, paramKey);
 
     if (additionalParameters) {
-      Object.entries(additionalParameters).forEach(([key, value]) => {
+      for (const [key, value] of Object.entries(additionalParameters)) {
         if (value != null) {
           data.append(key, value instanceof Blob ? value : String(value));
         }
-      });
+      }
     }
 
     return ajax({

@@ -96,7 +96,7 @@ export default class Pagination extends Listenable {
 
     ul.append(this.previousLink());
 
-    this.windowedPageNumbers().forEach((page) => {
+    for (const page of this.windowedPageNumbers()) {
       const li = document.createElement('li');
 
       if (page === this.page) {
@@ -110,7 +110,7 @@ export default class Pagination extends Listenable {
       }
 
       ul.append(li);
-    });
+    }
 
     ul.append(this.nextLink());
 
