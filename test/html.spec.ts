@@ -1,6 +1,7 @@
 import {
   elementFromString,
   escapeMultilineHTML,
+  tag,
 } from '../html';
 
 describe('elementFromString', () => {
@@ -41,5 +42,19 @@ describe('escapeMultilineHTML', () => {
     expect(escapeMultilineHTML('<strong>\'Bob\' `&` "Bill"</strong>\n=/')).toBe(
       '&lt;strong&gt;&#39;Bob&#39; `&amp;` &quot;Bill&quot;&lt;/strong&gt;<br />=/',
     );
+  });
+});
+
+describe('tag', () => {
+  it('creates a basic tag', () => {
+    expect(tag.div().outerHTML).toBe('<div></div>');
+  });
+
+  it('creates an input tag with a value', () => {
+    expect(tag.input({ attributes: { type: 'text', value: 'hello' } }).outerHTML)
+      .toBe('<input type="text" value="hello">');
+
+    expect(tag.input({ attributes: { type: 'text', value: null } }).outerHTML)
+      .toBe('<input type="text">');
   });
 });

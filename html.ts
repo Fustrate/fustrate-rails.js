@@ -4,7 +4,7 @@ import kebabCase from 'lodash/kebabCase';
 type ToggleableAttribute = 'checked' | 'required' | 'disabled' | 'selected' | 'readonly';
 
 interface BaseTagOptions {
-  attributes?: Record<string, string | number | true>;
+  attributes?: Record<string, string | number | true | null>;
   class?: string | string[];
   data?: Record<string, string | number | true>;
 }
@@ -22,7 +22,9 @@ function setBaseOptions(element: HTMLElement, options: BaseTagOptions): void {
 
   if (options.attributes) {
     for (const [key, value] of Object.entries(options.attributes)) {
-      element.setAttribute(key, value === true ? '' : String(value));
+      if (value != null) {
+        element.setAttribute(key, value === true ? '' : String(value));
+      }
     }
   }
 
