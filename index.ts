@@ -17,7 +17,11 @@ function wrapTableElements() {
 }
 
 function initialize(): void {
+  console.log('initializing');
+
   instance?.initialize();
+
+  console.log('initialized');
 
   wrapTableElements();
 }
