@@ -93,8 +93,9 @@ export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableR
     return this.settings[key] ?? defaultSettings[key];
   }
 
-  @initialize
-  public async initializeTable(): Promise<any> {
+  public override async initialize(): Promise<any> {
+    await super.initialize();
+
     await this.reloadTable();
   }
 

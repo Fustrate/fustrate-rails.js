@@ -30,11 +30,12 @@ export default class GenericPage {
     // Always call this function first, because decorated functions might use fields/buttons.
     this.reloadUIElements();
 
+    this.addDecoratedEventHandlers();
+
     callDecoratedMethods(this, $initialize);
   }
 
-  @initialize
-  protected handleDecoratedEvents(): void {
+  protected addDecoratedEventHandlers(): void {
     delegate(
       document,
       { selector: '[data-button], [data-field]', exclude: '.modal [data-button], .modal [data-field]' },
