@@ -1,4 +1,4 @@
-import GenericPage, { initialize } from './generic-page';
+import GenericPage from './generic-page';
 import Pagination from './components/pagination';
 import { elementFromString } from './html';
 import { deepExtend } from './object';
