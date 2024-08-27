@@ -7,18 +7,18 @@ interface UIElements {
   [s: string]: HTMLElement | UIElements | UIElements[];
 }
 
-const $refresh = Symbol('$refresh');
 const $initialize = Symbol('$initialize');
+const $refresh = Symbol('$refresh');
 
 export const button = (buttonName: string) => decorateMethod(`$onclick-${buttonName}`);
 
-export const onChange = (fieldName: string) => decorateMethod(`$onchange-${fieldName}`);
+export const initialize = decorateMethod($initialize);
 
-export const onDoubleClick = (buttonName: string) => decorateMethod(`$ondoubleclick-${buttonName}`);
+export const onChange = (fieldName: string) => decorateMethod(`$onchange-${fieldName}`);
 
 export const onClick = (name: string) => decorateMethod(`$onclick-${name}`);
 
-export const initialize = decorateMethod($initialize);
+export const onDoubleClick = (buttonName: string) => decorateMethod(`$ondoubleclick-${buttonName}`);
 
 export const refresh = decorateMethod($refresh);
 
