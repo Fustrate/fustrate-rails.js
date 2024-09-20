@@ -57,4 +57,18 @@ describe('tag', () => {
     expect(tag.input({ attributes: { type: 'text', value: null } }).outerHTML)
       .toBe('<input type="text">');
   });
+
+  it('creates a tag with classes', () => {
+    expect(tag.span({ class: 'green red' }).outerHTML)
+      .toBe('<span class="green red"></span>');
+
+    expect(tag.span({ class: ['green', 'red'] }).outerHTML)
+      .toBe('<span class="green red"></span>');
+
+    expect(tag.span({ class: ['green red', 'blue'] }).outerHTML)
+      .toBe('<span class="green red blue"></span>');
+
+    expect(tag.span({ class: ['green red', 'blue yellow'] }).outerHTML)
+      .toBe('<span class="green red blue yellow"></span>');
+  });
 });
