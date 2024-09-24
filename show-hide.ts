@@ -1,9 +1,8 @@
 function toggleElement(element: HTMLElement, makeVisible?: boolean) {
   if (makeVisible == null) {
-    makeVisible = element.style.display === 'none';
+    makeVisible = element.classList.contains('tw-hidden');
   }
 
-  element.style.display = makeVisible ? '' : 'none';
   element.classList.toggle('tw-hidden', !makeVisible);
 
   // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-hidden
