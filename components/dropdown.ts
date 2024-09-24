@@ -11,16 +11,22 @@ function open(event: UIEvent & { target: HTMLElement }): false {
   // Hide any visible dropdowns before showing this one
   hide();
 
+  const target = event.target.closest<HTMLElement>('.has-dropdown');
+
+  if (!target) {
+    return false;
+  }
+
   const options = {
     modifiers: [],
     ...defaultOptions,
   };
 
-  if (event.target.dataset.popperPlacement) {
-    options.placement = event.target.dataset.popperPlacement as Placement;
+  if (target.dataset.popperPlacement) {
+    options.placement = target.dataset.popperPlacement as Placement;
   }
 
-  if (event.target.dataset.popperFlip) {
+  if (target.dataset.popperFlip) {
     options.modifiers.push({
       name: 'flip',
       options: {
@@ -29,7 +35,7 @@ function open(event: UIEvent & { target: HTMLElement }): false {
     });
   }
 
-  popper = createPopper(event.target, event.target.nextElementSibling as HTMLElement, options);
+  popper = createPopper(target, target.nextElementSibling as HTMLElement, options);
 
   // The next time we click something on the page, hide the dropdown
   document.body.addEventListener('click', boundHide);
