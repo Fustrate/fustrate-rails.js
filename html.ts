@@ -15,9 +15,13 @@ interface ContentTagOptions extends BaseTagOptions {
   text?: string;
 }
 
+function flattenClasses(...classes: string[]) {
+  return classes.flatMap((classname) => classname.split(' ')).filter(Boolean);
+}
+
 function setBaseOptions(element: HTMLElement, options: BaseTagOptions): void {
   if (options.class) {
-    element.classList.add(...(typeof options.class === 'string' ? [options.class] : options.class));
+    element.classList.add(...flattenClasses(...(typeof options.class === 'string' ? [options.class] : options.class)));
   }
 
   if (options.attributes) {
