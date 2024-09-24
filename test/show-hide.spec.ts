@@ -44,13 +44,13 @@ describe('toggle', () => {
 });
 
 describe('show', () => {
-  it('removes the js-hide class', () => {
+  it('removes the tw-hidden class', () => {
     const element = document.createElement('div');
-    element.classList.add('js-hide');
+    element.classList.add('tw-hidden');
 
     show(element);
 
-    expect(element.classList).toEqual({ 0: 'js-show' });
+    expect(Object.keys(element.classList).length).toEqual(0);
   });
 
   it('resets the css display property', () => {
@@ -64,11 +64,12 @@ describe('show', () => {
 });
 
 describe('hide', () => {
-  it('removes the css display property', () => {
+  it('adds the tw-hidden class', () => {
     const element = document.createElement('div');
 
     hide(element);
 
+    expect(element.classList).toEqual({ 0: 'tw-hidden' });
     expect(element.style.display).toBe('none');
   });
 });
