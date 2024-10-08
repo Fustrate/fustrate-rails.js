@@ -44,9 +44,9 @@ describe('toggle', () => {
 });
 
 describe('show', () => {
-  it('removes the tw-hidden class', () => {
+  it('removes the hidden class', () => {
     const element = document.createElement('div');
-    element.classList.add('tw-hidden');
+    element.classList.add('hidden');
 
     show(element);
 
@@ -64,12 +64,12 @@ describe('show', () => {
 });
 
 describe('hide', () => {
-  it('adds the tw-hidden class', () => {
+  it('adds the hidden class', () => {
     const element = document.createElement('div');
 
     hide(element);
 
-    expect(element.classList).toEqual({ 0: 'tw-hidden' });
+    expect(element.classList).toEqual({ 0: 'hidden' });
     expect(element.style.display).toBe('none');
   });
 });

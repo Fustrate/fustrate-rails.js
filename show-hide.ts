@@ -1,9 +1,9 @@
 function toggleElement(element: HTMLElement, makeVisible?: boolean) {
   if (makeVisible == null) {
-    makeVisible = element.classList.contains('tw-hidden');
+    makeVisible = element.classList.contains('hidden');
   }
 
-  element.classList.toggle('tw-hidden', !makeVisible);
+  element.classList.toggle('hidden', !makeVisible);
 
   // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-hidden
   // aria-hidden="true" should not be added when:
@@ -13,7 +13,7 @@ function toggleElement(element: HTMLElement, makeVisible?: boolean) {
 }
 
 export function isVisible(element: HTMLElement): boolean {
-  if (element.classList.contains('tw-hidden')) {
+  if (element.classList.contains('hidden')) {
     return false;
   }
 
