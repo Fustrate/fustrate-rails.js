@@ -1,4 +1,4 @@
-import escape from 'lodash/escape';
+import lodashEscape from 'lodash/escape';
 import kebabCase from 'lodash/kebabCase';
 
 type ToggleableAttribute = 'checked' | 'required' | 'disabled' | 'selected' | 'readonly';
@@ -93,7 +93,7 @@ export function escapeMultilineHTML(string: string | null | undefined): string {
 
   return String(string)
     .split(/\r?\n/)
-    .map((line) => escape(line))
+    .map((line) => lodashEscape(line))
     .join('<br />');
 }
 

@@ -1,9 +1,4 @@
-import {
-  hide,
-  isVisible,
-  show,
-  toggle,
-} from '../show-hide';
+import { hide, isVisible, show, toggle } from '../show-hide';
 
 describe('isVisible', () => {
   it('detects invisible elements', () => {

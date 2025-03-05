@@ -7,6 +7,6 @@ if (typeof Array.prototype.at !== 'function') {
 
     const k = index >= 0 ? index : length + index;
 
-    return (k < 0 || k >= length) ? undefined : this[k];
+    return k < 0 || k >= length ? undefined : this[k];
   };
 }

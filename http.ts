@@ -3,11 +3,7 @@ import { csrfToken } from './ajax';
 type FormRedirectMethod = 'post' | 'patch' | 'delete';
 type FormRedirectData = Record<string, string>;
 
-export function formRedirectTo(
-  href: string,
-  method: FormRedirectMethod,
-  data: FormRedirectData,
-): void {
+export function formRedirectTo(href: string, method: FormRedirectMethod, data: FormRedirectData): void {
   const form = document.createElement('form');
   form.method = 'POST';
   form.action = href;

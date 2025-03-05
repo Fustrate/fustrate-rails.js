@@ -38,7 +38,10 @@ export default class GenericPage {
   protected addDecoratedEventHandlers(): void {
     delegate(
       document,
-      { selector: '[data-button], [data-field]', exclude: '.modal [data-button], .modal [data-field]' },
+      {
+        selector: '[data-button], [data-field]',
+        exclude: '.modal [data-button], .modal [data-field]',
+      },
       'click',
       (event) => {
         const element = event.target.closest<HTMLElement>('[data-button], [data-field]');

@@ -67,7 +67,9 @@ export default class Pagination extends Listenable {
       li.classList.add('unavailable');
       li.innerHTML = `<a href="#">${settings.previousText}</a>`;
     } else {
-      li.innerHTML = this.link(settings.previousText, this.page - 1, { rel: 'prev' });
+      li.innerHTML = this.link(settings.previousText, this.page - 1, {
+        rel: 'prev',
+      });
     }
 
     return li;
@@ -81,7 +83,9 @@ export default class Pagination extends Listenable {
       li.classList.add('unavailable');
       li.innerHTML = `<a href="#">${settings.nextText}</a>`;
     } else {
-      li.innerHTML = this.link(settings.nextText, this.page + 1, { rel: 'next' });
+      li.innerHTML = this.link(settings.nextText, this.page + 1, {
+        rel: 'next',
+      });
     }
 
     return li;

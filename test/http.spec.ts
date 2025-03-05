@@ -1,6 +1,4 @@
-import {
-  redirectTo,
-} from '../http';
+import { redirectTo } from '../http';
 
 describe('redirectTo', () => {
   jest.useFakeTimers();

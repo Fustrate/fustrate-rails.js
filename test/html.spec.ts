@@ -1,8 +1,4 @@
-import {
-  elementFromString,
-  escapeMultilineHTML,
-  tag,
-} from '../html';
+import { elementFromString, escapeMultilineHTML, tag } from '../html';
 
 describe('elementFromString', () => {
   it('creates a bare element', () => {
@@ -33,9 +29,7 @@ describe('escapeMultilineHTML', () => {
   });
 
   it('turns newlines into br elements', () => {
-    expect(escapeMultilineHTML('The\r\nLos\nAngeles\nDodgers')).toBe(
-      'The<br />Los<br />Angeles<br />Dodgers',
-    );
+    expect(escapeMultilineHTML('The\r\nLos\nAngeles\nDodgers')).toBe('The<br />Los<br />Angeles<br />Dodgers');
   });
 
   it('escapes entities in a string', () => {
@@ -51,24 +45,22 @@ describe('tag', () => {
   });
 
   it('creates an input tag with a value', () => {
-    expect(tag.input({ attributes: { type: 'text', value: 'hello' } }).outerHTML)
-      .toBe('<input type="text" value="hello">');
+    expect(tag.input({ attributes: { type: 'text', value: 'hello' } }).outerHTML).toBe(
+      '<input type="text" value="hello">',
+    );
 
-    expect(tag.input({ attributes: { type: 'text', value: null } }).outerHTML)
-      .toBe('<input type="text">');
+    expect(tag.input({ attributes: { type: 'text', value: null } }).outerHTML).toBe('<input type="text">');
   });
 
   it('creates a tag with classes', () => {
-    expect(tag.span({ class: 'green red' }).outerHTML)
-      .toBe('<span class="green red"></span>');
+    expect(tag.span({ class: 'green red' }).outerHTML).toBe('<span class="green red"></span>');
 
-    expect(tag.span({ class: ['green', 'red'] }).outerHTML)
-      .toBe('<span class="green red"></span>');
+    expect(tag.span({ class: ['green', 'red'] }).outerHTML).toBe('<span class="green red"></span>');
 
-    expect(tag.span({ class: ['green red', 'blue'] }).outerHTML)
-      .toBe('<span class="green red blue"></span>');
+    expect(tag.span({ class: ['green red', 'blue'] }).outerHTML).toBe('<span class="green red blue"></span>');
 
-    expect(tag.span({ class: ['green red', 'blue yellow'] }).outerHTML)
-      .toBe('<span class="green red blue yellow"></span>');
+    expect(tag.span({ class: ['green red', 'blue yellow'] }).outerHTML).toBe(
+      '<span class="green red blue yellow"></span>',
+    );
   });
 });

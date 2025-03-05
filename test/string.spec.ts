@@ -1,13 +1,4 @@
-import {
-  humanize,
-  isBlank,
-  isPresent,
-  parameterize,
-  phoneFormat,
-  pluralize,
-  presence,
-  underscore,
-} from '../string';
+import { humanize, isBlank, isPresent, parameterize, phoneFormat, pluralize, presence, underscore } from '../string';
 
 describe('#humanize()', () => {
   it('dasherizes a string', () => {

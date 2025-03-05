@@ -1,7 +1,7 @@
-import { type AxiosPromise } from 'axios';
+import type { AxiosPromise } from 'axios';
 
 import ajax from './ajax';
-import { type PaginatedData } from './components/pagination';
+import type { PaginatedData } from './components/pagination';
 
 function pathToJsonURL(path: string): string {
   const url = path.startsWith('/') ? new URL(path, window.location.origin) : new URL(path);

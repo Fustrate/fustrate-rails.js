@@ -1,4 +1,4 @@
-import { HTMLEvent, delegate, stopEverything } from '../events';
+import { type HTMLEvent, delegate, stopEverything } from '../events';
 
 export default class Tabs {
   protected tabs: HTMLUListElement;

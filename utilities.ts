@@ -91,9 +91,7 @@ export function icon(types: string, style?: FontAwesomeStyle): string {
 }
 
 export function label(text: string, ...classes: string[]): string {
-  const cssClasses = classes
-    .map((klass) => klass.replace(/[\s_-]+/g, '-').toLowerCase())
-    .filter(Boolean);
+  const cssClasses = classes.map((klass) => klass.replace(/[\s_-]+/g, '-').toLowerCase()).filter(Boolean);
 
   const span = document.createElement('span');
   span.textContent = text;

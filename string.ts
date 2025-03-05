@@ -45,9 +45,7 @@ export function phoneFormat(input: string): string {
 
 // This is far too simple for most cases, but it works for the few things we need
 export function pluralize(string: string): string {
-  return string.at(-1) === 'y'
-    ? `${string.slice(0, -1)}ies`
-    : `${string}s`;
+  return string.at(-1) === 'y' ? `${string.slice(0, -1)}ies` : `${string}s`;
 }
 
 export function presence(input: string | null | undefined): string | undefined {

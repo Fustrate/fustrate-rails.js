@@ -80,18 +80,18 @@ describe('decorateMethod', () => {
   it('decorates all kinds of stuff', () => {
     const record = new Subclass();
 
-    expect(Reflect.getMetadata(oneArgSymbol, Object.getPrototypeOf(record)))
-      .toStrictEqual(['oneArgMethod', 'anotherOneArgMethod']);
+    expect(Reflect.getMetadata(oneArgSymbol, Object.getPrototypeOf(record))).toStrictEqual([
+      'oneArgMethod',
+      'anotherOneArgMethod',
+    ]);
 
     expect(record.callDecoratedMethods()).toStrictEqual([1, 11, 111]);
 
     expect(record.callDecoratedMethodsWithOneArg(7)).toStrictEqual([8, -1]);
 
-    expect(record.callDecoratedMethodsWithManyArgs(3, 'total', { five: 5, eleven: 11 }))
-      .toStrictEqual(['total: 19']);
+    expect(record.callDecoratedMethodsWithManyArgs(3, 'total', { five: 5, eleven: 11 })).toStrictEqual(['total: 19']);
 
-    expect(record.callDynamicDecorator('potato', 'porpoise purpose'))
-      .toStrictEqual([['porpoise', 'purpose']]);
+    expect(record.callDynamicDecorator('potato', 'porpoise purpose')).toStrictEqual([['porpoise', 'purpose']]);
 
     expect(record.callTypedDecorator()).toStrictEqual([true]);
   });

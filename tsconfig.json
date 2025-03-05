@@ -1,27 +1,25 @@
 {
-    "compilerOptions": {
-      "baseUrl": ".",
-      "emitDecoratorMetadata": true,
-      "esModuleInterop": true,
-      "experimentalDecorators": true,
-      "isolatedModules": true,
-      "lib": ["ES2017", "ES6", "DOM", "ES2019.Array", "ES2015.Promise", "DOM.Iterable"],
-      "module": "es6",
-      "moduleResolution": "node",
-      "resolveJsonModule": true,
-      "sourceMap": true,
-      "target": "es6",
-      // Strict...
-      "noImplicitOverride": true,
-      "noImplicitReturns": true,
-      "noUnusedLocals": true,
-      "strict": true,
-      // ...but not that strict
-      "noImplicitAny": false,
-      "strictPropertyInitialization": false,
-    },
-    "exclude": [
-      "node_modules",
-    ],
-    "compileOnSave": false,
-  }
+	"compilerOptions": {
+		"baseUrl": ".",
+		"emitDecoratorMetadata": true,
+		"esModuleInterop": true,
+		"experimentalDecorators": true,
+		"isolatedModules": true,
+		"lib": ["ES2017", "ES6", "DOM", "ES2019.Array", "ES2015.Promise", "DOM.Iterable"],
+		"module": "es6",
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"sourceMap": true,
+		"target": "es6",
+		// Strict...
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noUnusedLocals": true,
+		"strict": true,
+		// ...but not that strict
+		"noImplicitAny": false,
+		"strictPropertyInitialization": false
+	},
+	"exclude": ["node_modules"],
+	"compileOnSave": false
+}

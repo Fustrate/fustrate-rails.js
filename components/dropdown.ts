@@ -1,4 +1,4 @@
-import { createPopper, type Instance, type Options, type Placement } from '@popperjs/core';
+import { type Instance, type Options, type Placement, createPopper } from '@popperjs/core';
 
 import { delegate, stopEverything } from '../events';
 

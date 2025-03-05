@@ -1,45 +1,41 @@
 {
-  "name": "@fustrate/rails",
-  "version": "0.3.0",
-  "description": "A frontend framework built for my personal projects because reinventing the wheel is obviously worth my time.",
-  "license": "UNLICENSED",
-  "type": "module",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Fustrate/fustrate-rails.js"
-  },
-  "bugs": "https://github.com/Fustrate/fustrate-rails.js/issues",
-  "dependencies": {
-    "@popperjs/core": "^2.11.8",
-    "animate.css": "^4.1.1",
-    "axios": "^1.7.9",
-    "lodash": "^4.17.21",
-    "reflect-metadata": "^0.2.2"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.20.0",
-    "@happy-dom/jest-environment": "^14.12.3",
-    "@jest/globals": "^29.7.0",
-    "@stylistic/eslint-plugin": "^2.13.0",
-    "@types/jest": "^29.5.14",
-    "@types/lodash": "^4.17.15",
-    "@types/luxon": "^3.4.2",
-    "eslint-plugin-jest": "^28.11.0",
-    "eslint-plugin-lodash": "^7.4.0",
-    "eslint-plugin-unicorn": "^53.0.0",
-    "jest": "^29.7.0",
-    "jest-mock-axios": "^4.8.0",
-    "ts-jest": "^29.2.5",
-    "typescript": "^5.7.3",
-    "typescript-eslint": "^7.18.0"
-  },
-  "scripts": {
-    "lint": "eslint .",
-    "lint:fix": "npm run lint",
-    "precommit": "npm run lint",
-    "test": "NODE_OPTIONS='--disable-warning=DeprecationWarning' jest --silent",
-    "tsc": "tsc --noEmit --incremental --project .",
-    "tsc:watch": "npm run tsc --watch",
-    "versions": "NODE_OPTIONS='--disable-warning=ExperimentalWarning' node ./lib/update-package-versions.js"
-  }
+	"name": "@fustrate/rails",
+	"version": "0.3.0",
+	"description": "A frontend framework built for my personal projects because reinventing the wheel is obviously worth my time.",
+	"license": "UNLICENSED",
+	"type": "module",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Fustrate/fustrate-rails.js"
+	},
+	"bugs": "https://github.com/Fustrate/fustrate-rails.js/issues",
+	"dependencies": {
+		"@popperjs/core": "^2.11.8",
+		"animate.css": "^4.1.1",
+		"axios": "^1.8.1",
+		"lodash": "^4.17.21",
+		"reflect-metadata": "^0.2.2"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"@happy-dom/jest-environment": "^17.2.2",
+		"@jest/globals": "^29.7.0",
+		"@types/jest": "^29.5.14",
+		"@types/lodash": "^4.17.16",
+		"@types/luxon": "^3.4.2",
+		"jest": "^29.7.0",
+		"jest-mock-axios": "^4.8.0",
+		"ts-jest": "^29.2.6",
+		"typescript": "^5.8.2"
+	},
+	"scripts": {
+		"lint": "biome lint .",
+		"lint:fix": "biome lint . --fix",
+		"lint:format": "biome format . --fix",
+		"precommit": "biome lint .",
+		"test": "NODE_OPTIONS='--disable-warning=DeprecationWarning' jest --silent",
+		"tsc": "tsc --noEmit --incremental --project .",
+		"tsc:watch": "npm run tsc --watch",
+		"versions": "NODE_OPTIONS='--disable-warning=ExperimentalWarning' node ./lib/update-package-versions.js"
+	}
 }

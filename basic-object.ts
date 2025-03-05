@@ -22,13 +22,11 @@ export default class BasicObject extends Listenable {
       return data as InstanceType<T>;
     }
 
-    if (typeof data === 'string' || typeof data === 'number') {
-      data = { id: data };
-    }
-
     const record = new this();
 
-    record.extractFromData(deepExtend({}, data, attributes ?? {}));
+    record.extractFromData(
+      deepExtend({}, typeof data === 'string' || typeof data === 'number' ? { id: data } : data, attributes ?? {}),
+    );
 
     return record as InstanceType<T>;
   }

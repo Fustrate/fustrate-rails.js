@@ -1,9 +1,9 @@
 function toggleElement(element: HTMLElement, makeVisible?: boolean) {
   if (makeVisible == null) {
-    makeVisible = element.classList.contains('hidden!');
+    element.classList.toggle('hidden!');
+  } else {
+    element.classList.toggle('hidden!', !makeVisible);
   }
-
-  element.classList.toggle('hidden!', !makeVisible);
 
   // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-hidden
   // aria-hidden="true" should not be added when:
@@ -22,8 +22,10 @@ export function isVisible(element: HTMLElement): boolean {
     return element.checkVisibility();
   }
 
-  return element.parentElement != null
-    && (element.offsetWidth > 0 || element.offsetHeight > 0 || element.getClientRects().length > 0);
+  return (
+    element.parentElement != null &&
+    (element.offsetWidth > 0 || element.offsetHeight > 0 || element.getClientRects().length > 0)
+  );
 }
 
 export function toggle(element: NodeList | HTMLElement, showOrHide?: boolean): void {

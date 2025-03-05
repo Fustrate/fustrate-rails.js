@@ -1,9 +1,9 @@
-import GenericPage from './generic-page';
 import Pagination from './components/pagination';
+import GenericPage from './generic-page';
 import { elementFromString } from './html';
 import { deepExtend } from './object';
 
-import { type PaginatedData } from './components/pagination';
+import type { PaginatedData } from './components/pagination';
 
 export interface GenericTableSettings {
   [s: string]: any;
@@ -12,7 +12,7 @@ export interface GenericTableSettings {
   selector?: string;
 }
 
-export { type PaginatedData } from './components/pagination';
+export type { PaginatedData } from './components/pagination';
 
 export { initialize, refresh } from './generic-page';
 
@@ -23,10 +23,7 @@ const defaultSortFunction: SortFunction = (row) => row.textContent ?? '';
 const blankRow = '<tr></tr>';
 const noRecordsMessage = 'No records found.';
 
-function sortRows<T extends HTMLElement = HTMLElement>(
-  rows: T[],
-  sortFunction: SortFunction<T> = defaultSortFunction,
-) {
+function sortRows<T extends HTMLElement = HTMLElement>(rows: T[], sortFunction: SortFunction<T> = defaultSortFunction) {
   const rowsWithSortOrder: [string, T][] = rows.map((row) => [sortFunction(row), row]);
 
   rowsWithSortOrder.sort((x, y) => {
@@ -78,11 +75,11 @@ export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableR
 
     if (table == null) {
       throw new Error(`Could not find table: ${selector}`);
-    } else {
-      this.table = table;
-
-      [this.tbody] = this.table.tBodies;
     }
+
+    this.table = table;
+
+    [this.tbody] = this.table.tBodies;
   }
 
   protected abstract reloadTable(): Promise<void>;
@@ -113,7 +110,7 @@ export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableR
     }
 
     if (trs.length > 0) {
-      for (const tr of (options?.sort ? sortRows<U>(trs, options.sort) : trs)) {
+      for (const tr of options?.sort ? sortRows<U>(trs, options.sort) : trs) {
         this.tbody.append(tr);
       }
     }
@@ -149,8 +146,9 @@ export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableR
   }
 
   protected getCheckedIds(): string[] {
-    return [...this.tbody.querySelectorAll<HTMLInputElement>('td:first-child input:checked')]
-      .map((input) => input.value);
+    return [...this.tbody.querySelectorAll<HTMLInputElement>('td:first-child input:checked')].map(
+      (input) => input.value,
+    );
   }
 
   protected checkAll(event: Event & { target: HTMLInputElement }): void {

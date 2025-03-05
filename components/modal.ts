@@ -21,11 +21,12 @@ interface ButtonAttributes {
 
 export type ModalButton = 'spacer' | 'cancel' | 'save' | HTMLButtonElement | Record<string, string | ButtonAttributes>;
 
-export type ModalContent = string |
-  HTMLElement |
-  HTMLElement[] |
-  (() => HTMLElement | HTMLElement[]) |
-  DocumentFragment;
+export type ModalContent =
+  | string
+  | HTMLElement
+  | HTMLElement[]
+  | (() => HTMLElement | HTMLElement[])
+  | DocumentFragment;
 
 export interface ModalSettings {
   buttons?: ModalButton[];
@@ -96,7 +97,11 @@ function createButton(name: string, options?: string | ButtonAttributes) {
     text = options;
   }
 
-  return tag.button({ class: type ?? name, text: text ?? startCase(name), data: { button: name } });
+  return tag.button({
+    class: type ?? name,
+    text: text ?? startCase(name),
+    data: { button: name },
+  });
 }
 
 function toggleOverlay(visible = true) {
@@ -185,7 +190,9 @@ export default abstract class Modal<T = void> extends Listenable {
     this.setup();
   }
 
-  public get locked() { return this.#locked; }
+  public get locked() {
+    return this.#locked;
+  }
 
   public setting<K extends keyof ModalSettings>(key: K): Partial<ModalSettings>[K] {
     return this.settings[key] ?? defaultSettings[key];
@@ -268,9 +275,21 @@ export default abstract class Modal<T = void> extends Listenable {
       if (button === 'spacer') {
         list.push(tag.div({ class: 'spacer' }));
       } else if (button === 'cancel') {
-        list.push(tag.button({ class: button, text: 'Cancel', data: { modalClose: true } }));
+        list.push(
+          tag.button({
+            class: button,
+            text: 'Cancel',
+            data: { modalClose: true },
+          }),
+        );
       } else if (typeof button === 'string') {
-        list.push(tag.button({ class: button, text: startCase(button), data: { button } }));
+        list.push(
+          tag.button({
+            class: button,
+            text: startCase(button),
+            data: { button },
+          }),
+        );
       } else if (button instanceof HTMLButtonElement) {
         list.push(button);
       } else if (typeof button === 'object') {
@@ -313,8 +332,9 @@ export default abstract class Modal<T = void> extends Listenable {
       return;
     }
 
-    const firstInput = [...this.modal.querySelectorAll<HTMLInputElement>('input, select, textarea')]
-      .find((element) => isVisible(element) && !element.disabled && !element.readOnly);
+    const firstInput = [...this.modal.querySelectorAll<HTMLInputElement>('input, select, textarea')].find(
+      (element) => isVisible(element) && !element.disabled && !element.readOnly,
+    );
 
     firstInput?.focus();
   }
@@ -410,9 +430,7 @@ export default abstract class Modal<T = void> extends Listenable {
 
   protected createModal(): HTMLDivElement {
     // Join and split in case any of the classes include spaces
-    const classes = this.defaultClasses()
-      .join(' ')
-      .split(' ');
+    const classes = this.defaultClasses().join(' ').split(' ');
 
     const element = elementFromString<HTMLDivElement>(template);
     element.classList.add(...classes);

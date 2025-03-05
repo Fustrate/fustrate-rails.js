@@ -6,8 +6,15 @@ import { fire } from './events';
 import formDataBuilder from './form-data-builder';
 import { underscore } from './string';
 
-export type ParamValue = string | number | boolean | null | undefined | Blob | ParamValue[] |
-  { [s: string]: ParamValue };
+export type ParamValue =
+  | string
+  | number
+  | boolean
+  | null
+  | undefined
+  | Blob
+  | ParamValue[]
+  | { [s: string]: ParamValue };
 
 export type Parameters = Record<string, ParamValue>;
 
@@ -65,10 +72,7 @@ export default class BaseRecord extends BasicObject {
     });
   }
 
-  public async update(
-    attributes: Parameters,
-    additionalParameters?: AdditionalParameters,
-  ): Promise<AxiosResponse> {
+  public async update(attributes: Parameters, additionalParameters?: AdditionalParameters): Promise<AxiosResponse> {
     let url: string;
 
     if (this.id) {
@@ -79,8 +83,8 @@ export default class BaseRecord extends BasicObject {
       url = this.class.createPath({ format: 'json' });
     }
 
-    const paramKey = this.class.paramKey
-      || this.classname.replace(/::/g, '').replace(/^[A-Z]/, (match) => match.toLowerCase());
+    const paramKey =
+      this.class.paramKey || this.classname.replace(/::/g, '').replace(/^[A-Z]/, (match) => match.toLowerCase());
 
     const data = formDataBuilder(attributes, paramKey);
 

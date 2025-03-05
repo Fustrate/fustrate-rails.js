@@ -14,7 +14,11 @@ function matches(element: Element, selector: string | MatchesOptions) {
 
 // Triggers a custom event on an element and returns false if the event result is false
 export function fire<T = any>(target: EventTarget | Listenable, name: string, detail?: T): boolean {
-  const event = new CustomEvent(name, { bubbles: true, cancelable: true, detail });
+  const event = new CustomEvent(name, {
+    bubbles: true,
+    cancelable: true,
+    detail,
+  });
 
   target.dispatchEvent(event);
 
@@ -43,7 +47,7 @@ export function delegate<T = HTMLEvent>(
       target = target.parentNode;
     }
 
-    if (target instanceof Element && (handler.call(target, event) === false)) {
+    if (target instanceof Element && handler.call(target, event) === false) {
       event.preventDefault();
       event.stopPropagation();
     }

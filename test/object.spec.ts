@@ -3,9 +3,10 @@ import BasicObject from '../basic-object';
 
 describe('#deepExtend()', () => {
   it('extends an object deeply', () => {
-    expect(
-      deepExtend({}, { a: { b: { c: [1, 2, 3] } } }, { a: { b: { d: 4 } } }, { e: 5 }),
-    ).toEqual({ a: { b: { c: [1, 2, 3], d: 4 } }, e: 5 });
+    expect(deepExtend({}, { a: { b: { c: [1, 2, 3] } } }, { a: { b: { d: 4 } } }, { e: 5 })).toEqual({
+      a: { b: { c: [1, 2, 3], d: 4 } },
+      e: 5,
+    });
   });
 });
 

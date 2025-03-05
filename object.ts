@@ -9,14 +9,14 @@ export function isPlainObject(object: any): boolean {
   return !object.isBasicObject && !object.isLuxonDateTime;
 }
 
-export function deepExtend(out: object | null, ...rest: object[]): object {
-  out = out ?? {};
+export function deepExtend(input: object | null, ...rest: object[]): object {
+  const output = input ?? {};
 
   for (const obj of rest.filter(Boolean)) {
     for (const key of Object.getOwnPropertyNames(obj)) {
-      out[key] = isPlainObject(obj[key]) ? deepExtend(out[key], obj[key]) : obj[key];
+      output[key] = isPlainObject(obj[key]) ? deepExtend(output[key], obj[key]) : obj[key];
     }
   }
 
-  return out;
+  return output;
 }

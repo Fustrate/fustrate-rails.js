@@ -7,7 +7,7 @@ type TypedMethodDecorator<T> = (
   propertyKey: string | symbol,
   descriptor: TypedPropertyDescriptor<T>,
   // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-) => void | TypedPropertyDescriptor<T>;
+) => TypedPropertyDescriptor<T> | void;
 
 export function decorateMethod<T = any>(name: DecoratorName): TypedMethodDecorator<T> {
   return (target, key) => {

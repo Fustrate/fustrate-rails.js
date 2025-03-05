@@ -1,9 +1,4 @@
-import {
-  accountingFormat,
-  bytesToString,
-  ordinalize,
-  truncate,
-} from '../number';
+import { accountingFormat, bytesToString, ordinalize, truncate } from '../number';
 
 describe('#accountingFormat()', () => {
   it('should format a positive integer', () => {
