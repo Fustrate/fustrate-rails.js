@@ -25,8 +25,8 @@ describe('toggle', () => {
 
     toggle(spans, false);
 
-    expect(spans[0].style.display).toBe('none');
-    expect(spans[1].style.display).toBe('none');
+    expect(spans[0].classList.contains('hidden!')).toBe(true);
+    expect(spans[1].classList.contains('hidden!')).toBe(true);
   });
 
   it('toggles a single element', () => {
@@ -34,27 +34,30 @@ describe('toggle', () => {
 
     toggle(element, false);
 
-    expect(element.style.display).toBe('none');
+    expect(element.classList.contains('hidden!')).toBe(true);
+
+    toggle(element);
+
+    expect(element.classList.contains('hidden!')).toBe(false);
   });
 });
 
 describe('show', () => {
   it('removes the hidden class', () => {
     const element = document.createElement('div');
-    element.classList.add('hidden');
+    element.classList.add('hidden!');
 
     show(element);
 
     expect(Object.keys(element.classList).length).toEqual(0);
   });
 
-  it('resets the css display property', () => {
+  it('does not change an element that is not hidden', () => {
     const element = document.createElement('div');
-    element.style.display = 'none';
 
     show(element);
 
-    expect(element.style.display).toBe('');
+    expect(Object.keys(element.classList).length).toEqual(0);
   });
 });
 
@@ -64,7 +67,6 @@ describe('hide', () => {
 
     hide(element);
 
-    expect(element.classList).toEqual({ 0: 'hidden' });
-    expect(element.style.display).toBe('none');
+    expect(element.classList).toEqual({ 0: 'hidden!' });
   });
 });
