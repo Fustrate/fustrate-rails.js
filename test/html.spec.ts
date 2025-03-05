@@ -13,12 +13,19 @@ describe('elementFromString', () => {
     expect(element.classList.contains('date')).toBe(true);
   });
 
-  it('creates an element with children', () => {
+  it('creates a table row element with children', () => {
     const element = elementFromString<HTMLTableRowElement>('<tr><td></td><td><input></td><td></td></tr>');
 
     expect(element).toBeInstanceOf(HTMLTableRowElement);
     expect(element.children).toHaveLength(3);
     expect(element.querySelector('input')).toBeInstanceOf(HTMLInputElement);
+  });
+
+  it('creates a table cell element', () => {
+    const element = elementFromString<HTMLTableCellElement>('<td>hello</td>');
+
+    expect(element).toBeInstanceOf(HTMLTableCellElement);
+    expect(element.textContent).toBe('hello');
   });
 });
 

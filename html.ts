@@ -81,7 +81,22 @@ function contentElement<K extends keyof HTMLElementTagNameMap>(
 export function elementFromString<T extends HTMLElement>(string: string): T {
   const template = document.createElement('template');
 
-  template.innerHTML = string.trim();
+  const trimmed = string.trim();
+
+  // https://github.com/capricorn86/happy-dom/issues/1687
+  if (trimmed.startsWith('<tr>')) {
+    template.innerHTML = `<table>${trimmed}</table>`;
+
+    return (template.content.firstChild as HTMLTableElement).rows[0] as unknown as T;
+  }
+
+  if (trimmed.startsWith('<td>')) {
+    template.innerHTML = `<table><tr>${trimmed}</tr></table>`;
+
+    return (template.content.firstChild as HTMLTableElement).rows[0].cells[0] as unknown as T;
+  }
+
+  template.innerHTML = trimmed;
 
   return template.content.firstChild as T;
 }
