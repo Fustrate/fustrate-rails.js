@@ -4,7 +4,7 @@ import kebabCase from 'lodash/kebabCase';
 type ToggleableAttribute = 'checked' | 'required' | 'disabled' | 'selected' | 'readonly';
 
 interface BaseTagOptions {
-  attributes?: Record<string, string | number | true | null>;
+  attributes?: Record<string, string | number | true | null | undefined>;
   class?: string | string[];
   data?: Record<string, string | number | true>;
 }
