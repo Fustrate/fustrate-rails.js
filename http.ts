@@ -1,7 +1,7 @@
 import { csrfToken } from './ajax';
 
 type FormRedirectMethod = 'post' | 'patch' | 'delete';
-type FormRedirectData = Record<string, string>;
+type FormRedirectData = Record<string, string | number | undefined | null>;
 
 export function formRedirectTo(href: string, method: FormRedirectMethod, data: FormRedirectData): void {
   const form = document.createElement('form');
@@ -32,7 +32,7 @@ export function formRedirectTo(href: string, method: FormRedirectMethod, data: F
 
     input.type = 'hidden';
     input.name = name;
-    input.value = value;
+    input.value = value == null ? '' : String(value);
 
     form.append(input);
   }
