@@ -19,7 +19,7 @@ export type ParamValue =
 export type Parameters = Record<string, ParamValue>;
 
 // Additional parameters are not recursively processed like the record parameters are.
-export type AdditionalParameters = Record<string, string | Blob | number | null>;
+export type AdditionalParameters = Record<string, string | Blob | number | null | undefined>;
 
 export default class BaseRecord extends BasicObject {
   public static classname: string;
