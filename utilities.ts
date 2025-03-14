@@ -115,7 +115,11 @@ export function linkTo(text: string, href: Linkable, attributes?: LinkableAttrib
   return element.outerHTML;
 }
 
-export function toHumanDate(dateTimeObject: DateTimeLike, time?: boolean): string {
+export function toHumanDate(dateTimeObject: DateTimeLike | null | undefined, time?: boolean): string | null {
+  if (dateTimeObject == null) {
+    return null;
+  }
+
   const year = dateTimeObject.year === new Date().getFullYear() ? '' : '/yy';
 
   return dateTimeObject.toFormat(`M/d${year}${time ? ' t' : ''}`);
