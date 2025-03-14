@@ -6,6 +6,15 @@ import { fire } from './events';
 import formDataBuilder from './form-data-builder';
 import { underscore } from './string';
 
+type RequiredParameter = string | number | { id: number } | { toParam?: number | string };
+// type OptionalParameter = string | number | null | undefined;
+type AnyParameter = RequiredParameter | string[] | number[] | null | undefined;
+
+interface RouteOptions {
+  [s: string]: AnyParameter;
+  format?: string;
+}
+
 export type ParamValue =
   | string
   | number
@@ -24,7 +33,7 @@ export type AdditionalParameters = Record<string, string | Blob | number | null 
 export default class BaseRecord extends BasicObject {
   public static classname: string;
   public static paramKey: string;
-  public static createPath: (options?: { format?: string }) => string;
+  public static createPath: (options?: RouteOptions) => string;
 
   public id?: number;
   protected isLoaded: boolean;
