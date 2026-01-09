@@ -26,7 +26,6 @@ describe('#isPlainObject()', () => {
   });
 
   it('new Object() is a plain object', () => {
-    // eslint-disable-next-line no-new-object
     expect(isPlainObject(new Object())).toBe(true);
   });
 

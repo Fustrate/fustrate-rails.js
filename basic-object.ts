@@ -43,8 +43,7 @@ export default class BasicObject extends Listenable {
     return items.map((item) => this.build(item, attributes)) as InstanceType<T>[];
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public constructor(data?: number | string) {
+  public constructor(_data?: number | string) {
     super();
   }
 
