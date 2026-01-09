@@ -11,21 +11,21 @@
 	"bugs": "https://github.com/Fustrate/fustrate-rails.js/issues",
 	"dependencies": {
 		"@popperjs/core": "^2.11.8",
-		"axios": "^1.9.0",
+		"axios": "^1.13.2",
 		"lodash": "^4.17.21",
 		"reflect-metadata": "^0.2.2"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
-		"@happy-dom/jest-environment": "^17.4.6",
+		"@happy-dom/jest-environment": "^17.6.3",
 		"@jest/globals": "^29.7.0",
 		"@types/jest": "^29.5.14",
-		"@types/lodash": "^4.17.16",
-		"@types/luxon": "^3.6.2",
+		"@types/lodash": "^4.17.21",
+		"@types/luxon": "^3.7.1",
 		"jest": "^29.7.0",
-		"jest-mock-axios": "^4.8.0",
-		"ts-jest": "^29.3.2",
-		"typescript": "^5.8.3"
+		"jest-mock-axios": "^4.9.0",
+		"ts-jest": "^29.4.6",
+		"typescript": "^5.9.3"
 	},
 	"scripts": {
 		"lint": "biome lint .",
