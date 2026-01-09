@@ -1,10 +1,11 @@
-import pull from 'lodash/pull';
-import set from 'lodash/set';
-import startCase from 'lodash/startCase';
+import { pull } from 'es-toolkit/array';
+import { merge } from 'es-toolkit/object';
+import { startCase } from 'es-toolkit/string';
 
 import { delegate, fire, stopEverything } from '../events';
 import { elementFromString, tag } from '../html';
 import Listenable from '../listenable';
+import { objectFromPath } from '../object';
 import { isVisible } from '../show-hide';
 import { animate, icon as createIcon } from '../utilities';
 
@@ -219,13 +220,13 @@ export default abstract class Modal<T = void> extends Listenable {
 
     for (const element of this.modal.querySelectorAll<HTMLElement>('[data-field]')) {
       if (element.dataset.field) {
-        set(this.fields, element.dataset.field, element);
+        merge(this.fields, objectFromPath(element.dataset.field, element));
       }
     }
 
     for (const element of this.modal.querySelectorAll<HTMLElement>('[data-button]')) {
       if (element.dataset.button) {
-        set(this.buttons, element.dataset.button, element);
+        merge(this.buttons, objectFromPath(element.dataset.button, element));
       }
     }
   }
@@ -347,7 +348,7 @@ export default abstract class Modal<T = void> extends Listenable {
     this.#locked = true;
 
     if (openModals.includes(this)) {
-      pull(openModals, this);
+      pull(openModals, [this]);
     }
 
     openModals.push(this);

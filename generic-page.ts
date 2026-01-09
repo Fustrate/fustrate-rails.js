@@ -1,7 +1,8 @@
-import set from 'lodash/set';
+import { merge } from 'es-toolkit/object';
 
 import { callDecoratedMethods, decorateMethod } from './decorators';
 import { delegate } from './events';
+import { objectFromPath } from './object';
 
 interface UIElements {
   [s: string]: HTMLElement | UIElements | UIElements[];
@@ -87,13 +88,13 @@ export default class GenericPage {
 
     for (const element of document.body.querySelectorAll<HTMLElement>('[data-field]')) {
       if (!element.matches('.modal [data-field]') && element.dataset.field) {
-        set(this.fields, element.dataset.field, element);
+        merge(this.fields, objectFromPath(element.dataset.field, element));
       }
     }
 
     for (const element of document.body.querySelectorAll<HTMLElement>('[data-button]')) {
       if (!element.matches('.modal [data-button]') && element.dataset.button) {
-        set(this.buttons, element.dataset.button, element);
+        merge(this.buttons, objectFromPath(element.dataset.button, element));
       }
     }
   }

@@ -1,5 +1,5 @@
-import { deepExtend, isPlainObject } from '../object';
 import BasicObject from '../basic-object';
+import { deepExtend, isPlainObject, objectFromPath } from '../object';
 
 describe('#deepExtend()', () => {
   it('extends an object deeply', () => {
@@ -34,5 +34,19 @@ describe('#isPlainObject()', () => {
     class Thing extends BasicObject {}
 
     expect(isPlainObject(new Thing())).toBe(false);
+  });
+});
+
+describe('#objectFromPath()', () => {
+  it('creates an object from a simple path', () => {
+    expect(objectFromPath('a.b.c', 42)).toEqual({ a: { b: { c: 42 } } });
+  });
+
+  it('creates an object from a path with an array index', () => {
+    expect(objectFromPath('a.b[0].c', 42)).toEqual({ a: { b: [{ c: 42 }] } });
+  });
+
+  it('creates an object from a path with multiple array indices', () => {
+    expect(objectFromPath('a.b[0].c[1]', 42)).toEqual({ a: { b: [{ c: [undefined, 42] }] } });
   });
 });
