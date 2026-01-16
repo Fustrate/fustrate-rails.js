@@ -108,7 +108,6 @@ describe('linkTo', () => {
 
 describe('toHumanDate', () => {
   beforeAll(() => {
-    // eslint-disable-next-line no-extend-native
     Date.prototype.getFullYear = jest.fn().mockReturnValue(2018);
   });
 

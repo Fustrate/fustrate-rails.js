@@ -6,7 +6,7 @@ type TypedMethodDecorator<T> = (
   target: object,
   propertyKey: string | symbol,
   descriptor: TypedPropertyDescriptor<T>,
-  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+  // biome-ignore lint/suspicious/noConfusingVoidType: This is a valid use of void in a decorator context
 ) => TypedPropertyDescriptor<T> | void;
 
 export function decorateMethod<T = any>(name: DecoratorName): TypedMethodDecorator<T> {

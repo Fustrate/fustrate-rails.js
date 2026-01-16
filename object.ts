@@ -20,3 +20,54 @@ export function deepExtend(input: object | null, ...rest: object[]): object {
 
   return output;
 }
+
+// es-toolkit doesn't provide a `set` function for deep object paths, so we implement our own
+export function objectFromPath(path: string, value: any): object {
+  const parts = path.split('.');
+  const result: any = {};
+  let current = result;
+
+  for (let i = 0; i < parts.length - 1; i++) {
+    const part = parts[i];
+    const match = /^(.+?)\[(\d+)\]$/.exec(part);
+
+    if (match) {
+      const [, key, index] = match;
+      const idx = Number.parseInt(index, 10);
+
+      if (!current[key]) {
+        current[key] = [];
+      }
+
+      if (!current[key][idx]) {
+        current[key][idx] = {};
+      }
+
+      current = current[key][idx];
+    } else {
+      if (!current[part]) {
+        current[part] = {};
+      }
+
+      current = current[part];
+    }
+  }
+
+  const lastPart = parts[parts.length - 1];
+  const match = /^(.+?)\[(\d+)\]$/.exec(lastPart);
+
+  if (match) {
+    const [, key, index] = match;
+    const idx = Number.parseInt(index, 10);
+
+    if (!current[key]) {
+      current[key] = [];
+    }
+
+    current[key][idx] = value;
+  } else {
+    current[lastPart] = value;
+  }
+
+  return result;
+}
