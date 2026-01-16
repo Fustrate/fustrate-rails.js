@@ -12,12 +12,12 @@
 	"dependencies": {
 		"@popperjs/core": "^2.11.8",
 		"axios": "^1.13.2",
-		"es-toolkit": "^1.43.0",
+		"es-toolkit": "^1.44.0",
 		"reflect-metadata": "^0.2.2"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.3.11",
-		"@happy-dom/jest-environment": "^20.1.0",
+		"@happy-dom/jest-environment": "^20.3.1",
 		"@jest/globals": "^30.2.0",
 		"@types/jest": "^30.0.0",
 		"@types/luxon": "^3.7.1",
