@@ -132,6 +132,7 @@ export function toggleAttribute(field: HTMLElement, attribute: ToggleableAttribu
 export const tag = {
   a: (options?: ContentTagOptions) => contentElement('a', options),
   address: (options?: ContentTagOptions) => contentElement('address', options),
+  audio: (options?: ContentTagOptions) => contentElement('audio', options),
   br: () => voidElement('br'),
   button: (options?: ContentTagOptions) => contentElement('button', options),
   canvas: (options?: ContentTagOptions) => contentElement('canvas', options),
