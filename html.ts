@@ -120,12 +120,14 @@ export function setChildren(parent: HTMLElement, items: HTMLElement[]): void {
   parent.append(fragment);
 }
 
-export function toggleAttribute(field: HTMLElement, attribute: ToggleableAttribute, enabled: boolean): void {
-  if (enabled) {
-    field.setAttribute(attribute, attribute);
-  } else {
-    field.removeAttribute(attribute);
-  }
+export function stripHTML(html: string): string {
+  const div = tag.div({ html });
+
+  const { textContent } = div;
+
+  div.remove();
+
+  return textContent ?? '';
 }
 
 // Access tag helpers via `tag.div({ ... })`
@@ -173,14 +175,13 @@ export const tag = {
   textarea: (options?: ContentTagOptions) => contentElement('textarea', options),
   tr: (options?: ContentTagOptions) => contentElement('tr', options),
   ul: (options?: ContentTagOptions) => contentElement('ul', options),
+  video: (options?: ContentTagOptions) => contentElement('video', options),
 };
 
-export function stripHTML(html: string): string {
-  const div = tag.div({ html });
-
-  const { textContent } = div;
-
-  div.remove();
-
-  return textContent ?? '';
+export function toggleAttribute(field: HTMLElement, attribute: ToggleableAttribute, enabled: boolean): void {
+  if (enabled) {
+    field.setAttribute(attribute, attribute);
+  } else {
+    field.removeAttribute(attribute);
+  }
 }
