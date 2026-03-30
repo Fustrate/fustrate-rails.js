@@ -1,4 +1,5 @@
 import Listenable from '../listenable';
+import { describe, it, expect } from 'vitest';
 
 class Thing extends Listenable {}
 

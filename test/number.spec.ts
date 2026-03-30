@@ -1,4 +1,5 @@
 import { accountingFormat, bytesToString, ordinalize, truncate } from '../number';
+import { describe, it, expect } from 'vitest';
 
 describe('#accountingFormat()', () => {
   it('should format a positive integer', () => {

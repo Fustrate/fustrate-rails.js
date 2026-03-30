@@ -1,4 +1,5 @@
 import { hide, isVisible, show, toggle } from '../show-hide';
+import { describe, it, expect } from 'vitest';
 
 describe('isVisible', () => {
   it('detects invisible elements', () => {
@@ -9,6 +10,7 @@ describe('isVisible', () => {
 
   it('detects visible elements', () => {
     const div = document.createElement('div');
+    div.textContent = 'I am visible';
 
     document.body.append(div);
 
@@ -67,6 +69,6 @@ describe('hide', () => {
 
     hide(element);
 
-    expect(element.classList).toEqual({ 0: 'hidden!' });
+    expect(element.classList.toString()).toEqual('hidden!');
   });
 });

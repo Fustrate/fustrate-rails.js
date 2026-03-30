@@ -1,4 +1,5 @@
 import { decorateMethod, callDecoratedMethods } from '../decorators';
+import { describe, it, expect } from 'vitest';
 
 const oneArgSymbol = Symbol('$oneArg');
 

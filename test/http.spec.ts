@@ -1,7 +1,8 @@
 import { redirectTo } from '../http';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('redirectTo', () => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 
   Object.defineProperty(window, 'location', {
     value: { href: 'https://github.com' },
@@ -10,15 +11,14 @@ describe('redirectTo', () => {
 
   it('redirects after 750ms', () => {
     redirectTo('https://google.com');
-
     expect(window.location.href).toBe('https://github.com');
 
     // Wait for 749ms
-    jest.advanceTimersByTime(749);
+    vi.advanceTimersByTime(749);
     expect(window.location.href).toBe('https://github.com');
 
     // 1 more ms and it should run
-    jest.advanceTimersByTime(1);
+    vi.advanceTimersByTime(1);
     expect(window.location.href).toBe('https://google.com');
   });
 });

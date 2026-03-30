@@ -1,5 +1,6 @@
 import BasicObject from '../basic-object';
 import { deepExtend, isPlainObject, objectFromPath } from '../object';
+import { describe, it, expect } from 'vitest';
 
 describe('#deepExtend()', () => {
   it('extends an object deeply', () => {

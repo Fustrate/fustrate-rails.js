@@ -1,4 +1,5 @@
 import { humanize, isBlank, isPresent, parameterize, phoneFormat, pluralize, presence, underscore } from '../string';
+import { describe, it, expect } from 'vitest';
 
 describe('#humanize()', () => {
   it('dasherizes a string', () => {
