@@ -28,7 +28,7 @@
 		"lint:fix": "biome lint . --fix",
 		"lint:format": "biome format . --fix",
 		"precommit": "biome lint .",
-		"test": "vitest",
+		"test": "vitest run",
 		"tsc": "tsc --noEmit --incremental --project .",
 		"tsc:watch": "npm run tsc --watch",
 		"versions": "NODE_OPTIONS='--disable-warning=ExperimentalWarning' node ./lib/update-package-versions.js"
