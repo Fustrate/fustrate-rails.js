@@ -1,4 +1,4 @@
-import { hide, isVisible, show, toggle } from '../show-hide';
+import { hide, show, toggle } from '../show-hide';
 import { describe, it, expect } from 'vitest';
 
 // JSDom doesn't render elements, so we can't test visibility based on layout.
