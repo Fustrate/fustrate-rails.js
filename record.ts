@@ -1,4 +1,4 @@
-import type { AxiosResponse } from 'axios';
+import type { KyResponse } from 'ky';
 
 import ajax from './ajax';
 import BasicObject from './basic-object';
@@ -64,23 +64,24 @@ export default class BaseRecord extends BasicObject {
     this.isLoaded = false;
   }
 
-  public async reload(options?: { force?: boolean }): Promise<AxiosResponse | undefined> {
+  public async reload(options?: { force?: boolean }): Promise<KyResponse | undefined> {
     if (this.isLoaded && !options?.force) {
       return void 0;
     }
 
-    return ajax.get(this.path({ format: 'json' })).then((response) => {
-      this.extractFromData(response.data);
+    const response = await ajax.get(this.path({ format: 'json' }));
+    const { data } = await response.json<{ data: Record<string, any> }>();
 
-      this.isLoaded = true;
+    this.extractFromData(data);
 
-      this.dispatchEvent(new CustomEvent('reloaded'));
+    this.isLoaded = true;
 
-      return response.data;
-    });
+    this.dispatchEvent(new CustomEvent('reloaded'));
+
+    return response;
   }
 
-  public async update(attributes: Parameters, additionalParameters?: AdditionalParameters): Promise<AxiosResponse> {
+  public async update(attributes: Parameters, additionalParameters?: AdditionalParameters): Promise<KyResponse> {
     let url: string;
 
     if (this.id) {
@@ -94,36 +95,37 @@ export default class BaseRecord extends BasicObject {
     const paramKey =
       this.class.paramKey || this.classname.replace(/::/g, '').replace(/^[A-Z]/, (match) => match.toLowerCase());
 
-    const data = formDataBuilder(attributes, paramKey);
+    const formData = formDataBuilder(attributes, paramKey);
 
     if (additionalParameters) {
       for (const [key, value] of Object.entries(additionalParameters)) {
         if (value != null) {
-          data.append(key, value instanceof Blob ? value : String(value));
+          formData.append(key, value instanceof Blob ? value : String(value));
         }
       }
     }
 
-    return ajax({
+    const response = await ajax(url, {
       method: this.id ? 'patch' : 'post',
-      url,
-      data,
+      body: formData,
       onUploadProgress: (event) => {
         fire(this, 'upload:progress', event);
       },
-    }).then((response) => {
-      this.extractFromData(response.data);
-
-      this.isLoaded = true;
-
-      this.dispatchEvent(new CustomEvent('updated'));
-
-      return response.data;
     });
+
+    const { data } = await response.json<{ data: Record<string, any> }>();
+
+    this.extractFromData(data);
+
+    this.isLoaded = true;
+
+    this.dispatchEvent(new CustomEvent('updated'));
+
+    return response;
   }
 
-  public async delete(params?: Parameters): Promise<AxiosResponse> {
-    return ajax.delete(this.path({ format: 'json' }), { params });
+  public async delete(): Promise<KyResponse> {
+    return ajax.delete(this.path({ format: 'json' }));
   }
 
   public static async create<T extends typeof BaseRecord>(

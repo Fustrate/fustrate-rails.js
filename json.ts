@@ -1,4 +1,4 @@
-import type { AxiosPromise } from 'axios';
+import type { KyResponse } from 'ky';
 
 import ajax from './ajax';
 import type { PaginatedData } from './components/pagination';
@@ -21,22 +21,22 @@ function pathToJsonURL(path: string): string {
   return url.toString();
 }
 
-export async function getJSON<T>(url: string): AxiosPromise<T> {
+export async function getJSON<T>(url: string): Promise<KyResponse<T>> {
   return ajax.get<T>(pathToJsonURL(url));
 }
 
-export async function patchJSON<T>(url: string, data: any): AxiosPromise<T> {
-  return ajax.patch<T>(pathToJsonURL(url), data);
+export async function patchJSON<T>(url: string, data: any): Promise<KyResponse<T>> {
+  return ajax.patch<T>(pathToJsonURL(url), { body: data });
 }
 
-export async function postJSON<T>(url: string, data?: any): AxiosPromise<T> {
-  return ajax.post<T>(pathToJsonURL(url), data);
+export async function postJSON<T>(url: string, data?: any): Promise<KyResponse<T>> {
+  return ajax.post<T>(pathToJsonURL(url), { body: data });
 }
 
-export async function getCurrentPageJSON<T = any>(): AxiosPromise<T> {
+export async function getCurrentPageJSON<T = any>(): Promise<KyResponse<T>> {
   return getJSON<T>(window.location.toString());
 }
 
-export async function getPaginatedJSON<T>(url: string): AxiosPromise<PaginatedData<T>> {
+export async function getPaginatedJSON<T>(url: string): Promise<KyResponse<PaginatedData<T>>> {
   return getJSON<PaginatedData<T>>(url);
 }
