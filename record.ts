@@ -124,8 +124,8 @@ export default class BaseRecord extends BasicObject {
     return response;
   }
 
-  public async delete(): Promise<KyResponse> {
-    return ajax.delete(this.path({ format: 'json' }));
+  public async delete(params?: AdditionalParameters): Promise<KyResponse> {
+    return ajax.delete(this.path({ format: 'json' }), { json: params });
   }
 
   public static async create<T extends typeof BaseRecord>(
