@@ -70,7 +70,7 @@ export default class BaseRecord extends BasicObject {
     }
 
     const response = await ajax.get(this.path({ format: 'json' }));
-    const { data } = await response.json<{ data: Record<string, any> }>();
+    const data = await response.json<Record<string, any>>();
 
     this.extractFromData(data);
 
@@ -114,7 +114,7 @@ export default class BaseRecord extends BasicObject {
       // },
     });
 
-    const { data } = await response.json<{ data: Record<string, any> }>();
+    const data = await response.json<Record<string, any>>();
 
     this.extractFromData(data);
 
