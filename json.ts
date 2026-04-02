@@ -1,3 +1,4 @@
+import type { Options } from 'ky';
 import ajax from './ajax';
 import type { PaginatedData } from './components/pagination';
 
@@ -19,6 +20,14 @@ function pathToJsonURL(path: string): string {
   return url.toString();
 }
 
+function optionsForData(data: any): Options {
+  if (data instanceof FormData) {
+    return { body: data };
+  } else {
+    return { json: data, headers: { 'content-type': 'application/json' } };
+  }
+}
+
 export async function getJSON<T>(url: string): Promise<T> {
   const response = ajax.get<T>(pathToJsonURL(url), { headers: { 'content-type': 'application/json' } });
 
@@ -26,12 +35,14 @@ export async function getJSON<T>(url: string): Promise<T> {
 }
 
 export async function patchJSON<T>(url: string, data: any): Promise<T> {
-  const response = ajax.patch<T>(pathToJsonURL(url), { json: data, headers: { 'content-type': 'application/json' } });
+  const response = await ajax.patch<T>(pathToJsonURL(url), optionsForData(data));
+
   return await response.json();
 }
 
 export async function postJSON<T>(url: string, data?: any): Promise<T> {
-  const response = ajax.post<T>(pathToJsonURL(url), { json: data, headers: { 'content-type': 'application/json' } });
+  const response = await ajax.post<T>(pathToJsonURL(url), optionsForData(data));
+
   return await response.json();
 }
 

@@ -64,6 +64,36 @@ describe('patchJSON', () => {
     });
     expect(data).toEqual(payload);
   });
+
+  it('sends FormData as body without content-type header', async () => {
+    const payload = { id: 42 };
+    const response = { json: vi.fn().mockResolvedValue(payload) };
+    const patchSpy = vi.spyOn(ajax, 'patch').mockReturnValue(response as any);
+    const origin = window.location.origin;
+    const formData = new FormData();
+    formData.append('name', 'Steven');
+
+    const data = await patchJSON<typeof payload>('/users/42', formData);
+
+    expect(patchSpy).toHaveBeenCalledWith(`${origin}/users/42.json`, {
+      body: formData,
+    });
+    expect(data).toEqual(payload);
+  });
+
+  it('sends a plain object as JSON with content-type header', async () => {
+    const payload = { id: 42 };
+    const response = { json: vi.fn().mockResolvedValue(payload) };
+    const patchSpy = vi.spyOn(ajax, 'patch').mockReturnValue(response as any);
+    const origin = window.location.origin;
+
+    await patchJSON('/users/42', { active: false });
+
+    expect(patchSpy).toHaveBeenCalledWith(`${origin}/users/42.json`, {
+      json: { active: false },
+      headers: { 'content-type': 'application/json' },
+    });
+  });
 });
 
 describe('postJSON', () => {
@@ -84,6 +114,36 @@ describe('postJSON', () => {
       headers: { 'content-type': 'application/json' },
     });
     expect(data).toEqual(payload);
+  });
+
+  it('sends FormData as body without content-type header', async () => {
+    const payload = { id: 99 };
+    const response = { json: vi.fn().mockResolvedValue(payload) };
+    const postSpy = vi.spyOn(ajax, 'post').mockReturnValue(response as any);
+    const origin = window.location.origin;
+    const formData = new FormData();
+    formData.append('name', 'Taylor');
+
+    const data = await postJSON<typeof payload>('/users', formData);
+
+    expect(postSpy).toHaveBeenCalledWith(`${origin}/users.json`, {
+      body: formData,
+    });
+    expect(data).toEqual(payload);
+  });
+
+  it('sends a plain object as JSON with content-type header', async () => {
+    const payload = { id: 99 };
+    const response = { json: vi.fn().mockResolvedValue(payload) };
+    const postSpy = vi.spyOn(ajax, 'post').mockReturnValue(response as any);
+    const origin = window.location.origin;
+
+    await postJSON('/users', { role: 'admin' });
+
+    expect(postSpy).toHaveBeenCalledWith(`${origin}/users.json`, {
+      json: { role: 'admin' },
+      headers: { 'content-type': 'application/json' },
+    });
   });
 
   it('allows posting without data', async () => {
