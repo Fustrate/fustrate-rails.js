@@ -1,4 +1,4 @@
-import ky, { type KyRequest, type BeforeErrorHook, type KyResponse } from 'ky';
+import ky, { type KyRequest, type BeforeErrorHook, type KyResponse, isHTTPError } from 'ky';
 
 import { addDebugData } from './debug';
 
@@ -6,9 +6,10 @@ export function csrfToken(): string | undefined {
   return document.querySelector<HTMLMetaElement>('meta[name=csrf-token]')?.content;
 }
 
-type ResponseErrorHandler = (response: KyResponse<{ errors?: string[] }>) => void;
+type ResponseErrorData = { errors?: string[] };
+type ResponseErrorHandler = (response: KyResponse<ResponseErrorData>, data?: ResponseErrorData) => void;
 
-let onResponseError: ResponseErrorHandler = (response: KyResponse<{ errors?: string[] }>) => {
+let onResponseError: ResponseErrorHandler = (response, data) => {
   const { status } = response;
 
   if (!status || status === 404) {
@@ -17,14 +18,10 @@ let onResponseError: ResponseErrorHandler = (response: KyResponse<{ errors?: str
     window.alert(
       'You are not currently logged in. Please refresh the page and try performing this action again. To prevent this in the future, check the "Remember Me" box when logging in.',
     );
+  } else if (data?.errors) {
+    console.log('Errors encountered:', data.errors);
   } else {
-    response.json().then((data) => {
-      if (data.errors) {
-        console.log('Errors encountered:', data.errors);
-      } else {
-        console.log(`Unhandled interception (${status})`, response);
-      }
-    });
+    console.log(`Unhandled interception (${status})`, response);
   }
 };
 
@@ -40,12 +37,14 @@ function processRequestError(request: KyRequest) {
   });
 }
 
-const errorHandler: BeforeErrorHook = async (error) => {
-  error.response?.status;
-  if ('response' in error && error.response) {
-    onResponseError(error.response);
-  } else if ('request' in error && error.request) {
-    processRequestError(error.request);
+const errorHandler: BeforeErrorHook = async ({ error, request }) => {
+  if (isHTTPError(error)) {
+    const response = error.response as KyResponse<ResponseErrorData>;
+    const data = error.data as ResponseErrorData | undefined;
+
+    onResponseError(response, data);
+  } else if (request) {
+    processRequestError(request);
   }
 
   return Promise.reject(error);
