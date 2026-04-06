@@ -108,10 +108,9 @@ export default class BaseRecord extends BasicObject {
     const response = await ajax(url, {
       method: this.id ? 'patch' : 'post',
       body: formData,
-      // Requires ky > 1.14.3
-      // onUploadProgress: (event) => {
-      //   fire(this, 'upload:progress', event);
-      // },
+      onUploadProgress: (event) => {
+        fire(this, 'upload:progress', event);
+      },
     });
 
     const data = await response.json<Record<string, any>>();
