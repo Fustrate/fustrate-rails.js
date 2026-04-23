@@ -13,7 +13,7 @@ function pathToJsonURL(path: string): string {
     search.set('format', 'json');
 
     url.search = search.toString();
-  } else {
+  } else if (!pathname.endsWith('.json')) {
     url.pathname = `${pathname}.json`;
   }
 
