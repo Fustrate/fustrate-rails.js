@@ -20,7 +20,7 @@
 		"@biomejs/biome": "^2.4.13",
 		"@types/luxon": "^3.7.1",
 		"jsdom": "^29.0.2",
-		"typescript": "^5.9.3",
+		"typescript": "^6.0.3",
 		"vitest": "^4.1.5"
 	},
 	"scripts": {
@@ -30,7 +30,7 @@
 		"precommit": "biome lint .",
 		"test": "vitest run",
 		"tsc": "tsc --noEmit --incremental --project .",
-		"tsc:watch": "npm run tsc --watch",
-		"versions": "NODE_OPTIONS='--disable-warning=ExperimentalWarning' node ./lib/update-package-versions.js"
+		"tsc:watch": "bun run tsc --watch",
+		"versions": "bun run ./lib/update-package-versions.js"
 	}
 }
