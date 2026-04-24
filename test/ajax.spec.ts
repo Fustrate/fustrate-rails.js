@@ -1,22 +1,19 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi, mock, spyOn } from 'bun:test';
 
-vi.mock('../debug', () => ({
-  addDebugData: vi.fn(),
+mock('../debug', () => ({
+  addDebugData: mock(),
 }));
 
 import ajax, { csrfToken, setResponseErrorHandler } from '../ajax';
 
-const flushPromises = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
+// const flushPromises = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
 
 const makeRequest = async (status: number, body = '{}') => {
-  vi.stubGlobal(
-    'fetch',
-    vi.fn().mockResolvedValue(
-      new Response(body, {
-        status,
-        headers: { 'Content-Type': 'application/json' },
-      }),
-    ),
+  spyOn(window, 'fetch').mockResolvedValue(
+    new Response(body, {
+      status,
+      headers: { 'Content-Type': 'application/json' },
+    }),
   );
 
   try {
@@ -25,22 +22,27 @@ const makeRequest = async (status: number, body = '{}') => {
     // errors are expected
   }
 
-  await flushPromises();
+  // await flushPromises();
 };
 
 describe('ajax', () => {
-  let alertSpy: ReturnType<typeof vi.spyOn>;
-  let consoleSpy: ReturnType<typeof vi.spyOn>;
+  let alertSpy: ReturnType<typeof spyOn>;
+  let consoleSpy: ReturnType<typeof spyOn>;
 
   beforeEach(() => {
-    alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
-    consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    alertSpy = spyOn(window, 'alert').mockImplementation(() => {});
+    consoleSpy = spyOn(console, 'log').mockImplementation(() => {});
+
+    Object.defineProperty(window.location, 'origin', {
+      value: 'https://example.com',
+      configurable: true,
+    });
   });
 
   afterEach(() => {
     alertSpy.mockRestore();
     consoleSpy.mockRestore();
-    vi.unstubAllGlobals();
+    mock.restore();
     document.head.innerHTML = '';
   });
 
@@ -89,7 +91,7 @@ describe('ajax', () => {
 
   describe('setResponseErrorHandler', () => {
     it('replaces the error handler', async () => {
-      const mockHandler = vi.fn();
+      const mockHandler = mock();
       setResponseErrorHandler(mockHandler);
 
       await makeRequest(422);
@@ -98,7 +100,7 @@ describe('ajax', () => {
     });
 
     it('calls the custom handler with the response object', async () => {
-      const mockHandler = vi.fn();
+      const mockHandler = mock();
       setResponseErrorHandler(mockHandler);
 
       await makeRequest(403);

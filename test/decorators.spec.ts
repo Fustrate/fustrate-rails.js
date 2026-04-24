@@ -1,5 +1,5 @@
 import { decorateMethod, callDecoratedMethods } from '../decorators';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect } from 'bun:test';
 
 const oneArgSymbol = Symbol('$oneArg');
 

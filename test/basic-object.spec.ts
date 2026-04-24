@@ -1,5 +1,5 @@
 import BasicObject from '../basic-object';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect } from 'bun:test';
 
 class Event extends BasicObject {
   public note: string;

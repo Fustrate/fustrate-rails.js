@@ -1,15 +1,26 @@
+/// <reference lib="dom" />
+
 import ajax from '../ajax';
 import { getCurrentPageJSON, getJSON, getPaginatedJSON, patchJSON, postJSON } from '../json';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi, mock, spyOn } from 'bun:test';
 
 describe('getJSON', () => {
+  beforeEach(() => {
+    Object.defineProperty(window.location, 'origin', {
+      value: 'https://example.com',
+      configurable: true,
+    });
+  });
+
   afterEach(() => {
-    vi.restoreAllMocks();
+    mock.restore();
   });
 
   it('adds .json to relative paths and preserves query params', async () => {
-    const response = { json: vi.fn().mockResolvedValue({ ok: true }) };
-    const getSpy = vi.spyOn(ajax, 'get').mockReturnValue(response as any);
+    const asyncMock = mock();
+
+    const response = { json: asyncMock.mockResolvedValue({ ok: true }) };
+    const getSpy = spyOn(ajax, 'get').mockReturnValue(response as any);
     const origin = window.location.origin;
 
     const data = await getJSON<{ ok: boolean }>('/users?page=2');
@@ -23,7 +34,7 @@ describe('getJSON', () => {
 
   it('adds format=json for root paths', async () => {
     const response = { json: vi.fn().mockResolvedValue({ ok: true }) };
-    const getSpy = vi.spyOn(ajax, 'get').mockReturnValue(response as any);
+    const getSpy = spyOn(ajax, 'get').mockReturnValue(response as any);
     const origin = window.location.origin;
 
     await getJSON('/');
@@ -35,7 +46,7 @@ describe('getJSON', () => {
 
   it('normalizes absolute URLs with trailing slashes', async () => {
     const response = { json: vi.fn().mockResolvedValue({ ok: true }) };
-    const getSpy = vi.spyOn(ajax, 'get').mockReturnValue(response as any);
+    const getSpy = spyOn(ajax, 'get').mockReturnValue(response as any);
 
     await getJSON('https://example.com/api/users/?page=1');
 
@@ -47,13 +58,13 @@ describe('getJSON', () => {
 
 describe('patchJSON', () => {
   afterEach(() => {
-    vi.restoreAllMocks();
+    mock.restore();
   });
 
   it('patches JSON and returns parsed body', async () => {
     const payload = { id: 42 };
     const response = { json: vi.fn().mockResolvedValue(payload) };
-    const patchSpy = vi.spyOn(ajax, 'patch').mockReturnValue(response as any);
+    const patchSpy = spyOn(ajax, 'patch').mockReturnValue(response as any);
     const origin = window.location.origin;
 
     const data = await patchJSON<typeof payload>('/users/42', { name: 'Steven' });
@@ -67,8 +78,8 @@ describe('patchJSON', () => {
 
   it('sends FormData as body without content-type header', async () => {
     const payload = { id: 42 };
-    const response = { json: vi.fn().mockResolvedValue(payload) };
-    const patchSpy = vi.spyOn(ajax, 'patch').mockReturnValue(response as any);
+    const response = { json: mock().mockResolvedValue(payload) };
+    const patchSpy = spyOn(ajax, 'patch').mockReturnValue(response as any);
     const origin = window.location.origin;
     const formData = new FormData();
     formData.append('name', 'Steven');
@@ -84,7 +95,7 @@ describe('patchJSON', () => {
   it('sends a plain object as JSON with content-type header', async () => {
     const payload = { id: 42 };
     const response = { json: vi.fn().mockResolvedValue(payload) };
-    const patchSpy = vi.spyOn(ajax, 'patch').mockReturnValue(response as any);
+    const patchSpy = spyOn(ajax, 'patch').mockReturnValue(response as any);
     const origin = window.location.origin;
 
     await patchJSON('/users/42', { active: false });
@@ -98,13 +109,13 @@ describe('patchJSON', () => {
 
 describe('postJSON', () => {
   afterEach(() => {
-    vi.restoreAllMocks();
+    mock.restore();
   });
 
   it('posts JSON payload and returns parsed body', async () => {
     const payload = { id: 99 };
     const response = { json: vi.fn().mockResolvedValue(payload) };
-    const postSpy = vi.spyOn(ajax, 'post').mockReturnValue(response as any);
+    const postSpy = spyOn(ajax, 'post').mockReturnValue(response as any);
     const origin = window.location.origin;
 
     const data = await postJSON<typeof payload>('/users', { name: 'Taylor' });
@@ -119,7 +130,7 @@ describe('postJSON', () => {
   it('sends FormData as body without content-type header', async () => {
     const payload = { id: 99 };
     const response = { json: vi.fn().mockResolvedValue(payload) };
-    const postSpy = vi.spyOn(ajax, 'post').mockReturnValue(response as any);
+    const postSpy = spyOn(ajax, 'post').mockReturnValue(response as any);
     const origin = window.location.origin;
     const formData = new FormData();
     formData.append('name', 'Taylor');
@@ -135,7 +146,7 @@ describe('postJSON', () => {
   it('sends a plain object as JSON with content-type header', async () => {
     const payload = { id: 99 };
     const response = { json: vi.fn().mockResolvedValue(payload) };
-    const postSpy = vi.spyOn(ajax, 'post').mockReturnValue(response as any);
+    const postSpy = spyOn(ajax, 'post').mockReturnValue(response as any);
     const origin = window.location.origin;
 
     await postJSON('/users', { role: 'admin' });
@@ -149,7 +160,7 @@ describe('postJSON', () => {
   it('allows posting without data', async () => {
     const payload = { ok: true };
     const response = { json: vi.fn().mockResolvedValue(payload) };
-    const postSpy = vi.spyOn(ajax, 'post').mockReturnValue(response as any);
+    const postSpy = spyOn(ajax, 'post').mockReturnValue(response as any);
     const origin = window.location.origin;
 
     await postJSON('/ping');
@@ -163,15 +174,20 @@ describe('postJSON', () => {
 
 describe('page helpers', () => {
   afterEach(() => {
-    vi.restoreAllMocks();
+    mock.restore();
+  });
+
+  beforeEach(() => {
+    spyOn(window.location, 'origin').mockReturnValue('https://example.com');
+    spyOn(window.location, 'toString').mockReturnValue(`${window.location.origin}/projects?tab=all`);
   });
 
   it('getCurrentPageJSON requests the current location as JSON', async () => {
     const origin = window.location.origin;
     window.history.pushState({}, '', '/projects?tab=all');
 
-    const response = { json: vi.fn().mockResolvedValue({ ok: true }) };
-    const getSpy = vi.spyOn(ajax, 'get').mockReturnValue(response as any);
+    const response = { json: mock().mockResolvedValue({ ok: true }) };
+    const getSpy = spyOn(ajax, 'get').mockReturnValue(response as any);
 
     await getCurrentPageJSON();
 
@@ -183,7 +199,7 @@ describe('page helpers', () => {
   it('getPaginatedJSON delegates to getJSON', async () => {
     const payload = { data: [{ id: 1 }], pagination: { page: 1 } };
     const response = { json: vi.fn().mockResolvedValue(payload) };
-    const getSpy = vi.spyOn(ajax, 'get').mockReturnValue(response as any);
+    const getSpy = spyOn(ajax, 'get').mockReturnValue(response as any);
     const origin = window.location.origin;
 
     const data = await getPaginatedJSON<{ id: number }>('/widgets');

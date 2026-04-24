@@ -1,5 +1,5 @@
 import formDataBuilder from '../form-data-builder';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect } from 'bun:test';
 
 function rawDataFor(formData: FormData) {
   const data = {};

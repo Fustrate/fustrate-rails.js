@@ -1,5 +1,5 @@
 import { animate, hms, icon, label, linkTo, toHumanDate } from '../utilities';
-import { describe, it, expect, beforeAll, vi } from 'vitest';
+import { describe, it, expect, beforeAll, vi } from 'bun:test';
 
 describe('animate', () => {
   it('animates for a while', () => {
