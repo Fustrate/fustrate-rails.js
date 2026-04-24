@@ -184,7 +184,6 @@ describe('page helpers', () => {
 
   it('getCurrentPageJSON requests the current location as JSON', async () => {
     const origin = window.location.origin;
-    window.history.pushState({}, '', '/projects?tab=all');
 
     const response = { json: mock().mockResolvedValue({ ok: true }) };
     const getSpy = spyOn(ajax, 'get').mockReturnValue(response as any);
