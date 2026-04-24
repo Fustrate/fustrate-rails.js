@@ -1,4 +1,4 @@
-import { elementFromString, escapeMultilineHTML, tag } from '../html';
+import { elementFromString, escapeMultilineHTML, setChildren, stripHTML, tag, toggleAttribute } from '../html';
 import { describe, it, expect } from 'bun:test';
 
 describe('elementFromString', () => {
@@ -44,6 +44,74 @@ describe('escapeMultilineHTML', () => {
     expect(escapeMultilineHTML('<strong>\'Bob\' `&` "Bill"</strong>\n=/')).toBe(
       '&lt;strong&gt;&#39;Bob&#39; `&amp;` &quot;Bill&quot;&lt;/strong&gt;<br />=/',
     );
+  });
+});
+
+describe('setChildren', () => {
+  it('replaces all children of the parent element', () => {
+    const parent = document.createElement('div');
+    parent.innerHTML = '<span>old</span>';
+
+    const p1 = document.createElement('p');
+    p1.textContent = 'new1';
+    const p2 = document.createElement('p');
+    p2.textContent = 'new2';
+
+    setChildren(parent, [p1, p2]);
+
+    expect(parent.children).toHaveLength(2);
+    expect(parent.children[0].textContent).toBe('new1');
+    expect(parent.children[1].textContent).toBe('new2');
+  });
+
+  it('clears all existing children when given an empty array', () => {
+    const parent = document.createElement('div');
+    parent.innerHTML = '<span>one</span><span>two</span>';
+
+    setChildren(parent, []);
+
+    expect(parent.children).toHaveLength(0);
+  });
+});
+
+describe('stripHTML', () => {
+  it('strips HTML tags leaving only text content', () => {
+    expect(stripHTML('<p>Hello <strong>world</strong></p>')).toBe('Hello world');
+  });
+
+  it('returns plain text unchanged', () => {
+    expect(stripHTML('Hello world')).toBe('Hello world');
+  });
+
+  it('returns an empty string for a tag with no text', () => {
+    expect(stripHTML('<br>')).toBe('');
+  });
+});
+
+describe('toggleAttribute', () => {
+  it('sets the attribute when enabled is true', () => {
+    const input = document.createElement('input');
+
+    toggleAttribute(input, 'disabled', true);
+
+    expect(input.getAttribute('disabled')).toBe('disabled');
+  });
+
+  it('removes the attribute when enabled is false', () => {
+    const input = document.createElement('input');
+    input.setAttribute('disabled', 'disabled');
+
+    toggleAttribute(input, 'disabled', false);
+
+    expect(input.hasAttribute('disabled')).toBe(false);
+  });
+
+  it('does not add the attribute when already absent and enabled is false', () => {
+    const input = document.createElement('input');
+
+    toggleAttribute(input, 'required', false);
+
+    expect(input.hasAttribute('required')).toBe(false);
   });
 });
 

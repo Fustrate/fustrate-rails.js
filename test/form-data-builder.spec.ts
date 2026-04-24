@@ -58,4 +58,41 @@ describe('#toFormData', () => {
 
     expect(rawDataFor(formDataBuilder(input, 'bills'))).toEqual(output);
   });
+
+  it('appends arrays of primitive values as repeated keys', () => {
+    const formData = formDataBuilder({ tags: ['red', 'blue', 'green'] });
+
+    expect(formData.getAll('tags[]')).toEqual(['red', 'blue', 'green']);
+  });
+
+  it('appends arrays of objects with indexed keys', () => {
+    const formData = formDataBuilder({ items: [{ name: 'a' }, { name: 'b' }] });
+
+    expect(formData.get('items[0][name]')).toBe('a');
+    expect(formData.get('items[1][name]')).toBe('b');
+  });
+
+  it('appends blobs directly', () => {
+    const blob = new Blob(['content'], { type: 'text/plain' });
+    const formData = formDataBuilder({ file: blob });
+
+    expect(formData.get('file')).toBeInstanceOf(Blob);
+  });
+
+  it('skips undefined and NaN values', () => {
+    const formData = formDataBuilder({ a: undefined, b: NaN });
+
+    expect(formData.has('a')).toBe(false);
+    expect(formData.has('b')).toBe(false);
+  });
+
+  it('skips null values', () => {
+    const formData = formDataBuilder({ a: null });
+
+    expect(formData.has('a')).toBe(false);
+  });
+
+  it('converts boolean false to "0"', () => {
+    expect(rawDataFor(formDataBuilder({ active: false }))).toEqual({ active: '0' });
+  });
 });

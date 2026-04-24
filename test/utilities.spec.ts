@@ -112,6 +112,11 @@ describe('toHumanDate', () => {
     Date.prototype.getFullYear = mock().mockReturnValue(2018);
   });
 
+  it('returns null for null or undefined input', () => {
+    expect(toHumanDate(null)).toBeNull();
+    expect(toHumanDate(undefined)).toBeNull();
+  });
+
   it('formats a date in the past', () => {
     const date = {
       year: 2017,

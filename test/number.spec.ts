@@ -25,6 +25,15 @@ describe('#accountingFormat()', () => {
   it('should format zero', () => {
     expect(accountingFormat(0)).toBe('$0.00');
   });
+
+  it('strips trailing .00 cents on positive amounts when stripZeroCents is true', () => {
+    expect(accountingFormat(50, true)).toBe('$50');
+    expect(accountingFormat(0, true)).toBe('$0');
+  });
+
+  it('does not strip non-zero cents when stripZeroCents is true', () => {
+    expect(accountingFormat(50.75, true)).toBe('$50.75');
+  });
 });
 
 describe('#bytesToString()', () => {

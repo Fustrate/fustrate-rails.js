@@ -51,6 +51,49 @@ class TestRecord extends BasicObject {
   }
 }
 
+class SimpleRecord extends BasicObject {
+  public name?: string;
+}
+
+describe('::build', () => {
+  it('returns null when data is undefined', () => {
+    expect(SimpleRecord.build(undefined)).toBeNull();
+  });
+
+  it('returns the same instance when data is already an instance of the class', () => {
+    const record = new SimpleRecord();
+
+    expect(SimpleRecord.build(record)).toBe(record);
+  });
+
+  it('builds from a numeric ID', () => {
+    const record = SimpleRecord.build(42);
+
+    expect(record).toBeInstanceOf(SimpleRecord);
+    expect((record as any).id).toBe(42);
+  });
+
+  it('builds from a string ID', () => {
+    const record = SimpleRecord.build('99');
+
+    expect(record).toBeInstanceOf(SimpleRecord);
+    expect((record as any).id).toBe('99');
+  });
+
+  it('builds from a plain object', () => {
+    const record = SimpleRecord.build({ name: 'Alice' });
+
+    expect(record).toBeInstanceOf(SimpleRecord);
+    expect(record!.name).toBe('Alice');
+  });
+
+  it('merges extra attributes over the data', () => {
+    const record = SimpleRecord.build({ name: 'Alice' }, { name: 'Bob' });
+
+    expect(record!.name).toBe('Bob');
+  });
+});
+
 describe('::buildList', () => {
   it('builds an array of objects', () => {
     const records = TestRecord.buildList([{ age: 5 }, { age: 10 }, { age: 15 }]);
