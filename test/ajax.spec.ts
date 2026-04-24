@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi, mock, spyOn } from 'bun:test';
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from 'bun:test';
 
 mock('../debug', () => ({
   addDebugData: mock(),
