@@ -39,8 +39,8 @@ export function delegate<T = HTMLEvent>(
   selector: string | MatchesOptions,
   eventType: string,
   handler: (evt: T) => any,
-): void {
-  element.addEventListener(eventType, (event: any) => {
+): () => void {
+  const listener = (event: any) => {
     let { target } = event;
 
     while (target instanceof Element && !matches(target, selector)) {
@@ -51,5 +51,9 @@ export function delegate<T = HTMLEvent>(
       event.preventDefault();
       event.stopPropagation();
     }
-  });
+  };
+
+  element.addEventListener(eventType, listener);
+
+  return () => element.removeEventListener(eventType, listener);
 }

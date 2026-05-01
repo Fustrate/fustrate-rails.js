@@ -171,4 +171,45 @@ describe('delegate', () => {
 
     expect(event.defaultPrevented).toBe(true);
   });
+
+  it('returns a cleanup function that removes the event listener', () => {
+    const button = document.createElement('button');
+
+    button.classList.add('action');
+
+    container.append(button);
+
+    const handler = mock();
+
+    const cleanup = delegate(container, 'button.action', 'click', handler);
+
+    button.click();
+
+    expect(handler).toHaveBeenCalledTimes(1);
+
+    cleanup();
+
+    button.click();
+
+    expect(handler).toHaveBeenCalledTimes(1);
+  });
+
+  it('cleanup function does not affect other listeners on the same element', () => {
+    const button = document.createElement('button');
+    button.classList.add('action');
+    container.append(button);
+
+    const handler1 = mock();
+    const handler2 = mock();
+    const cleanup1 = delegate(container, 'button.action', 'click', handler1);
+
+    delegate(container, 'button.action', 'click', handler2);
+
+    cleanup1();
+
+    button.click();
+
+    expect(handler1).not.toHaveBeenCalled();
+    expect(handler2).toHaveBeenCalledTimes(1);
+  });
 });
