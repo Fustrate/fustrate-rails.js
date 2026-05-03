@@ -84,13 +84,13 @@ describe('::build', () => {
     const record = SimpleRecord.build({ name: 'Alice' });
 
     expect(record).toBeInstanceOf(SimpleRecord);
-    expect(record!.name).toBe('Alice');
+    expect(record?.name).toBe('Alice');
   });
 
   it('merges extra attributes over the data', () => {
     const record = SimpleRecord.build({ name: 'Alice' }, { name: 'Bob' });
 
-    expect(record!.name).toBe('Bob');
+    expect(record?.name).toBe('Bob');
   });
 });
 

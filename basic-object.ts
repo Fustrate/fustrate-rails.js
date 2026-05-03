@@ -11,7 +11,7 @@ export default class BasicObject extends Listenable {
 
   public static build<T extends typeof BasicObject>(
     this: T,
-    data?: Record<string, any>,
+    data?: Record<string, any> | InstanceType<T> | string | number,
     attributes?: Record<string, any>,
   ): InstanceType<T> | null {
     if (!data) {
