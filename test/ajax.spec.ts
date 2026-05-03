@@ -1,7 +1,7 @@
-import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from 'bun:test';
+import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest';
 
-mock('../debug', () => ({
-  addDebugData: mock(),
+vi.mock('../debug', () => ({
+  addDebugData: vi.fn(),
 }));
 
 import ajax, { csrfToken, setResponseErrorHandler } from '../ajax';
@@ -9,7 +9,7 @@ import ajax, { csrfToken, setResponseErrorHandler } from '../ajax';
 // const flushPromises = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
 
 const makeRequest = async (status: number, body = '{}') => {
-  spyOn(window, 'fetch').mockResolvedValue(
+  vi.spyOn(window, 'fetch').mockResolvedValue(
     new Response(body, {
       status,
       headers: { 'Content-Type': 'application/json' },
@@ -26,12 +26,12 @@ const makeRequest = async (status: number, body = '{}') => {
 };
 
 describe('ajax', () => {
-  let alertSpy: ReturnType<typeof spyOn>;
-  let consoleSpy: ReturnType<typeof spyOn>;
+  let alertSpy: MockInstance;
+  let consoleSpy: MockInstance;
 
   beforeEach(() => {
-    alertSpy = spyOn(window, 'alert').mockImplementation(() => {});
-    consoleSpy = spyOn(console, 'log').mockImplementation(() => {});
+    alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
+    consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 
     Object.defineProperty(window.location, 'origin', {
       value: 'https://example.com',
@@ -42,7 +42,7 @@ describe('ajax', () => {
   afterEach(() => {
     alertSpy.mockRestore();
     consoleSpy.mockRestore();
-    mock.restore();
+    vi.restoreAllMocks();
     document.head.innerHTML = '';
   });
 
@@ -91,7 +91,7 @@ describe('ajax', () => {
 
   describe('setResponseErrorHandler', () => {
     it('replaces the error handler', async () => {
-      const mockHandler = mock();
+      const mockHandler = vi.fn();
       setResponseErrorHandler(mockHandler);
 
       await makeRequest(422);
@@ -100,7 +100,7 @@ describe('ajax', () => {
     });
 
     it('calls the custom handler with the response object', async () => {
-      const mockHandler = mock();
+      const mockHandler = vi.fn();
       setResponseErrorHandler(mockHandler);
 
       await makeRequest(403);

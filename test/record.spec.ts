@@ -1,5 +1,5 @@
 import Record from '../record';
-import { describe, it, expect } from 'bun:test';
+import { describe, it, expect } from 'vitest';
 
 class BasicRecord extends Record {
   public name: string;

@@ -1,5 +1,5 @@
 import { formRedirectTo, redirectTo } from '../http';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'bun:test';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('redirectTo', () => {
   vi.useFakeTimers();

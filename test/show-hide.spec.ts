@@ -1,5 +1,5 @@
 import { hide, show, toggle } from '../show-hide';
-import { describe, it, expect } from 'bun:test';
+import { describe, it, expect } from 'vitest';
 
 // JSDom doesn't render elements, so we can't test visibility based on layout.
 // describe('isVisible', () => {

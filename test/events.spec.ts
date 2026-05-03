@@ -1,5 +1,5 @@
 import { delegate, fire, stopEverything } from '../events';
-import { afterEach, beforeEach, describe, expect, it, mock } from 'bun:test';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('fire', () => {
   it('dispatches a custom event on the target and returns true', () => {
@@ -102,7 +102,7 @@ describe('delegate', () => {
     button.classList.add('action');
     container.append(button);
 
-    const handler = mock();
+    const handler = vi.fn();
     delegate(document, 'button.action', 'click', handler);
 
     button.click();
@@ -118,7 +118,7 @@ describe('delegate', () => {
     button.append(span);
     container.append(button);
 
-    const handler = mock();
+    const handler = vi.fn();
     delegate(document, 'button.action', 'click', handler);
 
     span.click();
@@ -131,7 +131,7 @@ describe('delegate', () => {
     div.classList.add('other');
     container.append(div);
 
-    const handler = mock();
+    const handler = vi.fn();
     delegate(document, 'button.action', 'click', handler);
 
     div.click();
@@ -149,7 +149,7 @@ describe('delegate', () => {
     modal.append(modalButton);
     container.append(button, modal);
 
-    const handler = mock();
+    const handler = vi.fn();
     delegate(document, { selector: 'button.action', exclude: '.modal button.action' }, 'click', handler);
 
     modalButton.click();
@@ -179,7 +179,7 @@ describe('delegate', () => {
 
     container.append(button);
 
-    const handler = mock();
+    const handler = vi.fn();
 
     const cleanup = delegate(container, 'button.action', 'click', handler);
 
@@ -199,8 +199,8 @@ describe('delegate', () => {
     button.classList.add('action');
     container.append(button);
 
-    const handler1 = mock();
-    const handler2 = mock();
+    const handler1 = vi.fn();
+    const handler2 = vi.fn();
     const cleanup1 = delegate(container, 'button.action', 'click', handler1);
 
     delegate(container, 'button.action', 'click', handler2);

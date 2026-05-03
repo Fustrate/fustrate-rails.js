@@ -1,5 +1,5 @@
 import { elementFromString, escapeMultilineHTML, setChildren, stripHTML, tag, toggleAttribute } from '../html';
-import { describe, it, expect } from 'bun:test';
+import { describe, it, expect } from 'vitest';
 
 describe('elementFromString', () => {
   it('creates a bare element', () => {

@@ -1,5 +1,5 @@
 import { toSentence } from '../array';
-import { describe, it, expect } from 'bun:test';
+import { describe, it, expect } from 'vitest';
 
 describe('toSentence', () => {
   it('joins words and stuff', () => {

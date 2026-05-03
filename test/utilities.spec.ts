@@ -1,5 +1,5 @@
 import { animate, hms, icon, label, linkTo, toHumanDate } from '../utilities';
-import { describe, it, expect, beforeAll, mock } from 'bun:test';
+import { describe, it, expect, beforeAll, vi } from 'vitest';
 
 describe('animate', () => {
   it('animates for a while', () => {
@@ -109,7 +109,7 @@ describe('linkTo', () => {
 
 describe('toHumanDate', () => {
   beforeAll(() => {
-    Date.prototype.getFullYear = mock().mockReturnValue(2018);
+    Date.prototype.getFullYear = vi.fn().mockReturnValue(2018);
   });
 
   it('returns null for null or undefined input', () => {
@@ -120,7 +120,7 @@ describe('toHumanDate', () => {
   it('formats a date in the past', () => {
     const date = {
       year: 2017,
-      toFormat: mock().mockReturnValue('7/1/17'),
+      toFormat: vi.fn().mockReturnValue('7/1/17'),
     };
 
     expect(toHumanDate(date)).toBe('7/1/17');
@@ -130,7 +130,7 @@ describe('toHumanDate', () => {
   it('formats a date in the current year', () => {
     const date = {
       year: 2018,
-      toFormat: mock().mockReturnValue('7/1'),
+      toFormat: vi.fn().mockReturnValue('7/1'),
     };
 
     expect(toHumanDate(date)).toBe('7/1');
@@ -140,7 +140,7 @@ describe('toHumanDate', () => {
   it('formats a date in the future', () => {
     const date = {
       year: 2019,
-      toFormat: mock().mockReturnValue('7/1/19'),
+      toFormat: vi.fn().mockReturnValue('7/1/19'),
     };
 
     expect(toHumanDate(date)).toBe('7/1/19');
@@ -150,7 +150,7 @@ describe('toHumanDate', () => {
   it('formats a date with the time', () => {
     const date = {
       year: 2019,
-      toFormat: mock().mockReturnValue('7/1/19 8:30 AM'),
+      toFormat: vi.fn().mockReturnValue('7/1/19 8:30 AM'),
     };
 
     expect(toHumanDate(date, true)).toBe('7/1/19 8:30 AM');
