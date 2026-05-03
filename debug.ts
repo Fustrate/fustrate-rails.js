@@ -1,5 +1,5 @@
-export const debugData: any[] = [];
+export const debugData: unknown[] = [];
 
-export function addDebugData(data: any): void {
+export function addDebugData(data: unknown): void {
   debugData.push(data);
 }

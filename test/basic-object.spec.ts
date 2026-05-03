@@ -3,14 +3,14 @@ import { describe, it, expect } from 'vitest';
 
 class Event extends BasicObject {
   public note: string;
-  public eventable: any;
+  public eventable: unknown;
 
-  override extractFromData(data?: Record<string, any>) {
+  override extractFromData(data?: Record<string, unknown>) {
     if (data == null) {
       return {};
     }
 
-    if (data.note) {
+    if (typeof data.note === 'string') {
       this.note = data.note;
     }
 
@@ -25,20 +25,20 @@ class Event extends BasicObject {
 class TestRecord extends BasicObject {
   public date: Date;
   public events: Event[] = [];
-  public parent: any;
+  public parent: unknown;
   public age: number;
 
-  override extractFromData(data?: Record<string, any>) {
+  override extractFromData(data?: Record<string, unknown>) {
     if (data == null) {
       return {};
     }
 
-    if (data.date) {
+    if (data.date instanceof Date || typeof data.date === 'string' || typeof data.date === 'number') {
       this.date = new Date(data.date);
     }
 
-    if (data.events) {
-      this.events = Event.buildList(data.events, { eventable: this });
+    if (Array.isArray(data.events)) {
+      this.events = Event.buildList(data.events as Array<Record<string, unknown>>, { eventable: this });
     }
 
     if (data.parent) {
@@ -67,21 +67,21 @@ describe('::build', () => {
   });
 
   it('builds from a numeric ID', () => {
-    const record = SimpleRecord.build(42);
+    const record = SimpleRecord.build(42) as SimpleRecord & { id: number };
 
     expect(record).toBeInstanceOf(SimpleRecord);
-    expect((record as any).id).toBe(42);
+    expect(record.id).toBe(42);
   });
 
   it('builds from a string ID', () => {
-    const record = SimpleRecord.build('99');
+    const record = SimpleRecord.build('99') as SimpleRecord & { id: string };
 
     expect(record).toBeInstanceOf(SimpleRecord);
-    expect((record as any).id).toBe('99');
+    expect(record.id).toBe('99');
   });
 
   it('builds from a plain object', () => {
-    const record = SimpleRecord.build({ name: 'Alice' });
+    const record = SimpleRecord.build({ name: 'Alice' }) as SimpleRecord;
 
     expect(record).toBeInstanceOf(SimpleRecord);
     expect(record?.name).toBe('Alice');

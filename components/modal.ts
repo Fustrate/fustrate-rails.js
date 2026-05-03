@@ -78,8 +78,8 @@ let overlay: HTMLDivElement | null;
 
 let modalCount = 0;
 
-let onMouseMove: any;
-let onMouseUp: any;
+let onMouseMove: ((event: MouseEvent) => void) | undefined;
+let onMouseUp: (() => void) | undefined;
 
 const dragState = {
   mouseDownX: 0,
@@ -177,7 +177,7 @@ export default abstract class Modal<T = void> extends Listenable {
 
   protected promise: Promise<T>;
   protected resolve: (value: T | PromiseLike<T>) => void;
-  protected reject: (reason?: any) => void;
+  protected reject: (reason?: unknown) => void;
 
   protected settings: ModalSettings;
 
@@ -457,7 +457,7 @@ export default abstract class Modal<T = void> extends Listenable {
     return false;
   }
 
-  protected onMouseDown(event: MouseEventInit): void {
+  protected onMouseDown(event: MouseEvent): void {
     this.modal.classList.add('dragging');
 
     onMouseMove = this.onMouseMove.bind(this);
@@ -476,7 +476,7 @@ export default abstract class Modal<T = void> extends Listenable {
     document.addEventListener('mouseup', onMouseUp);
   }
 
-  protected onMouseMove(event: MouseEventInit): void {
+  protected onMouseMove(event: MouseEvent): void {
     if (event.screenX == null || event.screenY == null) {
       return;
     }
@@ -490,7 +490,12 @@ export default abstract class Modal<T = void> extends Listenable {
   protected onMouseUp(): void {
     this.modal.classList.remove('dragging');
 
-    document.removeEventListener('mousemove', onMouseMove);
-    document.removeEventListener('mouseup', onMouseUp);
+    if (onMouseMove) {
+      document.removeEventListener('mousemove', onMouseMove);
+    }
+
+    if (onMouseUp) {
+      document.removeEventListener('mouseup', onMouseUp);
+    }
   }
 }

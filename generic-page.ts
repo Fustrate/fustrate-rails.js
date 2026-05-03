@@ -27,7 +27,7 @@ export default class GenericPage {
   protected fields: UIElements;
   protected buttons: UIElements;
 
-  public async initialize(): Promise<any> {
+  public async initialize(): Promise<void> {
     // Always call this function first, because decorated functions might use fields/buttons.
     this.reloadUIElements();
 

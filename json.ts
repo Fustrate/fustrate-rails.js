@@ -2,6 +2,10 @@ import type { Options } from 'ky';
 import ajax from './ajax';
 import type { PaginatedData } from './components/pagination';
 
+type JsonPrimitive = string | number | boolean | null;
+type JsonValue = JsonPrimitive | JsonValue[] | { [key: string]: JsonValue };
+type JsonRequestData = FormData | JsonValue | undefined;
+
 function pathToJsonURL(path: string): string {
   const url = path.startsWith('/') ? new URL(path, window.location.origin) : new URL(path);
 
@@ -20,7 +24,7 @@ function pathToJsonURL(path: string): string {
   return url.toString();
 }
 
-function optionsForData(data: any): Options {
+function optionsForData(data: JsonRequestData): Options {
   if (data instanceof FormData) {
     return { body: data };
   } else {
@@ -34,19 +38,19 @@ export async function getJSON<T>(url: string): Promise<T> {
   return await response.json();
 }
 
-export async function patchJSON<T>(url: string, data: any): Promise<T> {
+export async function patchJSON<T>(url: string, data: JsonRequestData): Promise<T> {
   const response = await ajax.patch<T>(pathToJsonURL(url), optionsForData(data));
 
   return await response.json();
 }
 
-export async function postJSON<T>(url: string, data?: any): Promise<T> {
+export async function postJSON<T>(url: string, data?: JsonRequestData): Promise<T> {
   const response = await ajax.post<T>(pathToJsonURL(url), optionsForData(data));
 
   return await response.json();
 }
 
-export async function getCurrentPageJSON<T = any>(): Promise<T> {
+export async function getCurrentPageJSON<T = unknown>(): Promise<T> {
   return getJSON<T>(window.location.toString());
 }
 

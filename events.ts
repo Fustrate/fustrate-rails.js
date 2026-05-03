@@ -13,7 +13,7 @@ function matches(element: Element, selector: string | MatchesOptions) {
 }
 
 // Triggers a custom event on an element and returns false if the event result is false
-export function fire<T = any>(target: EventTarget | Listenable, name: string, detail?: T): boolean {
+export function fire<T = unknown>(target: EventTarget | Listenable, name: string, detail?: T): boolean {
   const event = new CustomEvent(name, {
     bubbles: true,
     cancelable: true,
@@ -38,16 +38,16 @@ export function delegate<T = HTMLEvent>(
   element: Element | Document | DocumentFragment,
   selector: string | MatchesOptions,
   eventType: string,
-  handler: (evt: T) => any,
+  handler: (evt: T) => unknown,
 ): () => void {
-  const listener = (event: any) => {
+  const listener = (event: Event) => {
     let { target } = event;
 
     while (target instanceof Element && !matches(target, selector)) {
       target = target.parentNode;
     }
 
-    if (target instanceof Element && handler.call(target, event) === false) {
+    if (target instanceof Element && handler.call(target, event as T) === false) {
       event.preventDefault();
       event.stopPropagation();
     }

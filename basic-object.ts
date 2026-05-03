@@ -33,8 +33,8 @@ export default class BasicObject extends Listenable {
 
   public static buildList<T extends typeof BasicObject>(
     this: T,
-    items: any[],
-    attributes?: Record<string, any>,
+    items: Array<Record<string, unknown> | InstanceType<T> | string | number>,
+    attributes?: Record<string, unknown>,
   ): InstanceType<T>[] {
     if (!Array.isArray(items)) {
       return [];

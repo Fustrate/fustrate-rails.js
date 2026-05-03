@@ -6,7 +6,7 @@ import { deepExtend } from './object';
 import type { PaginatedData } from './components/pagination';
 
 export interface GenericTableSettings {
-  [s: string]: any;
+  [s: string]: unknown;
   blankRow?: string;
   noRecordsMessage?: string;
   selector?: string;
@@ -90,7 +90,7 @@ export default abstract class GenericTable<T, U extends HTMLElement = HTMLTableR
     return this.settings[key] ?? defaultSettings[key];
   }
 
-  public override async initialize(): Promise<any> {
+  public override async initialize(): Promise<void> {
     await super.initialize();
 
     await this.reloadTable();
