@@ -24,8 +24,8 @@ export const onDoubleClick = (buttonName: string) => decorateMethod(`$ondoublecl
 export const refresh = decorateMethod($refresh);
 
 export default class GenericPage {
-  protected fields: UIElements;
-  protected buttons: UIElements;
+  protected fields!: UIElements;
+  protected buttons!: UIElements;
 
   public async initialize(): Promise<any> {
     // Always call this function first, because decorated functions might use fields/buttons.
