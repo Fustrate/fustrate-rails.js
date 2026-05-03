@@ -2,7 +2,7 @@ import type { Options } from 'ky';
 import ajax from './ajax';
 import type { PaginatedData } from './components/pagination';
 
-type JsonPrimitive = string | number | boolean | null;
+type JsonPrimitive = string | number | boolean | null | undefined;
 type JsonValue = JsonPrimitive | JsonValue[] | { [key: string]: JsonValue };
 type JsonRequestData = FormData | JsonValue | undefined;
 
