@@ -10,7 +10,7 @@ interface PaginationData {
   total: number;
 }
 
-export interface PaginatedData<T = unknown> {
+export interface PaginatedData<T = any> {
   data: T[];
   pagination: PaginationData;
 }
@@ -53,7 +53,7 @@ export default class Pagination extends Listenable {
     this.base = getPreppedPaginationURL();
   }
 
-  protected link(text: string, page: number, attributes: Record<string, string | number> = {}): string {
+  protected link(text: string, page: number, attributes: Record<string, any> = {}): string {
     attributes['data-page'] = page;
 
     return linkTo(text, `${this.base}page=${page}`, attributes);

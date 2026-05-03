@@ -59,7 +59,7 @@ const instance = ky.create({
   },
 });
 
-// export async function when<T>(...requests: unknown[]): Promise<T> {
+// export async function when<T>(...requests: any[]): Promise<T> {
 //   return new Promise((resolve) => {
 //     axios.all(requests).then(
 //       axios.spread((...responses) => {

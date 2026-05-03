@@ -3,7 +3,7 @@ import { type Instance, type Options, type Placement, createPopper } from '@popp
 import { delegate, stopEverything } from '../events';
 
 let popper: Instance | undefined;
-let boundHide: (() => void) | undefined;
+let boundHide: any;
 
 let defaultOptions: Partial<Options>;
 
@@ -38,9 +38,7 @@ function open(event: UIEvent & { target: HTMLElement }): false {
   popper = createPopper(target, target.nextElementSibling as HTMLElement, options);
 
   // The next time we click something on the page, hide the dropdown
-  if (boundHide) {
-    document.body.addEventListener('click', boundHide);
-  }
+  document.body.addEventListener('click', boundHide);
 
   stopEverything(event);
 
@@ -50,9 +48,7 @@ function open(event: UIEvent & { target: HTMLElement }): false {
 function hide(): void {
   popper?.destroy();
 
-  if (boundHide) {
-    document.body.removeEventListener('click', boundHide);
-  }
+  document.body.removeEventListener('click', boundHide);
 }
 
 export function initialize(options?: Partial<Options>) {
