@@ -38,8 +38,8 @@ describe('fire', () => {
 
     fire(element, 'greet');
 
-    expect(capturedEvent!.bubbles).toBe(true);
-    expect(capturedEvent!.cancelable).toBe(true);
+    expect(capturedEvent?.bubbles).toBe(true);
+    expect(capturedEvent?.cancelable).toBe(true);
   });
 });
 
