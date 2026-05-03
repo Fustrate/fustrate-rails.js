@@ -1,24 +1,30 @@
 {
 	"compilerOptions": {
 		"emitDecoratorMetadata": true,
+		"allowImportingTsExtensions": true,
 		"esModuleInterop": true,
 		"experimentalDecorators": true,
 		"isolatedModules": true,
-		"lib": ["ES2022", "ES6", "DOM", "ES2019.Array", "ES2015.Promise", "DOM.Iterable"],
-		"module": "es2022",
+		"lib": ["ESNext"],
+		"module": "Preserve",
 		"moduleResolution": "bundler",
-		"resolveJsonModule": true,
-		"sourceMap": true,
-		"target": "es6",
-		// Strict...
+		"noEmit": true,
+		"noFallthroughCasesInSwitch": false,
+		"noImplicitAny": false,
 		"noImplicitOverride": true,
 		"noImplicitReturns": true,
-		"noUnusedLocals": true,
+		"noPropertyAccessFromIndexSignature": false,
+		"noUncheckedIndexedAccess": false,
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"sourceMap": true,
 		"strict": true,
-		// ...but not that strict
-		"noImplicitAny": false,
-		"strictPropertyInitialization": false
+		"strictPropertyInitialization": false,
+		"target": "ESNext",
+		"types": ["bun"]
 	},
-	"exclude": ["node_modules"],
-	"compileOnSave": false
+	"compileOnSave": false,
+	"exclude": ["node_modules"]
 }

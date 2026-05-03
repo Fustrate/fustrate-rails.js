@@ -31,7 +31,7 @@
 		"lint:format": "biome format . --fix",
 		"precommit": "biome lint .",
 		"test": "vitest run",
-		"tsc": "tsc --noEmit --incremental --project .",
+		"tsc": "tsc --incremental --project .",
 		"tsc:watch": "bun run tsc --watch",
 		"versions": "bun run ./lib/update-package-versions.js"
 	}
