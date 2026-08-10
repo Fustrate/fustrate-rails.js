@@ -105,6 +105,16 @@ describe('patchJSON', () => {
       headers: { 'content-type': 'application/json' },
     });
   });
+
+  it('does not parse the response when requested', async () => {
+    const response = { json: vi.fn() };
+    vi.spyOn(ajax, 'patch').mockReturnValue(response as any);
+
+    const result = await patchJSON('/users/42', { active: false }, { parseResponse: false });
+
+    expect(result).toBeUndefined();
+    expect(response.json).not.toHaveBeenCalled();
+  });
 });
 
 describe('postJSON', () => {
@@ -169,6 +179,16 @@ describe('postJSON', () => {
       json: undefined,
       headers: { 'content-type': 'application/json' },
     });
+  });
+
+  it('does not parse the response when requested', async () => {
+    const response = { json: vi.fn() };
+    vi.spyOn(ajax, 'post').mockReturnValue(response as any);
+
+    const result: void = await postJSON('/users', { role: 'admin' }, { parseResponse: false });
+
+    expect(result).toBeUndefined();
+    expect(response.json).not.toHaveBeenCalled();
   });
 });
 
