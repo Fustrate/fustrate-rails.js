@@ -48,6 +48,12 @@ export async function patchJSON<T>(url: string, data: any, options: JSONOptions 
     return;
   }
 
+  // Fallback for when the client hasn't been updated to pass parseResponse: false and the server returns a
+  // 204 No Content response.
+  if (response.status === 204) {
+    return;
+  }
+
   return await response.json();
 }
 
@@ -58,6 +64,12 @@ export async function postJSON<T>(url: string, data?: any, options: JSONOptions 
   const response = await ajax.post<T>(pathToJsonURL(url), optionsForData(data));
 
   if (options.parseResponse === false) {
+    return;
+  }
+
+  // Fallback for when the client hasn't been updated to pass parseResponse: false and the server returns a
+  // 204 No Content response.
+  if (response.status === 204) {
     return;
   }
 
