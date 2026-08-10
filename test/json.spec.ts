@@ -182,10 +182,10 @@ describe('postJSON', () => {
   });
 
   it('does not parse the response when requested', async () => {
-    const response = { json: vi.fn() };
+    const response = { json: vi.fn(), status: 200 };
     vi.spyOn(ajax, 'post').mockReturnValue(response as any);
 
-    const result: void = await postJSON('/users', { role: 'admin' }, { parseResponse: false });
+    const result = await postJSON('/users', { role: 'admin' }, { parseResponse: false });
 
     expect(result).toBeUndefined();
     expect(response.json).not.toHaveBeenCalled();
