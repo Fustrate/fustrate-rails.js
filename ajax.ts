@@ -1,4 +1,4 @@
-import ky, { type KyRequest, type BeforeErrorHook, type KyResponse, isHTTPError } from 'ky';
+import ky, { type KyRequest, type BeforeErrorHook, type AfterResponseHook, type KyResponse, isHTTPError } from 'ky';
 
 import { addDebugData } from './debug';
 
@@ -29,6 +29,12 @@ export function setResponseErrorHandler(f: ResponseErrorHandler): void {
   onResponseError = f;
 }
 
+let responseHandler: AfterResponseHook | undefined;
+
+export function setResponseHandler(handler: AfterResponseHook): void {
+  responseHandler = handler;
+}
+
 function processRequestError(request: KyRequest) {
   window.alert('There was a problem connecting to the server - please wait a while before trying again.');
 
@@ -55,6 +61,7 @@ const instance = ky.create({
     'X-CSRF-Token': csrfToken(),
   },
   hooks: {
+    afterResponse: responseHandler ? [responseHandler] : [],
     beforeError: [errorHandler],
   },
 });
