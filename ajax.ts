@@ -61,7 +61,7 @@ const instance = ky.create({
     'X-CSRF-Token': csrfToken(),
   },
   hooks: {
-    afterResponse: responseHandler ? [responseHandler] : [],
+    afterResponse: [(...args) => responseHandler?.(...args)],
     beforeError: [errorHandler],
   },
 });

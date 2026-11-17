@@ -4,7 +4,7 @@ vi.mock('../debug', () => ({
   addDebugData: vi.fn(),
 }));
 
-import ajax, { csrfToken, setResponseErrorHandler } from '../ajax';
+import ajax, { csrfToken, setResponseErrorHandler, setResponseHandler } from '../ajax';
 
 // const flushPromises = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
 
@@ -107,6 +107,17 @@ describe('ajax', () => {
 
       expect(mockHandler).toHaveBeenCalledOnce();
       expect((mockHandler.mock.calls[0][0] as Response).status).toBe(403);
+    });
+  });
+
+  describe('setResponseHandler', () => {
+    it('calls the custom handler after a successful response', async () => {
+      const mockHandler = vi.fn();
+      setResponseHandler(mockHandler);
+
+      await makeRequest(200);
+
+      expect(mockHandler).toHaveBeenCalledOnce();
     });
   });
 });
